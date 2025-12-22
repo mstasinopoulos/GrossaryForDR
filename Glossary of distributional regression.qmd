@@ -7,7 +7,7 @@ number-sections: false
 number-depth: 3
 editor: visual
 quarto: add leovan/quarto-pseudocode
-author: GOD knows
+author: Dimitrios Mikis Stasinopoulos, 
 
 bibliography: book2025.bib       
 ---
@@ -108,7 +108,7 @@ Data partition has two different meanings.  The fist has to do with [statistical
  The second meaning of data partiotion occurs  in decision and [regression tree] analysis  
  
 
- <!-- ![](data_partition.png){width=100}     -->
+ ![](data_partition.png){width=500}     
 
 #### data analysis
 
@@ -227,7 +227,7 @@ GAMLSS stand for Genaralized Additive Model for Location, Scaler and Shape, @Rig
 `gamlss.cens` can take any distribution family in `gamlss.dist` and apply  `left` `right` or  `interval` censoring. 
 
 
-#### goodness of fit
+#### goodness of fit 
 
 A goodness of fit is a measure (a quantity) design to evaluate how close the model is to the data. 
 
