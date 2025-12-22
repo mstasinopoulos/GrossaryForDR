@@ -3,124 +3,264 @@ title: "A Glossary for Distributional Regression Models"
 format:
   html: default 
   pdf: default 
-
+number-sections: false   
+number-depth: 3
+editor: visual
+quarto: add leovan/quarto-pseudocode
+author: GOD knows
 
 bibliography: book2025.bib       
 ---
 
-This is a glossary of terms and ideas related  to models in general but more specifically to `distributional regression` models. This glossary is based on ideas presented in the talk `Regression Models; how to adapt for climate change challenges` given by Mikis Stasinopoulos, University of Greenwich, to the XVII Encontro Mineiro de Statistica on Octomber 2025c in Lavras, Brazil:
+## Introduction 
 
-- `agnostic methods` in modelling are techniques which could apply to any model independently if there are `mathematical`, `agent-based` or `algorithmic` models.  
+This is a glossary of terms and ideas related  to models in general but more specifically to [distributional regression] models. This glossary is based on ideas presented in the talk `Regression Models; how to adapt for climate change challenges` given by Mikis Stasinopoulos, University of Greenwich, to the XVII Encontro Mineiro de Statistica on Octomber 2025c in Lavras, Brazil:
+
+# Glossary
 
 
-- `agent` is the unit of interest in a `agent-based model`.
 
-- `agent-based model` is a simulation bottom up model where the unit of interest is called an `agent`. The model is build by simulating a lot of times how  the agents interact between them within a given environment. The agent is the unit of interest and its  behaviour is studied using simple rules. Agent-based models are simulation models where the behaviour of the agent is studied after a long simulation exercise. Therefore an important part of the model is to set the `parameters` determine the agent model behaviour.  
+#### agnostic method
 
-- `algotithm` is a step-by-step computational procedure designed to perform a task.  For `input-output` models this task mostly has to do with finding an unknown function  $g()$, i.e. $Y=g(X)$ connecting the input with the output. 
+in modelling is techniques which could apply to any model independently if there it is  a [mathematical model], [agent based model] or an [algorithmic model].  
 
- - `algorithmic model` is a model based on an algorithm. In regression typically an algorithmic model trying to model  $X \rightarrow Y$, through an unknown function  $g()$ i.e. $Y=g(X)$.   No explicit assumptions are made for the unknown function $g()$  but a lot of implicit assumptions depending on the type of algorithm used. Note that algorithmic models, like all mathematical models, can be deterministic or `stochastic`.
 
-- `assumption` is an axiomatic statement needed to be accepted for the model to work. Models need assumptions because of their simplified nature.  The reasoning behind is that if the assumptions are correct then the model could be useful. There are `explicit` and implicit assumptions. The `explicit` assumptions  are usually mathematical ones and are easy to check using `diagnostic` model tools. The  `implicit` assumptions common to algorithmic models are more difficult to check. `Incorrect` assumptions could lead to questionable scientific discoveries.  In a `agent based ` model the assumptions are the way  the agent are behaving.
+#### agent
 
-- `AIC` stands for the Akaike Information Criterion defined as `deviance` $+2\times df$  where $df$ are the `degrees of freedom` and 2 stands for the `penalty`.   See also `GAIC` and `BIC`.
+An agent is the unit of interest in a [agent based model].
 
-- `bagging` refer to bootstrapping followed by averaging the fitted models, see `bootstrapping` 
+#### agent based model
 
-- `black box` is a model with difficult interpretation. A lot of machine leaning models are black boxes.
+An agent based model is a simulation bottom up model where the unit of interest is called an [agent]. The model is build by simulating a lot of times how  the agents interact between them within a given environment. The agent is the unit of interest and its behaviour is studied using simple rules. The behaviour of the agent is studied after a long simulation exercise. Therefore an important part of the model is to set the parameters determine the agent model behaviour.  
 
-- `bootstapping` is a way to fit multiple models to a single data set by repeatedly re-sampling with replacement from the original data set. The multiple fits can be used  to obtain variability of the parameters of the model. In this sense bootstrapping  complement Bayesian fits where the information about the variability comes from prior assumptions rather than the bootstrap replications. Bootstrapping is based on partitioning the data with replacement $B$ times so the different fits could produce $B$ estimates of fitted values and residuals. Averaging those values sometimes refers to `bagging`.
+#### algorithm 
 
-- `boosting` is a way of fitting models using  many `complementary` sequential simple models and average them in order to build a unique fitted model. The individual models should be simple and easy to fit and should complement each other by modelling different characteristic of the data. Finally the individual fitted simple models contribute when averaging only to a small part say 10 or 20 percent of the original contribution. This percentage is one of the hyper parameters of boosting. The other hyper parameter is how many time we should repeat the fitting procedure in order to reach an adequate model. The latest is the main smoothing parameters of the boosting procedure. For determine the smoothing parameters cross validation can be used which requiring a good `measure of goodness of fit`.
+An algorithm is a step-by-step computational procedure designed to perform a task.  For [input-output model]s this task mostly has to do with finding an unknown function  $g()$, i.e. $Y=g(X)$ connecting the input with the output. 
 
-- `BIC`, the Bayesian information criterion defined as `deviance` $+ \log(n) \times DF$, when $n$ is the number of observations in the data. 
+#### algorithmic model
 
-- `centiles`  are values defined  $100 \times$ the quantile of a given distribution (or sample)  and therefore their use is similar to quantiles.
+ An algorithmic model is a model based on an algorithm. In regression typically an algorithmic model trying to model  $X \rightarrow Y$, through an unknown function  $g()$ i.e. $Y=g(X)$.   No explicit assumptions are made for the unknown function $g()$  but a lot of implicit [assumptions] depending on the type of algorithm used. Note that an [algorithmic model], like a [mathematical model], can be deterministic or [stochastic model].
 
-- `cdf` is the commutative distribution function. For distributional regression where the response is assumed to have a proper distribution is usually refer to as the cdf of the response.   
+#### assumptions
 
-- `data`  used to mean a file with many numbers, but data today could have different forms, Could be `text`, `pixels`, or any other file  containing `information`. The `model` tries to extract information from the data.  Note that at a pre-modelling  stage we can extract useful information from the data  to help us with  modelling. The package `gamlss.prepdata` is helping in this direction. Almost all analyis whivh use Distributional regression model is dealing with `tabular data` (see bellow).
-Note that data sets, In R a data set is refer to as  a `data.frame`.  
+Assumptions are an axiomatic statement needed to be accepted for the model to work. Models need assumptions because of their simplified nature.  The reasoning behind is that if the assumptions are correct then the model could be useful. There are **explicit** and **implicit** assumptions. The **explicit** assumptions  are usually mathematical ones and are easy to check using [diagnostics] tools. The  **implicit** assumptions are common to [algorithmic model]s are more difficult to check. **Incorrect** assumptions could lead to questionable scientific discoveries.  In a [agent based  model] the assumptions are the way  the agent are behaving.
+
+#### AIC
+
+AIC stands for the Akaike Information Criterion, @Akaike73b, defined as [deviance] $+2\times df$  where $df$ are the [degrees of freedom] and 2 stands for the **penalty**. See also [GAIC] and [BIC].
+
+#### averaging models
+
+Averaging models is a way to select a [final model] by averaging the results from different models. 
+
+#### bagging 
+
+Bagging refers to [bootstrapping] followed by [averaging models] the fitted models.
+
+#### black box
+
+A black box is a [model] with difficult interpretation. A lot of machine leaning models are black boxes.
+
+#### bootstapping
+
+Bootstapping is a way to fit multiple models to a single data set by repeatedly re-sampling with replacement from the original data set. The multiple fits can be used  to obtain variability of the parameters of the model. In this sense bootstrapping  complement Bayesian fits where the information about the variability comes from prior assumptions rather than the bootstrap replications. Bootstrapping is based on partitioning the data with replacement $B$ times so the different fits could produce $B$ estimates of fitted values and residuals. Averaging those values sometimes refers to `bagging`. For more detail about bootstrapping see @EfronTibshirani93.
+
+#### boosting
+
+Boosting is a way of fitting models using  many *complementary* sequential simple models and average them in order to build a unique fitted model. The individual models should be simple and easy to fit and should complement each other by modelling different characteristic of the data. Finally the individual fitted simple models contribute when averaging only to a small part say 10 or 20 percent of the original contribution. This percentage is one of the hyper parameters of boosting. The other hyper parameter is how many time we should repeat the fitting procedure in order to reach an adequate model. The latest is the main smoothing parameters of the boosting procedure. For determine the smoothing parameters cross validation can be used which requiring a good [measure of goodness of fit].
+
+
+#### BIC 
+
+BIC, the Bayesian information criterion, @Schwarz78, is defined as [deviance] $+ \log(n) \times DF$, when $n$ is the number of observations in the data, see [GAIC]. 
+
+#### bucket plot
+
+A bucket plot is a residual based [diagnostics] tool which can detect [skewness] and [kurtosis] in the [residuals] of a [model]. 
+
+
+#### centile
+
+A centile is a  values defined  as $100 \times$ the quantile of a given distribution or a given sample.  The terms is used is almost synonymous  to a [quantile].
+
+
+#### cdf 
+
+A cdf is the **commutative distribution function** of a random variable.  For a distributional regression where the [response] is assumed to have a proper distribution is usually refer to as the cdf of the response.   
+
+#### data
+
+
+
+The word data  used to mean a file with many numbers, but data today could have different forms, Could be **text**, **pixels**, or any other file  containing **information**. The [model] tries to extract information from the data.  Note that at a pre-modelling  stage we can extract useful information from the data  to help us with  modelling. The package `gamlss.prepdata` is helping in this direction. Almost all analysis which use Distributional regression model is dealing with `tabular data` (see bellow).
+Note that data sets, In `R` a data set is refer to as  a `data.frame`.  
+
+#### `data.frame` 
    
-- `data.frame` isthe way a `data` set is refereed to in the `R` statistical programming languish.   
+`data.frame` is the way a [data] set is refereed to in the `R` statistical programming languish.   
+
+
+#### data partition
+
        
-- `data partition`: helps model building, model interpretation, checking for over-fitting and  it helps to improve the inference by providing extra information about variations in the parameters. There several types of data partition;
- a `single` partition of a data set provides holdout samples for predition and validation purposes,   while `multiple` partitions as for example`bootstrapping` and  `K-fold cross validation` help inference. 
+Data partition has two different meanings.  The fist has to do with [statistical modelling]. In [statistical modelling]  helps model building, model interpretation, checking for over-fitting and  also helps to improve the inference by providing extra information about variations in the parameters. There several types of data partition;
+ a **single** partition of a data set provides holdout samples for prediction and validation purposes,   while **multiple** partitions as for example [bootstrapping] and  [K-fold cross validation] help inference. 
+ The second meaning of data partiotion occurs  in decision and [regression tree] analysis  
+ 
 
  <!-- ![](data_partition.png){width=100}     -->
 
-- `data analysis`; The art of extraction information from the data. The first question any researcher has to ask is; can the data or the model answer the question in hand? 
+#### data analysis
 
-- `data generating mechanism` the assumption of how the data were generated.  I distributional regression the data generating mechanism applies mostly into the way the response is generated given the explanatory variables.   
-
-- `degrees of freedom` of a model measures the complexity of the model. For mathematical parametric models the degrees of freedom are the number of independed parameters used in the model. For mathematical smooth models the degrees are defined as the diagonal elements of the smoothing matrix i.e. $\hat{\textbf{y}}= S(\textbf{x})$ where $\hat{\textbf{y}}$ are the `fitted values` of the smooth function and $\textbf{x}$ is the `explanatory variable`(s). For algorithmic models the degrees of freedom often are difficult to calculate.       
-
-- `design matrix` It usually refer to the matrix $\textbf{X}$ containing  all relevant explanatory variables. Note that for distributional regression model each paramerter of the distribution could have its own design matrix i.e.   $\textbf{X}_{\theta_k}$    
-
--  `deviance`: is a measure of goodness of fit and defined as $-2\log Likelihood$. It can be used for comparison between models. In GAMLSS modelling the `training deviance`, can be used together with its penalised form the Generalise Akaike Information Criterion, `GAIC`,  for model comparison. The deviance is an `empirical risk` measure based on `information criterion` concepts. It is a `summary statistics`, because it is a sum of the individual deviance increments and therefore an overall measure of goodness of fit. It tell us how well the conditional distribution of $f(y|X)$ fits the data overall. It does not tells whether the tail or the middle of the distribution fits well. The deviance increments may help to obtain such information.
-
-- `diagnostics` are tools for helping to check the `assumpions` of the model.
-
-- `distribution` refer to a probability distribution function which, in a distributional regression set-up, affects the behaviour of the response variable.
-Theoretical distributions depend on `distribution parameters`. The model parameter the mode flexible the distribution can be. 
-
-- `distribution regression` model is an `input-output` (regression) model in which the response $Y$  if assumed to have a distribution in which all the parameters of the distribution could depend on explanatory variables i.e. $X \rightarrow D(Y|\theta(X))$ where $\theta$ are the k parameters of the distribution.  
-
-- `dummy variables` is a set of binary (0 ,1) vectors indication whether certain conditions are present or not. Ant `factor` is represented as a set of dummy variables in a `design matrix`. The number of columns in the dummy variable set representation of a factor are the number of `levels` of factor minus one to avoid collinearity with the constant a vector of ones in the design matrix.   
+Data analysis is art of extraction information from the data. The first question any researcher has to ask is; can the data or the model answer the question in hand? 
 
 
-- `errors` in a regression situation refer to the statistical part of the stochastic model to account for the natural variability of the data.  
+#### data  generating mechanism
 
-- `GAIC` is the Generalised Akaike Criterion @Akaike83 defined as `deviance` $+ K \times df$  where $df$ are the `degrees of freedom` and $K$ stands for the `penalty`.
-
-- `GLM` Generalized Linear Model 
-
-- `GAM` Generalized Additive Model 
-
-- `GAMLSS` Genaralized Additive Model for Location, Scaler and Shape 
-
-- `gamlss` the original package in R for fitting a GAMLSS model.
-
-- `gamlss2` the new package in R for fitting a GAMLSS model.
-
-- `gamlss.data`  a package in R containing data serts use to demostate GAMLSS use.
-
-- `gamlss.prepdata` a package in R to help users to prepre data for ditributional regression modelling.
-
-- `gamlss.ggplots`  a package in R to help with diagnostics and other graphics  using the `ggplot2` package.  The functions in the package can be applied to fitted GAMLSS model independently whether were fitted  using the  `gamlss` or `gamlss2`.
-
-- `gamlss.dist` a package containing all the theoretical distribution which can be assumed for the response when fitting a GAMLSS  model.
-
-- `gamlss.tr` can take any distribution family in `gamlss.dist` and truncated `left` `right` of in `both` directions. 
-
-- `gamlss.cens` can take any distribution family in `gamlss.dist` and apply  `left` `right` or  `interval` censoring. 
-
-- `goodness of fit` is a measure (a quantity) design to evaluate how close the model is to the data. 
+Data generating mechanism are set of  assumptions of how the data were generated.  In distributional regression the data generating mechanism applies mostly into the way the response is generated given the explanatory variables.    
 
 
-- `fit`: refer to a model fitted into the data by maximise or minimise a `measure of goodness of fit`.
+#### degrees of freedom
 
-    - `over-fitting`
-    
-    - `under-fitting`
+The degrees of freedom of a model measures the complexity of the model. For mathematical parametric models the degrees of freedom are the number of independed parameters used in the model. For mathematical smooth models the degrees are defined as the diagonal elements of the smoothing matrix i.e. $\hat{\textbf{y}}= S(\textbf{x})$ where $\hat{\textbf{y}}$ are the `fitted values` of the smooth function and $\textbf{x}$ is the `explanatory variable`(s). For algorithmic models the degrees of freedom often are difficult to calculate.       
 
 
-- `factor` is  a categorical variables, that is, a variable which take limited unordered or orderer values.  
+#### design matrix
 
-- `function` $g()$ the unknown function which the model tries to approximate.
+By design matrix we usually refer to the matrix $\textbf{X}$ containing  all relevant explanatory variables. Note that for distributional regression model each paramerter of the distribution could have its own design matrix i.e.   $\textbf{X}_{\theta_k}$    
 
+#### deviance
 
-- `GAIC`, the  Generalise Akaike Information Criterion defined a `deviance` $+k \times df$ where $k$ is the penalty applied to the `degrees of freedom` $df$. 
-
-- `goodness of fit` measure:  A way to evaluate the fidelity of the data for a given. model.  That is, how close, is the model to the data using an objective measure. of goodness of fit. 
-
-
-- `graphics`
-
-- `hypothesis` what the researcher tries to understand and answer see also the `purpose` of the study 
+The deviance is a measure of goodness of fit and defined as $-2\log Likelihood$. It can be used for comparison between models. In GAMLSS modelling the `training deviance`, can be used together with its penalised form the Generalise Akaike Information Criterion, `GAIC`,  for model comparison. The deviance is an `empirical risk` measure based on `information criterion` concepts. It is a `summary statistics`, because it is a sum of the individual deviance increments and therefore an overall measure of goodness of fit. It tell us how well the conditional distribution of $f(y|X)$ fits the data overall. It does not tells whether the tail or the middle of the distribution fits well. The deviance increments may help to obtain such information.
 
 
-- `input-output model`: a model where the variables $X$, the input, affect the variables $Y$, the output i.e. $X \rightarrow Y$. Input-output model are `supervised learning` model since a response variable, $Y$ always exist. @breiman2003statistical use the diagram 
+#### diagnostics 
+
+Diagnostics are tools for helping to check the [assumption]s of the model.
+
+
+#### distribution
+
+distribution refer to a probability distribution function , [pdf] which, in a distributional regression set-up, affects the behaviour of the response variable. 
+
+
+#### distribution parameters
+
+Theoretical distributions depend on distribution parameters. The more distribution parameters exist more flexible the distribution is. For example in one parameter distribution like, for example the exponential distribution, the location, ....  @Rigbyetal2019  
+
+
+#### distributional regression 
+
+A distributional regression model is an [input-output] (regression) model in which the response $Y$  if assumed to have a distribution in which all the parameters of the distribution could depend on explanatory variables i.e. $X \rightarrow D(Y|\theta(X))$ where $\theta$ are the k parameters of the distribution.  
+
+#### dummy variables
+
+A dummy variables is a set of binary (0 ,1) vectors indication whether certain conditions are present or not. Any `factor` is represented as a set of dummy variables in a `design matrix` of a model. The number of columns in the dummy variable set representation of a factor are the number of `levels` of factor minus one to avoid collinearity with the constant a vector of ones in the design matrix.   
+
+#### error
+
+#### entopy
+
+#### errors
+
+Errors in a regression situation refer to the statistical part of the stochastic model to account for the natural variability of the data.  
+
+#### explanatory variables 
+
+Explanatory variables in an [input-output model] ate the input variables. 
+
+#### final model
+
+The model chosen after a selection of model was performed.
+
+
+#### GAIC
+
+GAIC stand for the Generalised Akaike Criterion @Akaike83 defined as `deviance` $+ K \times df$  where $df$ are the `degrees of freedom` and $K$ stands for the `penalty`.
+
+
+#### GLM
+
+ GLM stands for  Generalized Linear Model, @NelderWeddeburn72, ...
+
+#### GAM
+
+GAM stands for Generalized Additive Model, @HastieTibshirani90,  ...
+
+#### GAMLSS
+
+GAMLSS stand for Genaralized Additive Model for Location, Scaler and Shape, @RigbyStasinopoulos05  ...
+
+
+#### `gamlss`
+
+`gamlss` is the original package in `R` for fitting a GAMLSS model @StasinopoulosRigby07.
+
+#### `gamlss2`
+
+`gamlss2` the new package in R for fitting a GAMLSS model.
+
+#### `gamlss.data`
+
+`gamlss.data`  is a package in `R` containing data sets use to demonstrate GAMLSS models.
+
+#### `gamlss.prepdata`
+
+`gamlss.prepdata` is a package in R to help users to preper data for analysis using a [distributional regression] model.
+
+
+#### `gamlss.ggplots`
+
+`gamlss.ggplots` is a package in `R` to help with diagnostics and other graphics  using the `ggplot2` package.  The functions in the package can be applied to fitted GAMLSS model independently whether were fitted  using the  [`gamlss`] or [`gamlss2`].
+
+
+#### `gamlss.dist`
+
+`gamlss.dist` a package containing all the theoretical distribution which can be assumed for the response when fitting a GAMLSS  model.
+
+#### `gamlss.tr`
+
+`gamlss.tr` can take any distribution family in `gamlss.dist` and truncated `left` `right` of in `both` directions. 
+
+#### `gamlss.cens`
+
+`gamlss.cens` can take any distribution family in `gamlss.dist` and apply  `left` `right` or  `interval` censoring. 
+
+
+#### goodness of fit
+
+A goodness of fit is a measure (a quantity) design to evaluate how close the model is to the data. 
+
+
+#### fit
+
+A fit refer to a model fitted to the data by maximise or minimise a [measure of goodness of fit]. Note that a model fit can be an [adequate fit], [over-fitting] or [under-fitting]. A single fit could provides unique [fitted values] and [residuals] for both [training] and [test] data sets.
+
+
+#### factor
+
+A factor is  a categorical variables, that is, a variable which take limited unordered or orderer values.  
+
+#### the function $g()$
+
+We refer to the function  $g()$ as an unknown function which the model tries to approximate.
+
+
+#### GAIC
+
+GAIC is  the  Generalise Akaike Information Criterion defined as `deviance` $+k \times df$ where $k$ is the penalty applied to the [degrees of freedom] $df$. 
+
+
+#### graphics
+
+#### hypothesis
+
+The hypothesis is what the researcher tries to understand and answer see also the `purpose` of the study 
+
+
+#### input-output model
+
+An input-output model is a model where the variables $X$, the input, affect the variables $Y$, the output i.e. $X \rightarrow Y$. Input-output model are [supervised learning] model since a response variable, $Y$ always exist. @breiman2003statistical use the diagram 
 $$
 X  {\longrightarrow}  \fbox{NATURE} {\longrightarrow} Y, \ 
 $$
@@ -136,111 +276,214 @@ The function $g(.)$ is unknown so the task of the modeller is to find such a fun
 X  {\longrightarrow} \fbox{g()}  {\longrightarrow} D(Y|\theta(X)) \ 
 $$
 
-- `information`
+#### independent variables
 
-- `interpretation` of a model is the story behind the fitted model, what it is telling you. 
-
-- `error`
-
-- `entopy`
-
-- `K-fold Cross Validation`: provides `test` data for all the observations by going through all the K-folds, It provides unique `fitted values` and `residualas` and in addition provides multiple $K-1$ values for fitted values and residualas for the training $K-1$ folds.
-
-- `LASSO`
-
-- `lineal model`  refer to models described by the `assumtions` $\textbf{y}=\textbf{X}\boldsymbol{\beta}+e$ where $e_i \sim N(\boldsymbol{0}, \sigma^2)$.  That is the relationship between the response and the explanatory variables is linear determined by the coefficients $\boldsymbol{\beta}$ and the error term has a normal distribution with constant variance $\sigma^2$. The unknwon parameters in this case are the  $\boldsymbol{\beta}$ and $\sigma^2$. I we know those paramneters we can predict the behaviour of the response if the model is correct.  
-
-- `likelihood` is the probability of observing the sample for example $f(\textbf{y}|\boldsymbol{\theta})$ given the assumption about the distribution of the response seeing as a function of the parameters. 
-
-- `MLE` the method of maximising  the likehood aas a way to  
-    - `maximum` 
-
-     - `minimum`
-
-- `question`: the purpose of the study;
-
-- `machine learning`: refer to a selection of algorithmic models. A typical supervised machine learning model has the form $Y=g(X)+\epsilon$ where the error $\epsilon$ is assumed to be an identical and independently distributed random variable. Note that implicitly it is assumed that the error is a symmetrical random variable. 
-
-- `measure of goodness of fit` is usually an `empirical Risk` measure. For exampe the mean square error, MSE use in LS model, or the log-likelihood used in GLM and GAMLSS. A single fit could provides unique `fitted values` and `residuals` for both `training` and `test` data sets.
-
-- `model` is a simplification of reality by provides an easier way to understand the structure of a problem. Relevent to regression analysis there are `mathematical` and `algorithmic` models  A `mathematical model`is  model is using mathematical equations. An `algorithmic model` is  using  using a set of rules to perform a task. An `adequate` model is a model which fits the training data well. `All models are wrong but some are useful`, -- George  @box1979robustness. Whether a model is useful depends on the `purpose` of the study The model should be `adequate` to answer the `question`  in hand.
-
-- `model average`: prevent from choosing a single model by summarizing resul fits from multiple models. In my opinion model average is worth it if the fitted models complement each other. In terms of distributional regression this could mean the one model could fit the tail better while an other fits the middle of the data better. 
-
-- `model formula` A model formula in R takes a  
-
-- `model selection`: in GAMLSS has two meanings i) how to choose the distribution of the response and ii) to find out how the $x$'s effects the distribution of $y$. The latest is done by checking how x's effect the parameters of the distribution.
-
-- `model interpetation`: 
-
-- `multicollinearity`
+The [explanatory variables] in a [regression analysis]
 
 
-- `n` number of observations in a `tabular data` set
-
-- `normalised randomosed quantile ressiduals` 
-
-- `null model` refer to a model with no `terms` in it. In R notation this is the model with  a `model formula` equat to `~1`. For distributional regression a `null model` is model which has   `model formula` `~1` for all of each distribution paramaters.   
-
-- `observarions`  
-
-- `overfitting` when the fit is too close to the data and thefore do not generalised well when try to predict.
-
-- `parameter` in a distribution regression set-up could be of three types: the  `distribution parameters` which could be functions of the explanatory variables i.e. $\theta_k = g(X_k)$, coefficients describing the relationship between the distribution paramayters ans the explanatory vatiables. ands the `huper- parameters`.    
-
-= `PCR` principle component regression
-
-- `purpose`: the purpose of the study is the `hypothesis` the study is woring with.
-
-
-- `pdf` 
-
-- `PIT residuals`
-
-- `QQ-plot`
-
-- `quantiles`
-
-- `quantile function`
-
-- `quantile resuduals`
-
-- `r` the number of explanatory (`input`) variables in the data 
-
-
-- `Rashomon`
-
-- `Rashomon set` 
-
-- `regression`: a input-output model where the `explanatory variables`, $X$, affect the `resposnse` the $Y$.   
-
-
-- `regression` analysis is an input-output statistical model using  `tabular data`.  Typically in the past regression analysis is refer to the `linear model` but here we use to describe   any input-output relationship. 
-
-- `residualss`  are a vector of length `n` measuring the difference between observed and fitted values. For a `linear model` the residuals are defined as $y_i-\hat{y}_i$ for $i= 1,\ldots,n$. where $\hat{y}_i$ are the fitted values, that is  $n$-observations have `n` residuals. Residuals can be defined in both the `training` or the `test` data sets. Residuals from the training data can be used to check `underfitting` while residuals from the test data can be use for checking  `overfitting` the data.
-
-- `saturated  model` is a model which has as many unkown parameters as the number of obsrvations `n`.
-
-- `selection of terms` in distributional regression is the proccess of identify which `term` affect which parameter. 
-
-- `statistical modelling` is the art of creating a statistical model which represents the data generating mechanism adequately. Statistical model extract information from the data in a way to answer question of interest (see `purpose` of the study).
-
-
-- `stochastic` model: is a mathematical or algorithmic model which incorporates randomness so its output is not completely predictable even with the same starting conditions. Not all problems need a stochastic component. A `stochastic` `algorithmic` model is often called a `machine learning` model. - a `stochastic` model is a (mathematical or algorithmic) model which incorporates randomness so its output is not completely predictable even with the same starting conditions.
-
-- `stochastic regression` models contain `probabilistic` assumptions on how the input-output model is generated. The minimal assumption for a regression model is about the behaviour of the  `response. Not all problems need a stochastic component.   Stochastic models are often used because many natural, social, and physical systems have an inherent variability.
+#### information
 
 
 
+#### interpretation 
 
-- `stochastic regression model` is a input-output model containing probabilistic assumptions on how the variable involved  are generated
-
-- `summary statistic`
-
-- `t`-distribution
+The interpretation of a model is the story behind the fitted model, what it is telling you. 
 
 
-- `tabular data` are  spreadsheet type of data sets. Tabular data   are rectangular in shape with variables vertically  and observations horizontally. We refer to the number of observations as $n$ and the number of variables as $r$.  Over recent years we have seen an increasing in the size of data sets for both $n$ and $r$. Traditionally classical regression models  supported  the cases where $n\gg r$, where $\gg$ refers to “$n$ is much greater than $r$”. More  recent regression  techniques i.e `LASSO` ans `PCR` support situation where $n  \simeq r$, or even $n<r$, Note that the notation $\simeq$  refers to “$n$ is nearly equal to $r$".  A typical tabulat data exampe is shown in @tbl-TheTableofData.
+#### input variables
+
+The [explanatory variables] in a [regression analysis] same as  the input in an [input-output model].
+
+
+#### K-fold cross validation
+
+A K-fold Cross Validation provides [training] and [test] data for all the observations by going through all the K-folds, It provides unique `fitted values` and `residualas` and in addition provides multiple $K-1$ values for fitted values and residualas for the training $K-1$ folds.
+
+#### kurtosis
+
+
+#### LASSO
+
+
+#### linear model 
+
+By linear model we refer to models described by the `assumtions` $\textbf{y}=\textbf{X}\boldsymbol{\beta}+e$ where $e_i \sim N(\boldsymbol{0}, \sigma^2)$.  That is the relationship between the response and the explanatory variables is linear determined by the coefficients $\boldsymbol{\beta}$ and the error term has a normal distribution with constant variance $\sigma^2$. The unknwon parameters in this case are the  $\boldsymbol{\beta}$ and $\sigma^2$. I we know those parameters we can predict the behaviour of the response if the model is correct.  
+
+#### likelihood 
+
+The likelihood is the probability of observing the sample for example $f(\textbf{y}|\boldsymbol{\theta})$ given the assumption about the distribution of the response seeing as a function of the parameters. 
+
+
+#### mathemaitical model     
+
+#### maximum likelihood estimation 
+
+The Maximum Likelihood Estimation, MLE, is  method of fiiting a distributiona regression model.  
+     - maximum
+     - minimum
+     
+     
+####  measure of goodness of fit
+
+A measure of goodness of fit is a way to evaluate the fidelity of the data for a given. model.  That is, how close, is the model to the data using an objective measure. of goodness of fit. 
+
+
+
+#### question 
+
+The question is the purpose of the study in hand;
+
+
+#### mathematical model
+
+
+
+#### machine learning
+
+Machine learning refers to a selection of algorithmic models. A typical supervised machine learning model has the form $Y=g(X)+\epsilon$ where the error $\epsilon$ is assumed to be an identical and independently distributed random variable. Note that implicitly it is assumed that the error is a symmetrical random variable. 
+
+#### measure of goodness of fit
+
+A measure of goodness of fit is usually an [empirical Risk] measure. For exampe the mean square error, MSE use in LS model, or the log-likelihood used in GLM and GAMLSS. 
+
+#### model
+
+A model is a simplification of reality by provides an easier way to understand the structure of a problem. Relevent to regression analysis there are mathematical and algorithmic models  A [mathematical model] is  model is using mathematical equations. An [algorithmic model] is  using  using a set of rules to perform a task. An [adequate model] is a model which fits the [training] data well. `All models are wrong but some are useful`, George  @box1979robustness. Whether a model is useful depends on the [purpose] of the study The model should be adequate to answer the [question]  in hand.
+
+
+#### model average
+
+A model average prevent from choosing a single model by summarizing resul fits from multiple models. In my opinion model average is worth it if the fitted models complement each other. In terms of distributional regression this could mean the one model could fit the tail better while an other fits the middle of the data better. 
+
+#### model formula
+
+A model formula in R takes a  
+
+#### model selection 
+
+Model selection` in GAMLSS has two meanings i) how to choose the distribution of the response and ii) to find out how the $x$'s effects the distribution of $y$. The latest is done by checking how x's effect the parameters of the distribution.
+
+
+#### model interpetation 
+
+#### multicollinearity
+
+
+#### $n$
+
+$n$  is number of observations in a [tabular data] set
+
+#### normalised randomosed quantile ressiduals
+
+#### null model 
+
+As null model we refer to a model with no [terms] in it. In R notation this is the model with  a [model formula] equat to `~1`. For distributional regression a null model is model which has   [model formula] `~1` for all the [distribution parameters] models.   
+
+#### observarions
+
+#### overfitting 
+
+Overfitting happens when the fit is too close to the data and thefore do not generalised well when try to predict.
+
+#### papameters
+
+The parameters in a distribution regression set-up could be of three types: the  `distribution parameters` which could be functions of the explanatory variables i.e. $\theta_k = g(X_k)$, coefficients describing the relationship between the distribution paramayters ans the explanatory vatiables. ands the `huper- parameters`.    
+
+#### principle component regression
+
+
+#### purpose
+
+Ths purpose of the study is the [hypothesis] the study is working on.
+
+
+#### pdf 
+
+#### PIT residuals
+
+#### QQ-plot
+
+#### quantile
+
+#### quantile function
+
+#### quantile residuals
+
+#### $r$
+
+$r$ is the number of [explanatory variables] or [input variables] in the data 
+
+
+#### Rashomon
+
+
+#### Rashomon set 
+
+#### regression 
+
+A regression model is  a input-output model where the `explanatory variables`, $X$, affect the `resposnse` the $Y$.   
+
+
+#### regression analysis
+A regression analysis is an input-output statistical model using  `tabular data`.  Typically in the past regression analysis is refer to the `linear model` but here we use to describe   any input-output relationship. 
+
+
+#### regression tree
+
+#### residuals
+
+The residuals  are a [vector] of length $n$ measuring the difference between observed and fitted values. For a [linear model] the residuals are defined as $y_i-\hat{y}_i$ for $i= 1,\ldots,n$. where $\hat{y}_i$ are the fitted values, that is  $n$-observations have `n` residuals. Residuals can be defined in both the [training] or the [test] data sets. Residuals from the training data can be used to check [underfitting] while residuals from the test data can be use for checking  [overfitting] the data.
+
+#### response 
+
+The response variables is the output variable in a [input-output model].
+
+#### saturated  model
+
+A saturated  model is a model which has as many unkown parameters as the number of obsrvations `n`.
+
+
+#### selection of terms
+
+A selection of terms in distributional regression is the process of identify which `term` affect which parameter. 
+
+
+#### skewness
+
+#### supervised learning 
+
+#### statistical modelling
+
+Statistical modelling is the art of creating a statistical model which represents the data generating mechanism adequately. Statistical model extract information from the data in a way to answer question of interest (see `purpose` of the study).
+
+
+#### stochastic model
+
+A stochastic  model  is a mathematical or algorithmic model which incorporates randomness so its output is not completely predictable even with the same starting conditions. Not all models need a stochastic component. A [mathematical model] and a [algorithmic model]  do not always need a stochastic model, 
+
+#### stochastic regression
+
+A stochastic regression models contain [probabilistic] assumptions on how the input-output model is generated. The minimal assumption for a regression model is about the behaviour of the  `response. Not all problems need a stochastic component.   Stochastic models are often used because many natural, social, and physical systems have an inherent variability.
+
+
+
+
+#### summary statistic
+
+#### target
+
+The target variables is the [response] in a [regression analysis]
+
+#### training
+
+#### test 
+
+#### t-distribution
+
+
+#### tabular data
+
+Tabular data are  spreadsheet type of data sets. Tabular data   are rectangular in shape with variables vertically  and observations horizontally. We refer to the number of observations as $n$ and the number of variables as $r$.  Over recent years we have seen an increasing in the size of data sets for both $n$ and $r$. Traditionally classical regression models  supported  the cases where $n\gg r$, where $\gg$ refers to “$n$ is much greater than $r$”. More  recent regression  techniques i.e [LASSO] ans [PCR] support situation where $n  \simeq r$, or even $n<r$, Note that the notation $\simeq$  refers to “$n$ is nearly equal to $r$".  A typical tabulat data exampe is shown in @tbl-TheTableofData.
 
 
 ## Tabular data example {.smaller}
@@ -257,30 +500,54 @@ $$
 : A tabular data example {#tbl-TheTableofData .striped .hover}
 
 
-- `tail` of a distribution i 
+#### tail 
 
-- `term` refer to an explanatory variables in a model after possible trnsformation to make suitable for distribution regression analysis. For example a factor is a term an first order interaction is a terms. 
-
-
-
-- `uniform distribution`
-
-- `univariate` distribution 
-
-- `underfitting` when the fit is very poor and it does not represent the data properly.
+The  tail of a distribution is ...
 
 
-- `variable importance` shouls show important is a `term` for the `model`. Note that for `distributional regression` a `terms` affect both the `parameters` of the distribution and the overall `measure of goodness of fit`. So, for example one  should be able to ask the question,  of how important say **age** is  is for the variation in $Y$ i.e.  $\sigma$ but also how important is overall in the model.      
+#### term
 
-- `vector` 
 
-- `worm plot` is a diagnostic tool applied to the residuals of a regression model.
+A term is  an [explanatory variable] in a model after possible transformation to make suitable for distribution regression analysis. For example a factor is a term.  A first order interaction is a term. 
 
-- `X` refer to  the `explanatory`, `input` or `independent` variables.   
 
-- `Y` refer  to the `response`,`target`, or `y-variable`. 
 
--  `z-scores`: are the `residuals` for a distributional models. 
+#### uniform distribution
+
+#### univariate` distribution 
+
+#### underfitting 
+
+Underfitting occurs when the fit is very poor and it does not represent the data properly.
+
+#### variable importance
+
+A variable importance should show the important is a `term` for the `model`. Note that for [distributional regression] a [terms] affect both the [parameters] of the distribution and the overall [measure of goodness of fit]. So, for example one  should be able to ask the question,  of how important say **age** is for the variation in $Y$ i.e.  $\sigma$ but also how important is overall to the model.      
+
+#### vector 
+
+#### validation
+
+#### worm plot
+
+A worm plot is a diagnostic tool applied to the residuals of a regression model.
+
+
+#### $X$
+
+$X$ is used as a generic term for the [explanatory variables], [input variables] or [independent variables].   
+
+#### $Y$
+
+$Y$ is used as a generic terms for the [response], [target], or [y-variable]. 
+
+
+#### y-variable
+
+The [response] variable in a [regression analysis]
+
+#### z-scores 
+The   z-scores are the [residuals] of a distributional models. 
 
 
 
