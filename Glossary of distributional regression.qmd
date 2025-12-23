@@ -14,11 +14,15 @@ bibliography: book2025.bib
 
 ## Introduction 
 
-This is a glossary of terms and ideas related  to models in general but more specifically to [distributional regression] models. This glossary is based on ideas presented in the talk `Regression Models; how to adapt for climate change challenges` given by Mikis Stasinopoulos, University of Greenwich, to the XVII Encontro Mineiro de Statistica on Octomber 2025c in Lavras, Brazil:
+This is a glossary of terms and ideas related  to models in general but more specifically to [distributional regression] models. This glossary is based on ideas presented in the talk [Regression Models; how to adapt for climate change challenges](https://mstasinopoulos.github.io/Brazil2025-talk/talk_2.html#/title-slide)]  given by Mikis Stasinopoulos, University of Greenwich, to the XVII Encontro Mineiro de Statistica on Octomber 2025c in Lavras, Brazil:
 
 # Glossary
 
 
+
+#### adequate fit
+
+e call a [fit] adequate if the [model] represents the [data] well. 
 
 #### agnostic method
 
@@ -32,6 +36,11 @@ An agent is the unit of interest in a [agent based model].
 #### agent based model
 
 An agent based model is a simulation bottom up model where the unit of interest is called an [agent]. The model is build by simulating a lot of times how  the agents interact between them within a given environment. The agent is the unit of interest and its behaviour is studied using simple rules. The behaviour of the agent is studied after a long simulation exercise. Therefore an important part of the model is to set the parameters determine the agent model behaviour.  
+
+#### accumulated local effects 
+
+Accumulated Local Effects, ALE, is am model agnostic technique =for interpret a model.  It is showing how a explanatory variables affects the predictions value of the model. It works  even with correlated explanatory variables, by analysing differences in predictions across local intervals rather than averaging whole predictions. ALE avoids issues with [multicollinearity] by focusing on the change in predictions within local windows, therefore providing more accurate and  unbiased global explanations for   variable importance. 
+
 
 #### algorithm 
 
@@ -47,11 +56,11 @@ Assumptions are an axiomatic statement needed to be accepted for the model to wo
 
 #### AIC
 
-AIC stands for the Akaike Information Criterion, @Akaike73b, defined as [deviance] $+2\times df$  where $df$ are the [degrees of freedom] and 2 stands for the **penalty**. See also [GAIC] and [BIC].
+AIC stands for the Akaike Information Criterion, @Akaike73b. In distributional regression model it is used to  compare different fitted models. The AIC is defined as [deviance] $+2\times df$  where $df$ are the [degrees of freedom] and 2 stands for the **penalty**. See also [GAIC] and [BIC].
 
 #### averaging models
 
-Averaging models is a way to select a [final model] by averaging the results from different models. 
+Averaging models is a way to select a [final model] by averaging the results from different fitted models. 
 
 #### bagging 
 
@@ -63,7 +72,7 @@ A black box is a [model] with difficult interpretation. A lot of machine leaning
 
 #### bootstapping
 
-Bootstapping is a way to fit multiple models to a single data set by repeatedly re-sampling with replacement from the original data set. The multiple fits can be used  to obtain variability of the parameters of the model. In this sense bootstrapping  complement Bayesian fits where the information about the variability comes from prior assumptions rather than the bootstrap replications. Bootstrapping is based on partitioning the data with replacement $B$ times so the different fits could produce $B$ estimates of fitted values and residuals. Averaging those values sometimes refers to `bagging`. For more detail about bootstrapping see @EfronTibshirani93.
+Bootstapping is a way to fit multiple models to a single data set by repeatedly re-sampling with replacement from the original data set. The multiple fits can be used  to obtain variability of the parameters of the model. In this sense bootstrapping  complement Bayesian fits where the information about the variability comes from prior assumptions rather than the bootstrap replications. Bootstrapping is based on partitioning the data with replacement $B$ times so the different fits could produce $B$ estimates of fitted values and residuals. Averaging those values sometimes refer to as [bagging]. A gog information source  about bootstrapping is @EfronTibshirani93.
 
 #### boosting
 
@@ -72,7 +81,7 @@ Boosting is a way of fitting models using  many *complementary* sequential simpl
 
 #### BIC 
 
-BIC, the Bayesian information criterion, @Schwarz78, is defined as [deviance] $+ \log(n) \times DF$, when $n$ is the number of observations in the data, see [GAIC]. 
+BIC, the Bayesian information criterion, @Schwarz78 which in distributional regression model can be used to  compare different fitted models. The BIC (refer  to also as  SBC, Schwarz  Bayesian Criterion, is defined as [deviance] $+ \log(n) \times DF$, when $n$ is the number of observations in the data, see [GAIC]. 
 
 #### bucket plot
 
@@ -81,7 +90,7 @@ A bucket plot is a residual based [diagnostics] tool which can detect [skewness]
 
 #### centile
 
-A centile is a  values defined  as $100 \times$ the quantile of a given distribution or a given sample.  The terms is used is almost synonymous  to a [quantile].
+A centile is a  values defined  as $100 \times$ the [quantile] of a given distribution or for a given sample.  The terms is used is almost synonymous  to a [quantile].
 
 
 #### cdf 
@@ -151,7 +160,7 @@ Theoretical distributions depend on distribution parameters. The more distributi
 
 #### distributional regression 
 
-A distributional regression model is an [input-output] (regression) model in which the response $Y$  if assumed to have a distribution in which all the parameters of the distribution could depend on explanatory variables i.e. $X \rightarrow D(Y|\theta(X))$ where $\theta$ are the k parameters of the distribution.  
+A distributional regression model is an [input-output model]  model in which the response $Y$  is assumed to have a distribution in which all the parameters of the distribution could depend on explanatory variables. This can be represented as $X \rightarrow D(Y|\boldsymbol{\theta}(X))$ where $\boldsymbol{\theta}$ are the k parameters of the distribution the conditional distribution $D(Y|\boldsymbol{\theta})$.  
 
 #### dummy variables
 
@@ -234,16 +243,42 @@ A goodness of fit is a measure (a quantity) design to evaluate how close the mod
 
 #### fit
 
-A fit refer to a model fitted to the data by maximise or minimise a [measure of goodness of fit]. Note that a model fit can be an [adequate fit], [over-fitting] or [under-fitting]. A single fit could provides unique [fitted values] and [residuals] for both [training] and [test] data sets.
+
+A model fitting process involves the [data] the [model] and the [purpose]  of the study. The model is fitted by  minimise a [measure of goodness of fit] see @fig-fit.  So a [fit]   refers to a model fitted to the data for specific purpose. Note that a model fit can be an [adequate fit], [over-fit] or [under fit]. A single fit could provides unique [fitted values] and [residuals] for both [training] and [test] data sets.
+
+
+
+
+
+
+```{mermaid}
+%%| fig-width: 5
+%%| label: fig-fit
+%%| fig-cap: "The model fitting process needs both data and model which to conform with the purpose of the study  "
+flowchart TB
+  subgraph model-fitting-process
+   style model-fitting-process fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px
+    direction LR
+    A[data]
+    B[model]
+    D[purpose]
+  end
+
+  A --> C[fit]
+  B --> C
+  D --> C
+  
+
+```
 
 
 #### factor
 
 A factor is  a categorical variables, that is, a variable which take limited unordered or orderer values.  
 
-#### the function $g()$
+#### function $g()$
 
-We refer to the function  $g()$ as an unknown function which the model tries to approximate.
+We refer to the function  $g()$ as an true relationship between $X$ and $Y$ in [input-output model] which is unknown and  which the [model] tries to approximate.
 
 
 #### GAIC
@@ -256,6 +291,7 @@ GAIC is  the  Generalise Akaike Information Criterion defined as `deviance` $+k 
 #### hypothesis
 
 The hypothesis is what the researcher tries to understand and answer see also the `purpose` of the study 
+
 
 
 #### input-output model
@@ -275,6 +311,12 @@ $$
 The function $g(.)$ is unknown so the task of the modeller is to find such a function. In a distributional regression framework the represanation is more complex. $$
 X  {\longrightarrow} \fbox{g()}  {\longrightarrow} D(Y|\theta(X)) \ 
 $$
+
+
+#### independent random variable
+
+A [vector] of [random variable]s say $\textbf{y}$ is said to be independent (or independently distributed) if the distribution of the component of the vector can be written as the product of the individual probabilities i.e. $Pr(\textbf{y}) =  \prod_{i=1}^n Pr({y}_i)$  
+
 
 #### independent variables
 
@@ -328,7 +370,6 @@ The Maximum Likelihood Estimation, MLE, is  method of fiiting a distributiona re
 A measure of goodness of fit is a way to evaluate the fidelity of the data for a given. model.  That is, how close, is the model to the data using an objective measure. of goodness of fit. 
 
 
-
 #### question 
 
 The question is the purpose of the study in hand;
@@ -336,6 +377,8 @@ The question is the purpose of the study in hand;
 
 #### mathematical model
 
+A mathematical model is a model which is using mathematical equations to describe the variables involved.
+A popular mathematical model partial or  ordinary differential equations  model
 
 
 #### machine learning
@@ -381,13 +424,31 @@ As null model we refer to a model with no [terms] in it. In R notation this is t
 
 #### observarions
 
-#### overfitting 
+#### ordinary differential equations 
 
-Overfitting happens when the fit is too close to the data and thefore do not generalised well when try to predict.
+#### over fitting 
+
+Over fitting happens when the [fit] is too close to the [data] and therefore do not generalised well when try to predict, see also [over fit].
+
+
+#### over fit
+
+By [over fit] we mean situations where the model is too close to the actual [data] but not close to the [population]. An over fitted model is not good for predilection purpose, see also [over fitting]. 
+
+#### partial effects
+
+#### partial differential equations
+
 
 #### papameters
 
 The parameters in a distribution regression set-up could be of three types: the  `distribution parameters` which could be functions of the explanatory variables i.e. $\theta_k = g(X_k)$, coefficients describing the relationship between the distribution paramayters ans the explanatory vatiables. ands the `huper- parameters`.    
+
+
+
+#### population
+
+The population is the set of object we would like to study. The population is related with the [purpose] of the study. The idea behind is that we collect a [sample] ([data] set) from the population of interest to drew inference form the population using the sample. The process is called [statistical inference].
 
 #### principle component regression
 
@@ -396,10 +457,15 @@ The parameters in a distribution regression set-up could be of three types: the 
 
 Ths purpose of the study is the [hypothesis] the study is working on.
 
-
 #### pdf 
 
+
 #### PIT residuals
+
+
+#### probability 
+
+
 
 #### QQ-plot
 
@@ -416,56 +482,91 @@ $r$ is the number of [explanatory variables] or [input variables] in the data
 
 #### Rashomon
 
-
 #### Rashomon set 
+
+#### random
+
+The word random spme type is used as equivalent to [stochastic].
+
+#### random variable
+
+A random variable $Y$ is a variable which has a distribution. We denote this  as $Y \sim D( Y| \boldsymbol{\theta})$ whet the symbol $\sim$ reads as "is distributed" and where $D()$ denote  a probability distribution function [pdf].
 
 #### regression 
 
-A regression model is  a input-output model where the `explanatory variables`, $X$, affect the `resposnse` the $Y$.   
+A regression model is  a input-output model where the [explanatory variables], $X$, affect the [response] $Y$.   
 
 
 #### regression analysis
-A regression analysis is an input-output statistical model using  `tabular data`.  Typically in the past regression analysis is refer to the `linear model` but here we use to describe   any input-output relationship. 
+A regression analysis is an input-output statistical model using  [tabular data].  Typically regression analysis is refer to the [linear model] but here we use to describe any [input-output model] relationship. 
 
 
 #### regression tree
 
 #### residuals
 
-The residuals  are a [vector] of length $n$ measuring the difference between observed and fitted values. For a [linear model] the residuals are defined as $y_i-\hat{y}_i$ for $i= 1,\ldots,n$. where $\hat{y}_i$ are the fitted values, that is  $n$-observations have `n` residuals. Residuals can be defined in both the [training] or the [test] data sets. Residuals from the training data can be used to check [underfitting] while residuals from the test data can be use for checking  [overfitting] the data.
+The residuals  is a [vector] of length $n$ with each element measuring the difference between observed and fitted values. For a [linear model] the residuals are defined as $y_i-\hat{y}_i$ for $i= 1,\ldots,n$. where $\hat{y}_i$ is the fitted values of observation $i$. The $n$-observations have $n$ residuals. Residuals can be defined in both the [training] or the [test] data sets. Residuals from the training data can be used to check [underfitting] while residuals from the test data can be use for checking  [overfitting] the data.
 
 #### response 
 
 The response variables is the output variable in a [input-output model].
 
+
+#### sample 
+
+In statistics a sample has  the same meaning as [data]. It called a sample because it is assumed to come from a bigger data set the [population] of interest. 
+
 #### saturated  model
 
-A saturated  model is a model which has as many unkown parameters as the number of obsrvations `n`.
+A saturated  model is a model which has as many unkown parameters as the number of observations $n$ 
 
+#### SBC
+
+The Schwarz  Bayesian Criterion for comparing fitted models  it is defined in [BIC]
 
 #### selection of terms
 
-A selection of terms in distributional regression is the process of identify which `term` affect which parameter. 
+A selection of terms in distributional regression is the process of identify which [term] affect which parameter. 
 
 
 #### skewness
 
+Skewness is a statistical measure indicating whether a sample [vector] is symmetric or not. Skewness is also applied to random vectors and therefore to theoretical distributions.
+
+
 #### supervised learning 
+
+#### statistical inference 
+
 
 #### statistical modelling
 
 Statistical modelling is the art of creating a statistical model which represents the data generating mechanism adequately. Statistical model extract information from the data in a way to answer question of interest (see `purpose` of the study).
 
+```{mermaid}
+%%| fig-width: 5
+%%| label: fig-modelling
+%%| fig-cap: "The classical modelling process which uses a single model and tries to improve it"
+flowchart LR
+  A[Data] --> B[Assumptions] 
+  B --> C{one-Model}
+   C -->|check| B
+  C --> D[Interpretation & predict]
+```
+
+
+
+#### stochastic
+
+A random variable is stochastic if it has a distribution which is equivalent to [random]  
 
 #### stochastic model
 
-A stochastic  model  is a mathematical or algorithmic model which incorporates randomness so its output is not completely predictable even with the same starting conditions. Not all models need a stochastic component. A [mathematical model] and a [algorithmic model]  do not always need a stochastic model, 
+A stochastic  model  is a mathematical or algorithmic model which incorporates randomness so its output is not completely predictable even with the same starting conditions. Not all models need a stochastic component. A [mathematical model] and a [algorithmic model] do not always need a stochastic model. A stochastic model contains [probability] assumtpions 
 
 #### stochastic regression
 
-A stochastic regression models contain [probabilistic] assumptions on how the input-output model is generated. The minimal assumption for a regression model is about the behaviour of the  `response. Not all problems need a stochastic component.   Stochastic models are often used because many natural, social, and physical systems have an inherent variability.
-
-
+A stochastic regression models contain [probability] assumptions on how the input-output model is generated. A typical assumption is the response is a function of the explanatory variables plus an [error], for example, $\textbf{y} = g(\textbf{x}) + \boldsymbol{\epsilon}$ where The minimal assumption for a regression model is about the behaviour of the  `response. Not all problems need a stochastic component.   Stochastic models are often used because many natural, social, and physical systems have an inherent variability.
 
 
 #### summary statistic
@@ -483,7 +584,7 @@ The target variables is the [response] in a [regression analysis]
 
 #### tabular data
 
-Tabular data are  spreadsheet type of data sets. Tabular data   are rectangular in shape with variables vertically  and observations horizontally. We refer to the number of observations as $n$ and the number of variables as $r$.  Over recent years we have seen an increasing in the size of data sets for both $n$ and $r$. Traditionally classical regression models  supported  the cases where $n\gg r$, where $\gg$ refers to “$n$ is much greater than $r$”. More  recent regression  techniques i.e [LASSO] ans [PCR] support situation where $n  \simeq r$, or even $n<r$, Note that the notation $\simeq$  refers to “$n$ is nearly equal to $r$".  A typical tabulat data exampe is shown in @tbl-TheTableofData.
+Tabular data are  spreadsheet type of data sets. Tabular data   are rectangular in shape with variables vertically  and observations horizontally. We refer to the number of observations as $n$ and the number of variables as $r$.  Over recent years we have seen an increasing in the size of data sets for both $n$ and $r$. Traditionally classical regression models  supported  the cases where $n\gg r$, where $\gg$ refers to “$n$ is much greater than $r$”. More  recent regression  techniques i.e [LASSO] ans [PCR] support situation where $n  \simeq r$, or even $n<r$, Note that the notation $\simeq$  refers to “$n$ is nearly equal to $r$".  A typical tabular data example is shown in @tbl-TheTableofData.
 
 
 ## Tabular data example {.smaller}
@@ -510,15 +611,18 @@ The  tail of a distribution is ...
 
 A term is  an [explanatory variable] in a model after possible transformation to make suitable for distribution regression analysis. For example a factor is a term.  A first order interaction is a term. 
 
+#### under fit
+
+A [model]  under fits the [data] if it is not close enough to the data. The closeness is evaluated using a [goodness of fit] measure like [GAIC]. This happens if the model is not flexible enough and therefore misses important information in the [data].  See also [under fitting]
 
 
 #### uniform distribution
 
 #### univariate` distribution 
 
-#### underfitting 
+#### under fitting 
 
-Underfitting occurs when the fit is very poor and it does not represent the data properly.
+Under fitting occurs when the [fit] is very poor accoding to a [goodness of fit]  measure and it does not represent the [data] properly, see also [under fit]. 
 
 #### variable importance
 
