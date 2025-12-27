@@ -90,6 +90,8 @@ Bootstrapping is a way to fit multiple models to a single data set by repeatedly
 Boosting is a way of fitting models using  many *complementary* sequential simple models and average them in order to build a unique fitted model. The individual models should be simple and easy to fit and should complement each other by modelling different characteristic of the data. Finally the individual fitted simple models contribute when averaging only to a small part say 10 or 20 percent of the original contribution. This percentage is one of the hyper parameters of boosting. The other hyper parameter is how many time we should repeat the fitting procedure in order to reach an adequate model. The latest is the main smoothing parameters of the boosting procedure. For determine the smoothing parameters cross validation can be used which requiring a good [measure of goodness of fit].
 
 
+#### binomial distribution
+
 #### BIC 
 
 BIC is the Bayesian information criterion of @Schwarz78. Within a [distributional regression] model the BIC can be used to  compare different fitted models.  The BIC is also refer to also as  [SBC], Schwarz  Bayesian Criterion. The BIC is defined as [deviance] $+ \log(n) \times DF$, when $n$ is the number of observations in the data,  and $DF$ are the [degrees of freedom].  See also [GAIC].
@@ -121,21 +123,44 @@ i) $(-\infty , \infty)$, continuous in the real line;
 ii)  $(0, \infty)$,  continuous in the positive real line;
 iii)  $(0 , 1)$  continuous on a finite  interval in the real line;
 
-Next we show plots of different types of continuous distributions;
-
+Next we show plots of different types of continuous distributions. We start with the normal distribution which has two parameters $\mu$ the mean and $\sigma$ the standard deviation and which is defined  on $(-\infty , \infty)$  
 ```{r}
 #| warning: false 
 library(gamlss.ggplots)
-
+family_pdf("NO", mu=c(0, 0, 0), sigma =c(1,1.5, 2), from=-5, to=5,title="Normal with mu=(0,0,0) and sigma=(1,1.5,2)")
 ```
+Similarly the gamma distribution has two parameters  $\mu$ the mean and $\sigma$a scale parameter but its defined on the positive real line $(0, \infty)$:
+```{r}
+#| warning: false 
+library(gamlss.ggplots)
+family_pdf("GA", mu=c(1, 1, 1), sigma =c(1,0.8, 1.5), from=0.01, to=5,
+        title="Gamma with mu=(1,1,1) and sigma=(1,0.8, 1.5)")   
+```
+The beta distribution is defined on the real line $(0, \infty)$ and  two parameters  $\mu$ the mean and $\sigma$ a scale parameter:
+```{r}
+#| warning: false 
+library(gamlss.ggplots)
+family_pdf("BE", mu=c(.2, .5, .8), sigma =c(0.2 ,0.8, 0.3), from=0.01, to=0.99,
+           title="Beta with mu=(.2, .5, .8) and sigma=(0.2,0.8, 0.3)") 
+```
+As rule the more parameters exist in a [distribution] the more flexible the [distribution] is. 
+
 
 Note that any random variable in the interval $(\alpha, \beta)$ can be transformed to a distribution in the interval  $(0 , 1)$. Also note that  any distribution with range  $(-\infty , \infty)$ can be **log** or **logit** transformed  to a distribution in the positive real line  $(0, \infty)$ or  to the fine interval $(0 , 1)$, respectively.  
 
+
+####  characteristics of the distribution
+
+Each [distribution] has its own properties. We called those the [characteristics of the distribution] or the [properties of the distribution].   In a [distributional regression] framework  we are dealing both with [properties] of the [distribution parameters]  and [characteristics of the distribution] themselves. In the later case, that is, [characteristics of the distribution]  there are two major way to  characterise the [properties] of a [distribution] i) using [moment]s ii) using [quantile] based measures.
 
 
 #### classification model
 
 A [classification model] is an [unsupervised learning] [model]  in which the output that is the [response]  is a  [factor] with unknown  categories. The model tries to guess what is the best possible value for the response given the [explanatory variables]. The models for  [distributional regression] are all [supervised learning model]s in which a [response] exist  in the [data].  
+
+#### count data distribution
+
+See [discrete distribution]
 
 #### data
 
@@ -179,31 +204,42 @@ By [design matrix] we usually refer to the matrix $\textbf{X}$ containing  all r
 
 #### deviance
 
-The [deviance] is a measure of goodness of fit and defined as $-2 \ell(\theta)$, that is, minus twice the [log likelihood]. It can be used for comparison between models. It can be defined as a *training* or as a *test* deviance depending whether is evaluated at the [training] or [test] data sets. In GAMLSS modelling the `training deviance`, can be used together with its penalised form the Generalise Akaike Information Criterion, `GAIC`,  for model comparison. The deviance is an [empirical risk] measure based on `information criterion` concepts. It is a `summary statistics`, because it is a sum of the individual deviance increments and therefore an overall measure of goodness of fit. It tell us how well the conditional distribution of $f(y|X)$ fits the data overall. It does not tells whether the tail or the middle of the distribution fits well. The deviance increments may help to obtain such information.
+The [deviance] is a measure of goodness of fit and defined as $-2 \ell(\boldsymbol{\theta})$, that is, minus twice the [log likelihood]. The  [deviance] can be used  for model comparison.The  [deviance]  can be defined in both the [training] or the [test] data set so we can have a [training] or [test] [deviance].  In [GAMLSS] modelling the [training] [deviance], is  used  with its penalised form the Generalise Akaike Information Criterion, [GAIC],  for model comparison. The deviance can be seeing  as an [empirical risk] measure based on [information criterion] concepts. It is a [summary statistic], because it is a sum of the individual deviance increments and therefore an overall measure of goodness of fit. It tell us how well the conditional distribution of $D(Y|\boldsymbol{\theta})$  fits the data overall. It does not tells whether the tail or the middle of the distribution is fitting well. The [deviance increment]s may help to obtain such information. 
+
+#### deviance increment
 
 #### density function
 
-At a theoretical level a density function is the [pdf] of a random variable. At the sample level a density function of a vector in the data is an empirical distribution function of a variable in the data.   
+At a theoretical level a [density function] is the [pdf] of a [random] variable. At the [sample] level a density function of a [vector] in the [data] is an empirical distribution function of a variable in the [data] obtain using smoothing techniques. In thios case the [density function] is a smooth [histogram].
+
+
+```{r}
+#| warning: false
+library(gamlss.data)
+library(gamlss.ggplots)
+y_hist(rent99$rent)
+```
+
 
 #### diagnostics 
 
-Diagnostics are (usually graphical) tools for helping to check the [assumption]s of the model.
+Diagnostics are tools for helping to check the [assumptions] of a fitted [model]. Within [distributional regression]  can help to identifying whether the [distribution] of the [resposnse] is fitted well or whether the [term]s in the  different [distribution parameters] models are fitted appropriately.  
 
 
 #### discrete distribution 
 
-A [discrete distribution] is distribution function [pdf] of a random veriable which takes only integer values.
-The only property that any  discrete distribution  must have is $\sum(i {R(y)} f(y_i)$
+A [discrete distribution] is distribution function [pdf] of a [random] variable which takes only integer values i.e. $0,1,2,\ldots, 10$. Another name for a discrete distribution  is [count data distribution]. 
+The only property that any discrete distribution must have is that it should sums up to one. $\sum_{i=1}^{\infty}  f(y_i)=1$. There are mainly two types of [discrete distribution]s depending on the range of the discrete [random] variable involve i) infinite count ii) finite count [distribution]s.  The most common example of an infinite count distribution is the [Poisson distribution] and the most common example of the finite count is the [binomial distribution]. 
 
 #### distribution
 
-The term [distribution] refer to a probability distribution function  [pdf], i.e. $D(y | \boldsymbol{\theta})$. The only property which is required for any [pdf] is that it should sum up to one.  Within a distributional regression set-up the [pdf] affects the behaviour of the response variable. 
+The term [distribution] refer to a probability distribution function  [pdf],  $f(Y)$. The only property for $f(Y)$ is required is that it should sum up to one.  In distributional regression we write the [pdf]  of the [response] as $D(Y | \boldsymbol{\theta})$ not $f()$ a notation which could be used for describing the relationships between the [explanatory variables] and the [response]. We are also  emphasising  that the [pdf] of the response is a function the different [distribution parameters], $\boldsymbol{\theta}$.  The  function $D(Y | \boldsymbol{\theta})$ describes how the behaviour of the [response] variable is affected by the [explanatory variables] and it is the main [stochastic] component of a [distributional regression]. 
 
 
 #### distribution parameters
 
-Theoretical distributions depend on distribution parameters $\boldsymbol{\theta}$ where $\boldsymbol{\theta}$ is a [vector] of length $K$. The more distribution parameters exist the more flexible the distribution is. For example in one parameter distribution like, for example the exponential distribution, the location, ....  @Rigbyetal2019  
-
+Theoretical distributions depend on [distribution parameters] $\boldsymbol{\theta}$ where $\boldsymbol{\theta}=(\theta_1, \theta_2, \ldots, \theta_K)$ is a [vector] of length $K$. The more independent [distribution parameters] exist in a [distribution] family the more flexible the [distribution] is. For example 
+one parameter distributions can only model one characteristic of the [distribution] of the [response] mainly the [location parameter].
 
 #### distributional regression 
 
@@ -239,7 +275,6 @@ gg+ggplot2::stat_function(fun = pNO, args=list(mu=0, sigma=1), col="red")
 
 #### empirical risk
 
-
 #### entopy
 
 #### error
@@ -259,6 +294,10 @@ Explanatory variables in an [input-output model] are the input variables $X$. In
 
 The [exponential family] is a family of theoretical [distribution]s with  the propety of allowing [sufficient statistic]s 
 
+
+#### expected value
+
+ The [expected value] (the [mean] or first [moment]) of a [distribution] called distribution is defined as $E(Y)=\int Y f(y)dY$  for [continuous distribution]s and  
 #### final model
 
 Is the [model] chosen after a selection procedure is applied to model selection. 
@@ -341,6 +380,15 @@ GAMLSS stand for Genaralized Additive Model for Location, Scaler and Shape, @Rig
 A goodness of fit is a measure (a quantity) design to evaluate how close the model is to the data. 
 
 
+#### histogram
+
+#### information
+
+
+#### information criterion
+
+
+
 #### fit
 
 
@@ -407,7 +455,6 @@ The function $g(.)$ is unknown so the task of the modeller is to find such a fun
 X  {\longrightarrow} \fbox{g()}  {\longrightarrow} D(Y|\theta(X)) \ 
 $$
 
-
 #### independent random variable
 
 A [vector] of [random variable]s say $\textbf{y}$ is said to be independent (or independently distributed) if the distribution of the component of the vector can be written as the product of the individual probabilities i.e. $Pr(\textbf{y}) =  \prod_{i=1}^n Pr({y}_i)$  
@@ -419,7 +466,6 @@ The [explanatory variables] in a [regression analysis]
 
 
 #### information
-
 
 
 #### interpretation 
@@ -437,6 +483,8 @@ The [explanatory variables] in a [regression analysis] same as  the input in an 
 A K-fold Cross Validation provides [training] and [test] data for all the observations by going through all the K-folds, It provides unique `fitted values` and `residualas` and in addition provides multiple $K-1$ values for fitted values and residualas for the training $K-1$ folds.
 
 #### kurtosis
+
+#### kurtosis parameter
 
 #### LASSO
 
@@ -459,7 +507,12 @@ In both cases the functions are seen as functions of $\boldsymbol{\theta}$ rathe
 
 #### log likelihood 
 
-See [likelihood]
+The [log likelihood] is a [measure of goodness of fit] for a  [model]. It is denoted as $\ell(\boldsymbol{\theta})$  see [likelihood] for its definition.
+
+
+#### location parameter
+
+A parameter of the distribution describing the centre of the [distribution]. The most common  [location parameter]a are the [mean] and the [median].
 
 #### mathematical model     
 
@@ -474,6 +527,13 @@ The Maximum Likelihood Estimation, MLE, is method of fiting a distribution to a 
 
 A measure of goodness of fit is a way to evaluate the fidelity of the data for a given. model.  That is, how close, is the model to the data using an objective measure. of goodness of fit. 
 
+#### mean
+
+The mean of a [vector] in a [sample] is the average value of the [vector] i.e. $\bar{x}= \frac{1}{n}\sum_{i=1}^n x_i$. The mean or [expected value] of a [distribution] sometimes called the first [moment] of the distribution is defined as $E(Y)=\int Y f(y)dY$  
+
+#### median
+
+#### moment
 
 #### mixed distribution 
 
@@ -549,14 +609,24 @@ By [over fit] we mean situations where the model is too close to the actual [dat
 
 #### papameters
 
-The parameters in a distribution regression set-up could be of three types: the  `distribution parameters` which could be functions of the explanatory variables i.e. $\theta_k = g(X_k)$, coefficients describing the relationship between the distribution paramayters ans the explanatory vatiables. ands the `huper- parameters`.    
+The parameters in a distribution regression set-up could be of three types: the  `distribution parameters` which could be functions of the explanatory variables i.e. $\theta_k = g(X_k)$, coefficients describing the relationship between the distribution parameters ans the explanatory variables. and the `huper- parameters`.    
 
+#### Poisson distribution
 
 #### population
 
 The population is the set of object we would like to study. The population is related with the [purpose] of the study. The idea behind is that we collect a [sample] ([data] set) from the population of interest to drew inference form the population using the sample. The process is called [statistical inference].
 
 #### principle component regression
+
+#### properties of the distribution
+
+Please see [characteristics of the distribution]
+
+#### properties of the distribution parameters
+
+The [distribution parameters] have different properties by how they are defined within a [distribution]. Any [distribution] can be re-parametrised differently as far as the re-parametrisation end up with the some number of parameters as the original distribution. For [distributional regression] the specific parametrization  do matter in order to help the [interpretation] of the [model]. Some  parametrisations are more useful in practice that others. For example in a [distributional regression] it worth to have a parameter dealing with, where the centre of the [distribution] is, and whether this centre changes with [explanatory variables].  Those parameters are called  [location parameter]s.  Other parameters could describe  how far from the centre each observations could fall. Those are called the  [scale parameter]s. To describe asymmetry in the distribution we have the [skewness parameter]s. To distinguish distribution with fat [tail]s  we have the [kurtosis parameter]s.  Notice that any distribution could have more that one parametrisation and that the specific parametrization could affect different [characteristics of the distribution].
+
 
 #### purpose
 
@@ -657,14 +727,20 @@ A saturated  model is a model which has as many unkown parameters as the number 
 
 The SBC is another name for [BIC]. It stand for  the Schwarz  Bayesian Criterion for comparing fitted models.
 
+
+#### scale parameter
+
 #### selection of terms
 
 A selection of terms in distributional regression is the process of identify which [term] affect which parameter. 
+
+
 
 #### skewness
 
 Skewness is a statistical measure indicating whether a sample [vector] is symmetric or not. Skewness is also applied to random vectors and therefore to theoretical distributions.
 
+#### skewness parameter
 
 #### supervised learning model
 
