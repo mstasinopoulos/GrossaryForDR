@@ -7,30 +7,34 @@ number-sections: false
 number-depth: 3
 editor: visual
 quarto: add leovan/quarto-pseudocode
-author: Dimitrios Mikis Stasinopoulos, 
+author: GAMLSS working party  
 
 bibliography: book2025.bib       
 ---
 
 ## Introduction 
 
-This is a glossary of terms and ideas related  to models in general but more specifically to [distributional regression] models. This glossary is based on ideas presented in the talk [Regression Models; how to adapt for climate change challenges](https://mstasinopoulos.github.io/Brazil2025-talk/talk_2.html#/title-slide)]  given by Mikis Stasinopoulos, University of Greenwich, to the XVII Encontro Mineiro de Statistica on Octomber 2025c in Lavras, Brazil, but also from the realization that different data scientist use different terminology according to their background.  Typically the [response] variable a well known expresion   to describe the variable of interest in a [regression analysis] it is called the [target] in [machine learning]. 
+This is a glossary of terms and ideas related  to statistical models in general but more specifically to [distributional regression] models. The current glossary started  based on ideas presented in the talk [Regression Models; how to adapt for climate change challenges](https://mstasinopoulos.github.io/Brazil2025-talk/talk_2.html#/title-slide)  given by Mikis Stasinopoulos, University of Greenwich, to the XVII Encontro Mineiro de Statistica on Octomber 2025, in Lavras, Brazil.  It was soon realised that there was also a large gap between the [statistical modelling]
+terminology and the terminology used by other  data analysis scientists. For example,  the [response] variable a well known expression to describe the variable of interest in a [regression analysis] its is called the [target] in [machine learning]. In this glossary we are trying to deal with those situation by describing both definitions. Also, we decided to include at several places of the  glossary, `R` output if  we thought it facilitate the understanding  ideas and concepts presented here.
 
 # Glossary
 
+### acf
+
+The term [acf] stands for [autocorrelation] function.  The [acf] is a [diagnostic] tool for detecting [autocorrelation] in a [vector] $\text{x}$.   
 
 #### additive smoothers 
 
-Additive smoothers occurs when the contribution of one or more continuous [term]s is added to the rest of the terms in the equation of  a model i.e. $s_1(x_1)+s_2(x_2)+ s_3(x_1, x_2)$, where the $s()$s  are different smooth functions
+Additive smoothers occurs when the contribution of one or more continuous [term]s is added to the rest of the terms in the equation of  a model i.e. $s_1(x_1)+s_2(x_2)+ s_3(x_1, x_2)$, where the $s()$s  are different [smooth function]s.
 
 #### additive model
 
-An additive model occurs when the contribution of each [term]s is added to the rest of the terms in the [formula] of  a model. Let $x_1$ abd $x_2$  be two continuous variables and  $f_1$ and $f_2$ to be [factor]s. i.e. $b_1 x_1+s_2(x_2)+ f+ +F*xs_3(x_1, x_2)$, where the $s()$s  are different smooth functions
+An additive model occurs when the contribution of each [term]s is added to the rest of the terms in the [formula] of  a model. Let $x_1$ abd $x_2$  be two continuous variables and  $f_1$ and $f_2$ to be two [factor]s. i.e. $b_1 x_1+s_2(x_2)+ f_1*f_2+f_2*s_3(x_1, x_2)$, where the $s()$s  are different smooth functions $\ldots$
 
 
 #### adequate fit
 
-We call a [fit] adequate if the [model] represents the [data] well. Within distributional regression we have two type of adequacy. The first has to do of whether the [distribution] of the [response] is fitted adequately the second on  whether the chosen [term]s are adequate for the [distribution parameters] model. 
+We call a [fit] adequate if the [model] represents the [data] well. Within a [distributional regression] framework we have two types of [adequate fit]s to consider. The first has to do of whether the [distribution] of the [response] is fitted adequately the second on  whether the chosen [term]s are adequate for modelling the [distribution parameters] model. 
 
 
 #### agnostic method
@@ -49,27 +53,35 @@ An agent based model is a simulation, bottom up model, where the unit of interes
 
 Accumulated Local Effects, ALE, @apley2020visualizing, is a model agnostic technique for interpretatng  [term]s  in a [model].  It is showing how explanatory variable affects the predictions value of the model. It works  even with correlated explanatory variables, by analysing differences in predictions across local intervals rather than averaging whole predictions. ALE avoids issues with [multicollinearity] by focusing on the change in predictions within local windows, therefore providing more accurate and  unbiased global explanations for   variable importance. 
 
+
 #### ALE 
 
-For ALE see [accumulated local effects] 
+[ALE] is an abbreviation for  [accumulated local effects] 
 
 #### algorithm 
 
-An algorithm is a step-by-step computational procedure designed to perform a task. For [input-output model]s this task mostly has to do with finding an unknown function say $g()$, which connect the input with the output, i.e. $Y=g(X)$. 
+An algorithm is a step-by-step computational procedure designed to perform a specified task. For [input-output model]s this task mostly has to do with finding an unknown function say $g()$, which connect the input with the output, i.e. $Y=g(X)$. 
 
 #### algorithmic model
 
- An algorithmic model is a model based on an algorithm. In regression typically an algorithmic model trying to model  $X \rightarrow Y$, through an unknown function  $g()$ i.e. $Y=g(X)$.   No explicit assumptions are made for the unknown function $g()$  but a lot of implicit [assumptions] depending on the type of algorithm used. Note that an [algorithmic model], like a [mathematical model], can be deterministic or [stochastic model].
+ An algorithmic model is a model based on an algorithm. In [regression] typically an algorithmic model trying to model  $X \rightarrow Y$, through an unknown function  $g()$ i.e. $Y=g(X)$.   No explicit assumptions are made for the unknown function $g()$  but a lot of implicit [assumptions] depending on the type of algorithm used. Note that an [algorithmic model], like a [mathematical model], can be deterministic or [stochastic model] The [stochastic model] can be written as  $g()$ i.e. $Y=g(X)+ \boldsymbol{\epsilon}$.
 
 #### assumptions
 
-Assumptions are axiomatic statements needed to be accepted for the model to work. Models need assumptions because of their simplified nature. The reasoning behind assumption is that if the assumptions are correct then the model can be useful. There are **explicit** and **implicit** assumptions. The **explicit** assumptions  are usually mathematical ones and could be  easily checked using [diagnostics] tools. The  **implicit** assumptions are common in [algorithmic model]s ans they are more difficult to check. **Incorrect** assumptions could lead to questionable scientific discoveries.  For an [agent based  model] the assumptions are the different ways  the agent are behaving.
+Assumptions are axiomatic statements needed to be accepted for the model to work. Models need assumptions because of their simplified nature. The reasoning behind assumption is that if the assumptions are correct then the model can be useful. There are **explicit** and **implicit** assumptions. The **explicit** assumptions  are usually mathematical ones and could be  easily checked using [diagnostics] tools. The  **implicit** assumptions common in [algorithmic model]s are more difficult to check. **Incorrect** assumptions could lead to questionable scientific discoveries.  For an [agent based  model] the assumptions are the different ways  the agent are behaving.
 
 #### AIC
 
-AIC stands for the Akaike Information Criterion, @Akaike73b. In distributional regression model it is used to  compare different fitted models. The AIC is defined as [deviance] $+2\times df$  where $df$ are the [degrees of freedom] and 2 stands for the **penalty**. See also [GAIC] and [BIC].
+[AIC] stands for the Akaike Information Criterion, @Akaike73b. [AIC] is used to  compare different fitted models. The [AIC] is defined as [deviance] $+2\times df$  where $df$ are the [degrees of freedom] and 2 stands for the **penalty**, see also [GAIC] and [BIC].
+
+
+#### autocorrelation
+
+The term [autocorrelation] in a vector $\textbf{x}$  implies that sequential values of $\textbf{x}$ depend on previous values. Autocorrelation is very common on [time series] data and can be detected using [acf] and [pacf] functions.      
 
 #### averaging models
+
+
 
 Averaging models is a way of selecting a [final model] by averaging results from different fitted models. 
 
@@ -81,9 +93,13 @@ Bagging refers to [bootstrapping] followed by am [averaging models] procedure.
 
 A black box is a [model] with difficult interpretation. A lot of machine leaning models are black boxes.
 
-#### bootstapping
+#### bootstrapping
+
+
 
 Bootstrapping is a way to fit multiple models to a single data set by repeatedly re-sampling with replacement from the original data set. The multiple fits can be used  to obtain variability of the parameters of the model. In this sense bootstrapping  complement Bayesian fits where the information about the variability comes from prior assumptions rather than the bootstrap replications. Bootstrapping is based on partitioning the data with replacement $B$ times so the different fits could produce $B$ estimates of fitted values and residuals. Averaging those values sometimes refer to as [bagging]. A good  book  about bootstrapping is @EfronTibshirani93.
+
+
 
 #### boosting
 
@@ -91,6 +107,37 @@ Boosting is a way of fitting models using  many *complementary* sequential simpl
 
 
 #### binomial distribution
+
+The pdf of a binomial distributed [random] variable is:
+$$f(Y|p)= \binom{n}{p} p^{p} (1-p)^{n-p}$$
+where $Y$ takes values in the range $0,1,2,\ldots,n$, $n$  is called here the **binomial denominator** and the parameter $p$ is a probability parameter taking values $0<p<1$. Note that $\binom{n}{p}$ can be written also as;   
+$$ \binom{n}{p} =\frac{\Gamma(n+1)}{\Gamma(y+1) \Gamma{(n-y+1)}}$$
+For more details see pp. 521-522   of @Rigbyetal2019. The expected value of the distribution is $E(Y)=np$ and the variance is $Var(Y)=np(1-p)$. @fig-binomial show the three different binomial distributions with binomial denominator equal to 10 and different probabilities at   
+
+```{r}
+#| label: fig-binomial
+#| fig-cap: "The binomial distribution with different values of p=(0.1,0.3,0.5) and n=10"
+#| warning: false
+library(gamlss.ggplots)
+family_pdf(BI, mu=c(0.1,0.3,0.5), title="binomial p=c(0.1,0.3,0.5) and n=10")
+```
+Note that in the `gamlss.ggplots` documentation  the parameter of the [binomial distribution]  called here as $p$ is denote as `mu`. The binomial denominator in the function  `family_pdf` can be specified in by the argument `to`. In @fig-binimial  it take the default value which is 10.  
+
+#### Bernoulli distribution
+
+The [Bernoulli distribution] is special case of the [binomial distribution] when $n=1$. A Bernoulli [random] variables has range of values  $0$ or $1$, expected value $E(Y)=p$ and variance $p(1-p)$.
+@fig-bernoulli show three realization of the [Bernoulli distribution] at different values of $p=(0.1,0.3,0.5)$
+SOMETHING IS WRING WITH IT the p should be in the first line not the second
+
+
+
+```{r}
+#| label: fig-bernoulli
+#| warning: false
+#| fig-cap: "The Bermoulli distribution with differenrt values of p=(0.1,0.3,0.5) and n=1"
+library(gamlss.ggplots)
+family_pdf(BI, mu=c(0.1,0.3,0.5), to=1, title="Bermoulli p=c(0.1,0.3,0.5) an n=1")
+```
 
 #### BIC 
 
@@ -123,21 +170,27 @@ i) $(-\infty , \infty)$, continuous in the real line;
 ii)  $(0, \infty)$,  continuous in the positive real line;
 iii)  $(0 , 1)$  continuous on a finite  interval in the real line;
 
-Next we show plots of different types of continuous distributions. We start with the normal distribution which has two parameters $\mu$ the mean and $\sigma$ the standard deviation and which is defined  on $(-\infty , \infty)$  
+Next we show plots the different types of continuous distributions. We start with the normal distribution in  which has two parameters $\mu$ the mean and $\sigma$ the standard deviation and which is defined  on $(-\infty , \infty)$  
 ```{r}
+#| label: fig-normal
+#| fig-cap: "The normal distribution with differenrt values of sigma=(1,1.5,2) and mu=0"
 #| warning: false 
 library(gamlss.ggplots)
 family_pdf("NO", mu=c(0, 0, 0), sigma =c(1,1.5, 2), from=-5, to=5,title="Normal with mu=(0,0,0) and sigma=(1,1.5,2)")
 ```
-Similarly the gamma distribution has two parameters  $\mu$ the mean and $\sigma$a scale parameter but its defined on the positive real line $(0, \infty)$:
+Similarly the gamma distribution in @fig-beta,  has two parameters  $\mu$ the mean and $\sigma$a scale parameter but its defined on the positive real line $(0, \infty)$:
 ```{r}
+#| label: fig-gamma
+#| fig-cap: "The gamma distribution with differenrt values of mu ar 1 and sigma=(1 ,0.8, 1.5)."
 #| warning: false 
 library(gamlss.ggplots)
 family_pdf("GA", mu=c(1, 1, 1), sigma =c(1,0.8, 1.5), from=0.01, to=5,
         title="Gamma with mu=(1,1,1) and sigma=(1,0.8, 1.5)")   
 ```
-The beta distribution is defined on the real line $(0, \infty)$ and  two parameters  $\mu$ the mean and $\sigma$ a scale parameter:
+The beta distribution in @fig-beta, is defined on the real line $(0, \infty)$ and  two parameters  $\mu$ the mean and $\sigma$ a scale parameter:
 ```{r}
+#| label: fig-beta
+#| fig-cap: "The beta distribution with differenrt values of mu=(0.2, 0.5, 0.8) and sigma=(0.2 ,0.8, 0.3)."
 #| warning: false 
 library(gamlss.ggplots)
 family_pdf("BE", mu=c(.2, .5, .8), sigma =c(0.2 ,0.8, 0.3), from=0.01, to=0.99,
@@ -151,7 +204,7 @@ Note that any random variable in the interval $(\alpha, \beta)$ can be transform
 
 ####  characteristics of the distribution
 
-Each [distribution] has its own properties. We called those the [characteristics of the distribution] or the [properties of the distribution].   In a [distributional regression] framework  we are dealing both with [properties] of the [distribution parameters]  and [characteristics of the distribution] themselves. In the later case, that is, [characteristics of the distribution]  there are two major way to  characterise the [properties] of a [distribution] i) using [moment]s ii) using [quantile] based measures.
+Each [distribution] has its own properties. We called those the [characteristics of the distribution] or the [properties of the distribution]. In a [distributional regression] framework  we are dealing both with [properties] of the [distribution parameters]  and [characteristics of the distribution] themselves. In the later case, that is, [characteristics of the distribution]  there are two major way to  characterise the [properties] of a [distribution] i) using [moment]s ii) using [quantile] based measures.
 
 
 #### classification model
@@ -170,18 +223,20 @@ Note that data sets in the statistical programming language `R` are refereed to 
 
 #### `data.frame` 
    
-`data.frame` is the way a [data] set is refereed to in the `R` statistical programming language.   
+`data.frame` is the way a [data] set is refer to in the `R` statistical programming language.   
 
 
 #### data partition
 
-The term [data partition] has two different meanings.  The fist has to do with [statistical modelling]. Data partition in the process of [statistical modelling] helps the model building process, the model interpretation, the checking for [over-fit] and  also helps to improve the [statistical inference] by providing extra information about variations in the parameters. There different types of data partition;
- a **single** partition of a data set provides holdout samples for prediction and validation purposes. A **multiple** partitions as for example [bootstrapping] and  [K-fold cross validation] help inference. 
+The term [data partition] has two different meanings.  The fist has to do with [statistical modelling] the second on looking at whether the variables involved behave differently at different parts of the [data].
+
+Data partition in the process of [statistical modelling] helps the model building process, [model] [interpretation], the checking for [over fit] and  also helps to improve the [statistical inference] by providing extra [information] about variations in the parameters. There are  different types of data partition;
+ a **single** partition of a data set provides holdout samples for prediction and validation purposes. A **multiple** partitions as for example [bootstrapping] and  [K-fold cross validation]  to help inference. 
    
  ![Diffrent data partitions](data_partition.png){width=500}     
 
 
- The second meaning of data partition occurs in modelling. Some models like classification and [regression tree]s try to separate the data in such a way that the resulted subclass are homogeneous.  
+ The second meaning of [data partition] tries to answer the following question. Is there a way to partition the data in such a way that the relationship between the variables in the data data behave differently?; or more generaly can I divide the data in such way that different models could apply to different parts of the [data]?.  Models like [regression tree]s try to separate the data in such a way that the resulted subclass are homogeneous by fitting differenr constant models. $\ldots$ 
  
 #### data analysis
 
@@ -214,7 +269,9 @@ At a theoretical level a [density function] is the [pdf] of a [random] variable.
 
 
 ```{r}
-#| warning: false
+#| label: fig-hist-density
+#| fig-cap: "An estimated density funtion on top of a histogram for the variable the price of `rent` in the Munich `rent99` data set." 
+#| warning: false 
 library(gamlss.data)
 library(gamlss.ggplots)
 y_hist(rent99$rent)
@@ -251,27 +308,44 @@ A dummy variables is a set of binary (0 ,1) vectors indication whether certain c
 
 #### empirical cdf
 
-The empirical [cdf]  is the cumulative function function of any variable in the [data] ([sample]). The Empirical cdf  is a step function that shows the proportion of observed data points less than or equal to a specific value.It creates a cumulative probability distribution directly from a vetron in he data, without assuming a  theoretical model therefore is the source of a mavy of non-parametric procedures in statistics. Any [vector] in a [tabular data] set can have an empirical cdf. For a given value $x_o$ of the any continuous variable in the data $\textbf{x}$ the empirical cdf gives the fraction of data points in $\textbf{x}$  i.e, #$(\textbf{x} \le x_o)$. 
+The [empirical cdf], [ECDF] is the cumulative function function of any continuous or ordered categorical variable in the [sample], ([data]). The [empirical cdf] is a step function that shows the proportion of observed data points less than or equal to a specific value in the data . It creates a cumulative probability distribution directly from a vector say $\textbf{x}$ in the data, without assuming a theoretical model therefore is the source of a many non-parametric procedures in statistics. Any [vector]  $\textbf{x}$ in a [tabular data] set can have an [empirical cdf] but it is more  difficult to justify it  for unordered categorical variables since it implies an explicit order in $\textbf{x}$. For a given value $x_o$ in   $\textbf{x}$ for any continuous or ordered categorical variable in the data the [empirical cdf], [ECDF] gives the percentage of data points in $\textbf{x}$  less than or equal $x_o$ for example,  #$[\textbf{x} \le x_o] \times \frac{1}{n}$. 
+@fig-ECDF-continuous shows the ECDF curve of the continuous variable `rent` from the `rent99` data set. 
 
 ```{r}
 #| warning: false
-#| fig.caption: "FIGURE"
+#| label:  fig-ECDF-continuous
+#| fig.cap: "The ECDF of a continuous variables. "
 library(gamlss)
 plot(ecdf(rent99$rent), main="ECDF", xlab="rent")
 ```
-The [empirical cdf] is also defined on the [residuals] of a [model]. If the model represent correctly the [data generating mechanism] then the residuals of a distributional regression model should be behave as a [white noise]. In this case the empirical cumulative distribution function of tthe residuals should be very close to the cumulative distribution function of the Normal distribution.
-
+@fig-ECDF-ordered shows the ECDF curve of the oerdered categorical variable `location` from the `rent99` data set. 
+```{r}
+#| label:  fig-ECDF-ordered
+#| fig.cap: "The ECDF of an ordered categorical variables."
+plot(ecdf(rent99$location), main="ECDF", xlab="rent")
+```
+The [empirical cdf] is also defined on the [residuals] of a fitted [model]. In [distributional regression] if the model represent correctly the [data generating mechanism] then the [residuals] of a [distributional regression] [model] should be behave as a [white noise]. In this case the empirical cumulative distribution function of the residuals should be very close to the cumulative distribution function of the Normal distribution.
+Next we fit a GAMLSS model using the `gamlss2()` function to the `rent99` [data]. We use the [formula] `rent~s(area)+s(yearc)+location+kitchen+kitchen` for the $\mu$ model and the [formula] `s(area)+s(yearc)` for $\sigma$ and we fit a [BCT]o distribution. The [ECDF] of the residual of the fitted [model] should behave, if the model is a [adequate fit]   as normally distributed [random] variables. @fig-ECDF-resid_normal show the  cdf of the [residuals] with a normal [cdf]  superimposed in red. From the plot there is no reason he doubt the adequacy of the model. Note that the same infoemation could be extracted by plotting the [QQ-plot] or the [worm plot] of the residuals. 
 
 ```{r}
+#| label:  fig-ECDF-resid_normal
+#| fig.cap: "The ECDF of the residuals from a GAMLSS fitted model with the normal cdf superimposed."
 #| warning: false
 library(ggplot2)
 library(gamlss.data)
 library(gamlss2)
-m1 <- gamlss2(rent~s(area)+s(yearc)+location+kitchen+kitchen|s(area)+s(yearc), family=BCTo, data=rent99 )
+m1 <- gamlss2(rent~s(area)+s(yearc)+location+kitchen+kitchen|
+                s(area)+s(yearc), family=BCTo, data=rent99 )
 library(gamlss.ggplots)
 gg <- resid_ecdf(m1)
 gg+ggplot2::stat_function(fun = pNO, args=list(mu=0, sigma=1), col="red")
 ```
+
+
+#### ECDF
+
+See [Empirical cdf] 
+
 
 #### empirical risk
 
@@ -298,6 +372,7 @@ The [exponential family] is a family of theoretical [distribution]s with  the pr
 #### expected value
 
  The [expected value] (the [mean] or first [moment]) of a [distribution] called distribution is defined as $E(Y)=\int Y f(y)dY$  for [continuous distribution]s and  
+
 #### final model
 
 Is the [model] chosen after a selection procedure is applied to model selection. 
@@ -319,10 +394,10 @@ GAIC stand for the Generalised Akaike Criterion @Akaike83 defined as `deviance` 
     $$ 
   where $E(Y)$ is the expected values of the output $Y$ and $f()$ is a general function connecting the $X$'s with the expected value of $Y$.
 As a [statistical model] a GLM can be written as;
-\begin{split}
+$$\begin{split}
 \textbf{y}    &  \stackrel{\small{ind}}{\sim }  D( \boldsymbol{\mu},  \phi) \nonumber \\
 \eta &= g(\boldsymbol{\mu}) &= \textbf{X}\boldsymbol{\beta} \nonumber \\
-\end{split}
+\end{split}$$
  where $\stackrel{\small{ind}}{\sim}$ is read as the vector of the response is "independently distributed [random] [vector] having a distribution $D()$."  The distribution  $D()$  belongs to the [exponential family] which has as sub-models the [normal distribution], the [gamma distribution], the [inverse Gaussian], the [Poisson distribution] ans the [binomial distribution].  The fact that the elements of the vector $\textbf{y}$ are independent from each has the consequence that the log-likelihood is simply the sum of the individual log-[likelihood]s.    
  
  
@@ -410,8 +485,6 @@ flowchart TB
   A --> C[fit]
   B --> C
   D --> C
-  
-
 ```
 
 #### factor
@@ -601,7 +674,11 @@ Over fitting happens when the [fit] is too close to the [data] and therefore do 
 
 By [over fit] we mean situations where the model is too close to the actual [data] but not close to the [population]. An over fitted model is not good for predilection purpose, see also [over fitting]. 
 
-#### pexplanaarcimony
+#### pacf
+
+The term [pacf] stands for partial [autocorrelation] function. The [pacf] is a [diagnostic] tool for detecting [autocorrelation] in a [vector] $\text{x}$. 
+
+#### parcimony
 
 #### partial effects
 
@@ -807,6 +884,10 @@ A smoother is a smooth [term] in the equations of a model i.e. `s(x)`.
 
 The target variables is the [response] variable in a [regression analysis]
 
+#### time series
+
+A [time series] [data] set is a data set when observations were obtained over time and therefore that is a high probability that they are not independently distributed but there is autocorrelation between sequential observations. A [time series] analysis is a methodology to deal with a [time seriess] [data]. 
+
 #### training data
 
 The training data are the data used in the [fit] stage of a modelling process. The contrast with the [test data] and the [validation data] sets.
@@ -845,7 +926,7 @@ The  tail of a distribution is ...
 
 #### term
 
-A [term] is an [explanatory variable] in a [model].  after possible [transformation] to make suitable for distribution regression analysis. For example a factor is a term.  A first order interaction is a term. 
+A [term] is one of the  [explanatory variables] in a [model],  after possible a [transformation] to make it suitable for [distributional regression] analysis. For example a [factor] is a [term].  A first order interaction is a [term]. 
 
 #### test 
 
@@ -880,11 +961,15 @@ The validation set is used for tuning the model, (estimating its [hyper paramete
 
 #### variable importance
 
-A variable importance should show the important is a `term` for the `model`. Note that for [distributional regression] a [terms] affect both the [parameters] of the distribution and the overall [measure of goodness of fit]. So, for example one  should be able to ask the question,  of how important say **age** is for the variation in $Y$ i.e.  $\sigma$ but also how important is overall to the model.      
+A variable importance should show the important is a [term] for the [model]. Note that for [distributional regression] a [terms] affect both the [parameters] of the distribution and the overall [measure of goodness of fit]. So, for example one  should be able to ask the question,  of how important say **age** is for the variation in $Y$ i.e.  $\sigma$ but also how important is overall to the model.      
 
 #### vector 
 
+
+
 #### white noise
+
+The term [white noise] refers to an identical distributed normally distributed variable. A random variable behaving as a [white noise] has no pattern. There should not be any autocorrelation or heterogeneity in the process.    
 
 #### worm plot
 
