@@ -300,8 +300,22 @@ The term [data partition] has two different meanings.  The fist has to do with [
 
 Data partition in the process of [statistical modelling] helps the model building process, [model] [interpretation], the checking for [over fit] and  also helps to improve the [statistical inference] by providing extra [information] about variations in the parameters. There are  different types of data partition;
  a **single** partition of a data set provides holdout samples for prediction and validation purposes. A **multiple** partitions as for example [bootstrapping] and  [K-fold cross validation]  to help inference. 
-   
- ![Diffrent data partitions](data_partition.png){width=500}     
+```{mermaid}
+%%| label: fig-data_split
+%%| fig-cap: Different ways of partitioning data in order to get more information aboout the model."
+flowchart TB
+  A[Data] --> B{Holdout} 
+  A --> C{K-fold-CV}
+  A --> D{Bootstrap}
+  B --> E[Training]
+  E --> F[Validate]
+  F --> G[Test]
+  D --> H[Non-parametric]
+  D --> K[Bayesian]
+  C -->  L[LOO]
+```
+
+
 
 
  The second meaning of [data partition] tries to answer the following question. Is there a way to partition the data in such a way that the relationships between the variables in the [data] behave differently?; or more generally can I divide the [data] in such way that different models can apply to different parts of the [data]?.  Models like [regression tree]s try to separate the [data] in such a way that the resulted subclass are homogeneous by fitting differenr constant models withing each part.. $\ldots$ 
