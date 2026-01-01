@@ -39,6 +39,7 @@ head(da)
 
 # Glossary
 
+################################################################################
 ## A
 
 #### accumulated local effects 
@@ -106,7 +107,7 @@ The term [autocorrelation] in a vector $\textbf{x}$  implies that sequential val
 
 #### averaging models
 
-
+################################################################################
 ## B
 
 #### backfitting 
@@ -117,7 +118,7 @@ Averaging models is a way of selecting a [final model] by averaging results from
 
 #### bagging 
 
-Bagging refers to [bootstrapping] followed by am [averaging models] procedure.
+Bagging refers to [bootstrapping] followed by an [averaging models] procedure. That is. when $B$ models are fitted to $B$ bootstrap [data partition]s  and the resulting models are then averaged. 
 
 
 #### Bernoulli distribution
@@ -169,7 +170,7 @@ There are two reason for black box model i) the function  $g()$ which the black 
 
 #### bootstrapping
 
-Bootstrapping is a way to fit multiple models to a single [data] set by repeatedly re-sampling with replacement from the original [data] set. The multiple fits can be used  to obtain variability of the parameters of the model. In this sense bootstrapping  complement Bayesian fits where the information about the variability comes from prior assumptions rather than the bootstrap replications. Bootstrapping is based on partitioning the [data] with replacement $B$ times so the different fits could produce $B$ estimates of fitted values and residuals. Averaging those values sometimes refer to as [bagging]. A good  book  about bootstrapping is @EfronTibshirani93.
+Bootstrapping is a way to fit multiple models to a single [data] set by repeatedly re-sampling with replacement from the original [data] set. The multiple fits can be used  to obtain variability of the parameters of the model. In this sense bootstrapping  complement Bayesian fits where the information about the variability comes from prior assumptions rather than the bootstrap replications. Bootstrapping is based on [data partition]s with replacement $B$ times so the different fits could produce $B$ estimates of fitted values and residuals. Averaging those values sometimes refer to as [bagging]. A good  book  about bootstrapping is @EfronTibshirani93.
 
 
 #### boosting
@@ -186,6 +187,7 @@ A bucket plot, @de2022bucket, is a residual based [diagnostic] tool which can de
 
 ```
 
+################################################################################
 ## C
 
 #### centile
@@ -259,11 +261,26 @@ Each [distribution] has its own properties. We called those the [characteristics
 
 A [classification model] is an [unsupervised learning] [model]  in which the output that is the [response]  is a  [factor] with unknown  categories. The model tries to guess what is the best possible value for the response given the [explanatory variables]. The models for  [distributional regression] are all [supervised learning model]s in which a [response] exist  in the [data].  
 
+
+#### copula
+
+#### correlation coefficient
+
 #### count data distribution
 
 See [discrete distribution]
 
 
+
+#### continuous rank probability scores
+
+$\dots$
+
+#### CRPS
+
+The expression [CRPS] is an abbreviation for [continuous rank probability scores] which are a [measure of goodness of fit] appropriate for [distributional regression] [model]s.
+
+################################################################################
 ## D
 
 #### data
@@ -287,7 +304,7 @@ Data partition in the process of [statistical modelling] helps the model buildin
  ![Diffrent data partitions](data_partition.png){width=500}     
 
 
- The second meaning of [data partition] tries to answer the following question. Is there a way to partition the data in such a way that the relationship between the variables in the [data] behave differently?; or more generaly can I divide the [data] in such way that different models could apply to different parts of the [data]?.  Models like [regression tree]s try to separate the [data] in such a way that the resulted subclass are homogeneous by fitting differenr constant models. $\ldots$ 
+ The second meaning of [data partition] tries to answer the following question. Is there a way to partition the data in such a way that the relationships between the variables in the [data] behave differently?; or more generally can I divide the [data] in such way that different models can apply to different parts of the [data]?.  Models like [regression tree]s try to separate the [data] in such a way that the resulted subclass are homogeneous by fitting differenr constant models withing each part.. $\ldots$ 
  
 #### data analysis
 
@@ -295,7 +312,7 @@ Data analysis is art of extraction information from the [data]. The first questi
 
 #### data  generating mechanism
 
-The [data generating mechanism] is a set of assumptions on how the [data] were generated. It is often difficult to check  those [assumptions] because of the possible [Rashomon effect] (different assumptions could easily lead to similar results). In distributional regression the [data] generating mechanism applies mostly on the way the [response] is generated given the [explanatory variables].    
+The [data generating mechanism] is a set of assumptions on how the [data] are generated. It is often difficult to check  those [assumptions] because of the possibility of having a  [Rashomon effect] where different assumptions lead to similar results. In distributional regression the [data] generating mechanism is assumed mostly on the way the [response] is generated given the [explanatory variables].    
 
 
 #### degrees of freedom
@@ -357,6 +374,7 @@ A distributional regression model is an [input-output model]  model in which the
 A dummy variables is a set of binary (0 ,1) vectors indication whether certain conditions are present or not. Any `factor` is represented as a set of dummy variables in a `design matrix` of a model. The number of columns in the dummy variable set representation of a factor are the number of `levels` of factor minus one to avoid collinearity with the constant a vector of ones in the design matrix.   
 
 
+################################################################################
 ## E
 
 #### empirical cdf
@@ -413,13 +431,13 @@ $$
 H(X) & = -\sum_{x \in X} p(x) \log p(x), \\
      &=  - E_p \log p(x) ,\\
      &= E_p \log \frac{1}{p(x)}
-\end{split}
-$$  That is, the [entropy] for a discrete random variables $X$ is equal to its expected value of minus the its log [probability]. Note that this quantity  is identical to the [log likelihood] (but the [log likelihood]  it is a function of the parameters and not the [random] variables $X$).   The [entropy] of a continuous random variable $X$ is ginen as:
-\begin{split}
+\end{split} $$  
+That is, the [entropy] for a discrete random variables $X$ is equal to its expected value of minus the its log [probability]. Note that this quantity  is identical to the [log likelihood] (but the [log likelihood]  it is a function of the parameters and not the [random] variables $X$).   The [entropy] of a continuous random variable $X$ is ginen as:
+$$\begin{split}
 H(X) &=-\int_{X}f(x) \log f(x)  dx \\
       &= - E_f \log f(x)  \nonumber \\
      &= E_f \log \frac{1}{f(x)}  \nonumber 
-\end{split}
+\end{split} $$
 The [entropy] is a [summary statistic] describing the randomness of the distribution of a [random] variables and it is a function of probabilities **not** the values or the range of the [random] variable $X$. The highest value of entropy is when we have equal probabilities for all values of $X$'s. That is when the $X$ has a [uniform distribution].  Note that the minus the log likelihood of a fitted [distributional regression] [model] which is defined as $- \ell(\boldsymbol{\theta})=\sum_{i=1}^{n} - \log f(y_i|\boldsymbol{\theta})$ is proportional to the  empirical estimated of the  entropy of the [response] variable with the constant of proportionately equal to $\frac{1}{n}$. This shows the close relationship between the concept of [entropy]  and the concept of the [log likelihood] important for statistical [inference]. 
 
 
@@ -431,6 +449,9 @@ The term [error] in a [model] is what chaharacterised a modes to  [stochastic], 
 #### errors
 
 The term [errors] refers to the statistical part of a [stochastic] model which accounts for the natural variability of the data. The [errors] often refer to the [residuals] part of the [model] that is what is left after the model has been applied.  
+
+
+####  exceedance probabilities
 
 #### explanatory variables 
 
@@ -445,7 +466,7 @@ The [exponential family] is a family of theoretical [distribution]s with  the pr
 
  The [expected value] (the [mean] or first [moment]) of a [distribution] called distribution is defined as $\mathbb{E}(Y)=\int Y f(y)dY$  for [continuous distribution]s and  
 
-
+################################################################################
 ## F
 
 #### factor
@@ -476,6 +497,10 @@ flowchart TB
 ```
 
 
+#### feature
+
+A [feature] in [data] analysis is an one of the [explanatory variables]  used for the model possible after a [transformation].
+
 #### function
 
 There are several occasions we use the terms [function] in [statistical modelling]. 
@@ -491,7 +516,7 @@ Is the [model] chosen after a selection procedure is applied to model selection.
 
 The term [formula] and formulae  refer to the `R` [formula] object which is used in the definition of a model. A formula in `R` stars with $\sim$, for example,  `rent~area+yearc+location` wuold indicate that the response is `rent` and the variables `area`, `yearc` ans `location`.    Note that because within  [distributional regression]  there could be one formula for each parameter 
 
-
+################################################################################
 ## G
 
 #### GAIC
@@ -505,11 +530,12 @@ GAIC stand for the Generalised Akaike Criterion @Akaike83 defined as `deviance` 
     $$ 
   where $\mathbb{E}(Y)$ is the expected values of the output $Y$ and $f()$ is a general function connecting the $X$'s with the expected value of $Y$.
 As a [statistical model] a GLM can be written as;
-$$\begin{split}
+$$
+\begin{split}
 \textbf{y}    &  \stackrel{\small{ind}}{\sim }  D( \boldsymbol{\mu},  \phi) \nonumber \\
 \eta &= g(\boldsymbol{\mu}) &= \textbf{X}\boldsymbol{\beta} \nonumber \\
-\end{split}$$
- where $\stackrel{\small{ind}}{\sim}$ is read as the vector of the response is "independently distributed [random] [vector] having a distribution $D()$."  The distribution  $D()$  belongs to the [exponential family] which has as sub-models the [normal distribution], the [gamma distribution], the [inverse Gaussian], the [Poisson distribution] ans the [binomial distribution].  The fact that the elements of the vector $\textbf{y}$ are independent from each has the consequence that the log-likelihood is simply the sum of the individual log-[likelihood]s.    
+\end{split} $$
+where $\stackrel{\small{ind}}{\sim}$ is read as the vector of the response is "independently distributed [random] [vector] having a distribution $D()$."  The distribution  $D()$  belongs to the [exponential family] which has as sub-models the [normal distribution], the [gamma distribution], the [inverse Gaussian], the [Poisson distribution] ans the [binomial distribution].  The fact that the elements of the vector $\textbf{y}$ are independent from each has the consequence that the log-likelihood is simply the sum of the individual log-[likelihood]s.    
  
  
  other with different mean $\mu$ depending linearly on the $X$'s but with a common second parameter  $\phi$.
@@ -576,7 +602,7 @@ GAIC is  the  Generalise Akaike Information Criterion defined as `deviance` $+k 
 
 #### graphics
 
-
+################################################################################
 ## H
 
 #### histogram
@@ -590,8 +616,8 @@ The hypothesis is what the researcher tries to understand and answer see also th
 #### hyper parameter
 
 
-
-# I
+################################################################################
+## I
 
 #### information
 
@@ -608,7 +634,7 @@ By [information theory] we mean the theory of of communication developed by @sha
 
 #### interpretable model
 
-A model is an [interpretable model] if its intepretation is easy. This is the case for most  [mathematical model]s but not all [algorithmic model]s. Other words for an [interpretable model] are **transparent**, **explainable** or **comprehensive** model. 
+A model is an [interpretable model] if its is easy to explain to others. Most  [mathematical model]s but not all [algorithmic model]s are [interpretable model]s. The following words have the same meaning  as [interpretable model], **transparent** model, **explainable** model or **comprehensive** model. 
 
 
 #### interval values
@@ -657,11 +683,12 @@ The interpretation of a model is the story behind the fitted model, what it is t
 The [explanatory variables] in a [regression analysis] same as  the input in an [input-output model].
 
 
+################################################################################
 
 ## J
 
-
-## k
+################################################################################
+## K
 
 
 #### K-fold cross validation
@@ -672,6 +699,7 @@ A K-fold Cross Validation provides [training] and [test] data for all the observ
 
 #### kurtosis parameter
 
+################################################################################
 ## L
 
 #### LASSO
@@ -705,6 +733,8 @@ A parameter of the distribution describing the centre of the [distribution]. The
 
 A [loss] function  is a [measure of goodness of fit]. The [loss] function $\ell oss()$ is a function of both the [data]  and the fitted [model] and measures how far we are prepared to accept that the model is correct. In gambling the [loss] function has a monetary value but in [statistical modelling] is a measure of difference between the [model] and the [data], (see also [risk]).  Typical loss functions are; i) [squared errors]  i.e.  $\sum_{i}^n (y_i - \hat{y_i})^2$ and  [absolute errors] i.e. $\sum_{i}^n \left|y_i - \hat{y_i} \right|$ determine how far the actual value $y$ is from its estimating value $\hat{y}$. Note that  in [distributional regression] $\hat{y}$ is an estimate of the [location parameter] of the the model  therefore is not an appropriate measure we are interest in other parts of the [distribution] fo the [response]  for example the [tail]. a more appropriate measure in this case could be minus the  the [log likelihood] $-\ell(\hat{\boldsymbol{\theta}}_i)$. Notice that [loss] functions could include penalty terms penalising the complexity of the model.
 
+
+################################################################################
 ## M  
 
 #### mathematical model     
@@ -715,10 +745,14 @@ A mathematical model is a model which is build using mathematical equations.
 
 The Maximum Likelihood Estimation, MLE, is method of fiting a distribution to a vector $\textbf{y}$ using minus the [log likelihood] as [measure of goodness of fit].  Note the minimise $-\ell(\boldsymbol{\theta})$ is equivalent of ninimise the [deviance]  $-2\ell(\boldsymbol{\theta})$ or maximising the [likelihood] $L(\boldsymbol{\theta})$ or the [log likelihood], $\ell(\boldsymbol{\theta})$.   
       
+
+####  measure of association
      
 ####  measure of goodness of fit
 
 A measure of goodness of fit is a way to evaluate the fidelity of the data for a given. model.  That is, how close, is the model to the data using an objective measure. of goodness of fit. 
+
+
 
 #### mean
 
@@ -767,13 +801,16 @@ A model formula in R takes a
 Model selection` in GAMLSS has two meanings i) how to choose the distribution of the response and ii) to find out how the $x$'s effects the distribution of $y$. The latest is done by checking how x's effect the parameters of the distribution.
 
 
-#### model interpetation 
+#### model interpretation 
+
+
+#### model prediction
 
 #### multicollinearity
 
 
 
-
+################################################################################
 ## N
 
 #### $n$
@@ -786,6 +823,9 @@ $n$  is number of observations in a [tabular data] set
 
 As null model we refer to a model with no [terms] in it. In R notation this is the model with  a [model formula] equal to `~1`. For distributional regression a null model is model which has   [model formula] `~1` for all the [distribution parameters] models.   
 
+
+
+################################################################################
 ## O
 
 #### observations
@@ -812,6 +852,7 @@ By [over fit] we mean situations where the model is too close to the actual [dat
 
 By [out of bag] [data] we refer to [data] that they have not be used to [fit] the [model]. That is, [test] or [validation] [data] sets.
 
+################################################################################
 ## P
 
 #### pacf
@@ -847,6 +888,10 @@ Please see [characteristics of the distribution]
 The [distribution parameters] have different properties by how they are defined within a [distribution]. Any [distribution] can be re-parametrised differently as far as the re-parametrisation end up with the some number of parameters as the original distribution. For [distributional regression] the specific parametrization  do matter in order to help the [interpretation] of the [model]. Some  parametrisations are more useful in practice that others. For example in a [distributional regression] it worth to have a parameter dealing with, where the centre of the [distribution] is, and whether this centre changes with [explanatory variables].  Those parameters are called  [location parameter]s.  Other parameters could describe  how far from the centre each observations could fall. Those are called the  [scale parameter]s. To describe asymmetry in the distribution we have the [skewness parameter]s. To distinguish distribution with fat [tail]s  we have the [kurtosis parameter]s.  Notice that any distribution could have more that one parametrisation and that the specific parametrization could affect different [characteristics of the distribution].
 
 
+#### power transformation
+
+ABy  [power transformation] in  [distributional regression]  we mean the transformation of the an $X$ variable to a [feature] for analysis using the transformation $\textbf{x}^p$ instead of $\textbf{x}$. where takes values typically in the range $0 \le p \le 1.5$. The transformations tries to make  the values od the $X$ more symmetric and more even spaced.  
+
 #### purpose
 
 The purpose of the study is the [hypothesis] the study is working on.
@@ -866,7 +911,7 @@ While the above definion of IT residuals works perfectly for [continuous distrib
 #### probability 
 
 
-
+################################################################################
 ## Q
 
 #### QQ-plot
@@ -948,7 +993,7 @@ $$\mathbb{ER}(g) = \frac{1}{n}\sum_{i=1}^n [ \ell oss(\hat{g}(x_i), y_i)$$
 Note that  if the [loss] function is defined as  minus the log [likelihood] (or the [deviance]) minimising the [empirical risk]  is equivalent to maximising the [likelihood] function with rescect to the parameters of the model.  Note that  $\frac{1}{n}$ is just a constant not involved in the minimazation.
 
 
-
+################################################################################
 ## S
 
 #### sample 
@@ -986,7 +1031,7 @@ The term [statistic] refers to a functin of the [sample] ([data]). For example, 
 
 #### statistical inference 
 
-Is the procees of drawing infrerence from the [sample] to the [population], from going to a specific case to the general situation. The path from to the spefic to the general can only be acheived using [assuptions] and therefore is very treacherous ans irrelevant if the assumtions are not right.    
+Is the process of drawing inference from the [sample] to the [population], from going to a specific case to the general situation. The path from to the spefic to the general can only be achieved using [assuptions] and therefore is very treacherous ans irrelevant if the assumtions are not right.    
 
 #### statistical model 
 
@@ -994,7 +1039,7 @@ A statistical model is a [mathematical model] containing a [stochastic] componen
 
 #### statistical modelling
 
-Statistical modelling is the art of creating a statistical model which represents the data generating mechanism adequately. Statistical model extract information from the data in a way to answer question of interest (see `purpose` of the study).
+Statistical modelling is the art of creating a statistical model which represents the data generating mechanism adequately. Statistical model extract information from the data in a way to answer question of interest (see [purpose]).
 
 ```{mermaid}
 %%| fig-width: 5
@@ -1006,7 +1051,24 @@ flowchart LR
   C -->|check| B
   C --> D[Interpretation & predict]
 ```
+In a modern statistical modelling approach the data are partitioned to help detection of [over fitting] and prediction. @fig-modelling_modern show this new approach of statistical modelling. Instead of a single fitted model $B$ candidate [model]s are [fit]ted and subsequently aggregated (see [stacking]) before [model interpretation] and [model prediction].
 
+```{mermaid}
+%%| fig-width: 5
+%%| label: fig-modelling_modern
+%%| fig-cap: "The modern modelling process uses more models and aggregates them"
+flowchart LR
+  A[part. Data] --> B[Assumptions] 
+  B --> C{fit K-Models}
+   C -->|check| B
+  C --> D[stacking]
+  D --> E[interpretation & prediction]
+```
+The achieve this more  modern approach to statistical modelling the following technique could be used: [boosting] where a lot of week models are fitted to a single data set in such a way that the averaged models supplement each other. This is done by taking into the account the [residuals] of the previously [fit]ted [model]; [bagging] when $B$ models are fitted to $B$ bootstrap [data partition]s and the models are averaged; [stacking] when when $B$ different [model]s are fitted to a single data set (no partition) and the models are averaged.
+
+#### stacking
+
+The idea of [stacking] is to [fit] several [model]s to single [data] set but instead of performing a [model selection] to proceed by averaging the resulting models. The problem with [stacking] is that very rare the procedure leads to good [model interpretation].
 
 #### stochastic
 
@@ -1039,6 +1101,7 @@ A smoother is a [smooth] non-parametric function  design to model non-linear rel
 
 #### summary statistic
 
+################################################################################
 
 ## T
 
@@ -1087,7 +1150,7 @@ Tabular data are  spreadsheet type of data sets. Tabular data   are rectangular 
 
 #### tail 
 
-The  tail of a distribution is ...
+The word [tail] in [distributional regression]   framework is refer to the [tail]s of the distribution of the response.  The [tail] of a distribution is very important if the [purpose] of the study is extreme values or exceedance probabilities.
 
 
 #### term
@@ -1102,6 +1165,13 @@ A [test] data set is the part of the [data] keep out of from fitting the [model]
 
 A [training] data set is the [data] set in which the [model] is [fit]ted.
 
+
+#### transformation
+
+By [transformation] we mean usualy a [vector] transformation, that is, a transformation of one of the columns of the [data] in  something that it is more suitable for [statistical modelling]. In a [distributional regression] framework we rarely transforming  the [response] variable, since the variability of the response is part of its assumed distribution. For example if we beleive that the response is highly [skew] to the left we caassume the log-distribution for $Y$ i.e `LOGNO` or `logTF`.  Transformations in the $X$'s sometime do help the modelling process. Typically is if would suspect non-linearity in the relatioship and we would like ot use a [smoother] to model it ideally the  $X$s should  be equal spaced with no outliers. A [power transformation] could help this. In [centile estimation] when we are dealling with  a single $X$ variable (often `age`) a [transformation] of the  $X$ maybe is necessary to achieve a good [model]. [reference here $\ldots$ Rigby et al. 2026]. Note that the timing for creating a new [feature]  by  transforming $X$  could be achieved before or during the [fit]ting a [model]. For the formal case see the function `trans()` in the package `gamlss.prepdata` for the later case see Fasiolo at al. $\ldots$.           
+
+################################################################################
+################################################################################
 
 ## U
 
@@ -1124,18 +1194,24 @@ Under fitting occurs when the [fit] is very poor accoding to a [goodness of fit]
 
 An [unsupervised learning] [model] also called a [classification model]  is a model which has [explanatory variables] but not [response]. The model tries to guess what class the response belong to given the [explanatory variables]. 
 
+################################################################################
+################################################################################
 ## V
 
 #### validation data
 
-The validation set is used for tuning the model, (estimating its [hyper parameter]s) 
+The [validation data] set is used for tuning a model. That usullu taking the form of estimating the [hyper parameter]s of a model.   The [validation data] is an [out of bag] data set.
 
 #### variable importance
 
-A variable importance should show the important is a [term] for the [model]. Note that for [distributional regression] a [terms] affect both the [parameters] of the distribution and the overall [measure of goodness of fit]. So, for example one  should be able to ask the question,  of how important say **age** is for the variation in $Y$ i.e.  $\sigma$ but also how important is overall to the model.      
+A variable importance should show the important of a [term] in the [model]. That is, how much this term contributed in explaining the model. Note that for [distributional regression] a [terms] affect both the model of  [parameters] of the distribution but also the overall [measure of goodness of fit]. 
+So, for example, one should be able to ask the question,  of how important say **age** is for $\sigma$  the variation the response  $Y$  but also how important is overall to the model compared with other terms that may influence other part of the model rather the scale parameter.  For [mathematical model] parametric [model]s the size of the estimated coefficients could provide an indication of how important a variable could be  but for other model could be more difficult. An [agnostic] method given in the literature (I think by Breimer) is to find the prediction power of the variables by scramble the variable of interest and compared it with the preditions ontain when the variable remain unscramble.This method couls produce indexes of importance both model parameter based and overall [measure of goodness of fit]     
+     
 
 #### vector 
 
+################################################################################
+################################################################################
 ## W
 
 #### white noise
@@ -1147,12 +1223,17 @@ The term [white noise] refers to an identical distributed normally distributed v
 A worm plot is a [diagnostics] tool applied to the [residuals] of a [regression] model but more often to [z-scores] of a [distributional regression]. A [worm plot] is a detrended [QQ-plot]. Detrended to highlight departures from normality. 
 
 
+################################################################################
+################################################################################
 ## X
 
 #### $X$
 
-$X$ is used as a generic term for [explanatory variables], [input variables] or [independent variables] in a [regression analysis] but also to indicate a [random] variable.  
+$X$ is used in present glossary as a generic term for [explanatory variables], [input variables] or [independent variables] in a [regression analysis] but also is used to indicate a [random] variable.  
 
+
+################################################################################
+################################################################################
 ## Y
 
 #### $Y$
@@ -1162,12 +1243,15 @@ $Y$ is used as a generic terms for the [response],  the [target], or the [y-vari
 
 #### y-variable
 
-The [response] variable in a [regression analysis]
+The [response] or [target] variable in a [regression analysis].
 
+################################################################################
+################################################################################
 ## Z
 
 #### z-scores 
-The   z-scores are the [residuals] of a [distributional regression] model. 
+In a  [distributional regression] model the [z-scores] are the normalised [residuals] of the [model]. 
+95% of  their values  the if the model is  [adequate fit] of the data should fail between -2 and 2. (More precisely between -1.96 and 1.96). Therefore [z-scores] for both [training] and [test] data can vbe use for dtaection of unusual obsrvations.  
 
-
-
+################################################################################
+################################################################################
