@@ -9,7 +9,7 @@ editor: visual
 quarto: add leovan/quarto-pseudocode
 author: GAMLSS working party  
 
-bibliography: book2025.bib       
+bibliography: book2026.bib       
 ---
 
 ## Introduction 
@@ -44,7 +44,6 @@ head(da)
 #### accumulated local effects 
 
 Accumulated Local Effects, ALE, @apley2020visualizing, is a model [agnostic] technique for interpretatng  [term]s  in a [model].  It is showing how explanatory variable affects the predictions value of the model. It works  even with correlated explanatory variables, by analysing differences in predictions across local intervals rather than averaging whole predictions. ALE avoids issues with [multicollinearity] or collinearity by focusing on the change in predictions within local windows, therefore providing more accurate and  unbiased global explanations for   variable importance. 
-
 
 ::: {.callout-note}
 example here 
@@ -92,16 +91,22 @@ The fitted smooth curves can be plotted by
 #| fig-cap: "The fitted smoothing terms for model `m1`."
 plot(m1)
 ```
-Note that an [additive model] is usually easy to [interpretation]  but more difficult to reach because one has to decide  which   [term]s should be included in the [model]. The [additive model]s need more thinking on how to reach them while a [machine learning] [model] let the computer to do the hard work.  Which we should trust best depends on the [purpose] of the study. My personal view in this that we should not let the comuter decide when the life of peaple is stake see also [black box].  
+Note that an [additive model] is usually easy to [interpretation]  but more difficult to reach because one has to decide  which   [term]s should be included in the [model]. The [additive model]s need more thinking on how to reach them while a [machine learning] [model] let the computer to do the hard work.  Which we should trust best depends on the [purpose] of the study. My personal view in this that we should \textbf{not} let the computers decide when the life of people is stake see also [black box].  
+
 
 #### adequate fit
 
-We call a [fit] adequate if the [model] represents the [data] well. Within a [distributional regression] framework we have two types of [adequate fit]s to consider. The first has to do of whether the [distribution] of the [response] is fitted adequately the second on  whether the chosen [term]s are adequate for modelling the [distribution parameters] model. 
+We call a [model] an  [adequate  fit] if the [final model]  is  an  [adequate  model]. 
+
+#### adequate model
+
+We call a [model] an  [adequate  model] if the [model] represents the [data] well.  This can be checked through model [diagnostics] and [goodness of fit] measures. 
+Within a [distributional regression] framework we have two types of [adequate model]s to consider. The first has to do of whether the [distribution] of the [response] is fitted adequately the second on  whether the chosen [term]s are adequate represent the relationships  in the [distribution parameters]. 
 
 
 #### agnostic method
 
-An [agnostic method] in [statistical modelling] is a technique which could apply to any [model] independently if they are [mathematical model]s, [agent based model]s or [algorithmic model]s.  Note, however, that a lot of the techniques claimed to be agnostic may depend on the [assumptions] of the model or on the type of [measure of goodness of fit] used to [fit] the model. The [assumptions] and the [measure of goodness of fit] are interconnected with the [model]. Strictly one should defined an [agnostic method] a techniques which is not associated  with non of them.
+An [agnostic method] in [statistical modelling] is a technique which could apply to any [model] independently if they are [mathematical model]s, [agent based model]s or [algorithmic model]s.  Note, however, that a lot of the techniques claimed to be agnostic may depend on the [assumptions] of the model or on the type of [measure of goodness of fit] used to [fit] the model. The [assumptions] and the [measure of goodness of fit] are interconnected with the [model]. Strictly one should defined an [agnostic method] a techniques which is not associated  with any of them.
 
 #### agent
 
@@ -114,7 +119,7 @@ An agent based model is a simulation, bottom up model, where the unit of interes
 
 #### AIC
 
-[AIC] stands for the Akaike Information Criterion, @Akaike73b. [AIC] is used to  compare different fitted models. The [AIC] is defined as [deviance] $+2\times df$  where $df$ are the [degrees of freedom] and 2 stands for the **penalty**, see also [GAIC] and [BIC].
+[AIC] stands for the Akaike Information Criterion, @Akaike73b. [AIC] it is a measure of [goodness of fit] used to  compare different fitted models. The [AIC] is defined as [deviance] $+2\times df$  where $df$ are the [degrees of freedom] and 2 stands for the **penalty**, see also [GAIC] and [BIC]. The [model] with the minimum  [AIC] is the best.
 
 
 ```{r}
@@ -127,7 +132,7 @@ AIC(m0,m1)
 
 #### algorithm 
 
-An algorithm is a step-by-step computational procedure designed to perform a specified task. For [input-output model]s this task mostly has to do with finding an unknown function say $g()$, which connect the input with the output, i.e. $Y=g(X)$. 
+An algorithm is a step-by-step computational procedure designed to perform a specified task. For example in a  [input-output model]s when typically we have $Y=g(X)+\epsilon$, the task is mainly to  find the unknown function $g()$, which connect the input with the output. 
 
 #### algorithmic model
 
@@ -263,7 +268,7 @@ The method of [bootstrapping] is a way to fit multiple models to a single [data]
 
 #### boosting
 
-The method od [boosting] is a way of [model fitting] using  many **complementary** sequential simple models and average them in order to build a unique [fit]ted [final model]. The individual models should be simple and easy to fit and should complement each other by modelling different characteristic of the [data]. Finally the individual [fitted] simple [model]s contribute when averaging only to a small part say 10 or 20 percent of their original contribution. This percentage is one of the [hyper parameter]s of the boosting method. The other [hyper parameter] is how many time we should repeat the fitting procedure in order to reach an adequate model. The latest is the main smoothing parameters of the [boosting] procedure. For determine the smoothing parameters [cross validation] can be used which requiring a good [measure of goodness of fit].
+The method od [boosting] is a way of [model fitting] using  many **complementary** sequential simple models and average them in order to build a unique [fit]ted [final model]. The individual models should be simple and easy to fit and should complement each other by modelling different characteristic of the [data]. Finally the individual [fitted] simple [model]s contribute when averaging only to a small part say 10 or 20 percent of their original contribution. This percentage is one of the [hyper parameter]s of the boosting method. The other [hyper parameter] is how many time we should repeat the fitting procedure in order to reach an [adequate fit]ted model. The latest is the main smoothing parameters of the [boosting] procedure. For determine the smoothing parameters [cross validation] can be used which requiring a good [measure of goodness of fit].
 
 #### cross validation
 
@@ -427,6 +432,7 @@ In general when someone tries to construct a [multivariate distribution] using c
 
 
 A [correlation coefficient] is a pairwise [measure of association] between two [continuous variables] in the [data].  
+@brito2025exploring
 
 
 #### measure of association
@@ -539,7 +545,7 @@ y_hist(rent99$rent)
 
 #### diagnostics 
 
-Diagnostics are tools for helping to check the [assumptions] of a fitted [model]. Within [distributional regression]  can help to identifying whether the [distribution] of the [resposnse] is fitted well or whether the [term]s in the  different [distribution parameters] models are fitted appropriately.  
+The diagnostics are statistical or graphical tools for helping to check the [assumptions] of a fitted [model]. Within [distributional regression]  [diagnostics] can help to identifying whether the [distribution] of the [response] is fitted well or whether the [term]s in the  different [distribution parameters] models are fitted appropriately.  
 
 #### discrete distribution 
 
@@ -662,9 +668,10 @@ The term [errors] refers to the statistical part of a [stochastic] model which a
 
 Let us assume that the [model] is specified by the [parameters] $\boldsymbol{\theta}$, After a [fit] we have [estimates] for the $\boldsymbol{\theta}$ which often present them with a hat $\hat{\boldsymbol{\theta}}$.
 
-####  exceedance probabilities
+####  exceedance probability
 
-By [exceedance probabilities] we refer to the probably that  values of a [randon] variable, $Y$, will exceed a certain pre specified value $c$, that is  $Pr[Y \ge c.$
+By [exceedance probability] we refer to the probably that  a values of a [random] variable, $Y$, will exceed a certain pre specified value $c$, that is  $Pr[Y \ge c.$ In fact if you know the [cdf], $F(.)$ of the random variable $Y$ its  [exceedance probability] is defined as $S(Y)=1-F(Y)$ where the function $S()$ often call in statistics the [survival  function].    
+
 
 #### explanatory variables 
 
@@ -776,7 +783,26 @@ GAM stands for Generalized Additive Model, @HastieTibshirani90,  ...
 
 #### GAMLSS
 
-GAMLSS stand for Genaralized Additive Model for Location, Scaler and Shape, @RigbyStasinopoulos05  ...
+GAMLSS stand for Genaralized Additive Model for Location, Scaler and Shape, @RigbyStasinopoulos05. The classical GAMLSS model as first defined by @RigbyStasinopoulos05; $$
+\begin{split}
+y| \boldsymbol{\gamma}     &  \stackrel{\small{ind}}{\sim } \mathcal{D}( \boldsymbol{\theta}_1, \ldots, \boldsymbol{\theta}_k) \nonumber \\
+g_1(\boldsymbol{\theta}_1) &= \textbf{X}_1 \boldsymbol{\beta}_1+ s_{\theta_1,1}(\textbf{x}_{\theta_1,1})+\ldots+ s_{\theta_1, J_k} (\textbf{x}_{\theta_1,J_{\theta_1}}) \nonumber \\
+ \cdots &= \cdots \nonumber\\
+g_k(\boldsymbol{\theta}_K) &= \textbf{X}_K \boldsymbol{\beta}_K + 
+s_{\theta_K,1}(\textbf{x}_{\theta_K,1})+\ldots+ s_{\theta_K, J_K} (\textbf{x}_{\theta_K,J_{\theta_K}})
+\nonumber 
+ \end{split}
+$$ {#eq-gamlssclassical} where we assume that the response variable $y_i$ for $i=1,\ldots, n$, is independently distributed having a distribution $\mathcal{D}( \theta_1, \ldots, \theta_k)$ with $k$ parameters and where $s_{\theta_k, j} (.)$ for $k=1,\ldots,K$ and $j=1,\ldots, J_{\theta_k}$ are smoothers for different explanatory variables. Note that smoother are depending on smoother parameters $\lambda$. Because of the duality of smoothers and random effects it was soon realise that the model can be a written in its **mixed** random effect model form as: 
+
+$$
+\begin{split}
+y| \boldsymbol{\gamma}   &  \stackrel{\small{ind}}{\sim }  \mathcal{D}( \boldsymbol{\theta}_1, \ldots, \boldsymbol{\theta}_k) \nonumber \\
+g_1(\boldsymbol{\theta}_1) &= \textbf{X}_1 \boldsymbol{\beta}_1+ \textbf{Z}_{1,1} \boldsymbol{\gamma}_{1,1}+ \dots +\textbf{Z}_{K, J_1} \boldsymbol{\gamma}_{K, J_1} \nonumber \\
+ \cdots  &= \cdots \nonumber\\
+g_k(\boldsymbol{\theta}_K) &= \textbf{X}_K \boldsymbol{\beta}_K + \textbf{Z}_{K,1} \boldsymbol{\gamma}_{K,1}+\dots+\textbf{Z}_{K,1} \boldsymbol{\gamma}_{K,J_K}  \nonumber
+ \end{split}
+$$ {#eq-gamlssmixed} where $\boldsymbol{\gamma}_{k,j}$ are random effect, for $k=1, \ldots,K$ and $j=1,\ldots,J_K$ and where each $\boldsymbol{\gamma}_{k,j}$ is distributed as a Normally distributed variable with zero mean and standard deviation given by $\sigma_{b_{k,j}}$. In fact there is set of $\sigma_{b_{k,j}}$'s which length is the length of all smoothers in the model. Note that smoothing parameters $\lambda_{\theta_k, j}$ and standard errors $\sigma_{b_{k,j}}$ are inverse related  $\lambda_{k, j}=\frac{1}{\sigma_{b_{k,j}}}.$ 
+
 
 
 #### `gamlss`
@@ -847,7 +873,9 @@ A goodness of fit is a measure (a quantity) design to evaluate how close the mod
 GAIC is  the  Generalise Akaike Information Criterion defined as `deviance` $+k \times df$ where $k$ is the penalty applied to the [degrees of freedom] $df$. 
 
 
-#### graphics
+#### graphic
+
+A [graphic] is a plot which help the analysis of [data]. A post-[fit] graphic that is a plot depending on the [fitted model] usually is either a [diagnostic] to help  checking assumptions or it is helping the [interpretation] of the model.   
 
 #### Gumbel copula
 
@@ -871,6 +899,12 @@ The [Gumbel copula] should be use if: i) joint large outcomes are important, ii)
 
 ################################################################################
 ## H
+
+
+#### hazard function
+
+The [hazard function] of a [random] variable $Y$, $h()$, which shows the risk of the instantaneous fail  of $Y$  is defined as the [pdf] divided by the [survival function] i.e. $h(Y)= \frac{f(y)}{S(Y)}=\frac{f(y)}{1-F(Y)}.$ 
+
 
 #### histogram
 
@@ -1094,14 +1128,20 @@ A measure of goodness of fit is usually an [empirical Risk] measure. For exampe 
 
 #### model
 
-A model is a simplification of reality by provides an easier way to understand the structure of a problem. Related to [regression analysis] there are [mathematical model]s and [algorithmic model]s.  A [mathematical model] is  a [model] using mathematical equations. An [algorithmic model] is  using instead a set of rules to perform a task. An [adequate model] is a model which fits the [training] data well. 
+
+A [model] is a simplification of reality by provides an easier way to understand the structure of a problem. In [data analysis] a [model] is a filter which tries to extract the right information from the data to answer the [question] the scientist  tries to answer. Related to [regression analysis] there are [mathematical model]s and [algorithmic model]s.  
+
+- A [mathematical model] tries to answer the [question] using mathematical equations. 
+
+- An [algorithmic model] is  using instead a set of rules to perform the task of answering the [question]. 
+
+An [adequate fit]ted [model] is a model which fits the [training] data well and its [interpretation] will help to answer the [question], but remember that; 
 
 > `all models are wrong but some are useful`.
 >
 > -- George Box  (@box1979robustness)
 
-Whether a model is useful depends on the [purpose] of the study The model should be adequate to answer the [question]  in hand.
-
+Whether a model is useful depends on the [purpose] of the study.
 
 #### model average
 
@@ -1120,14 +1160,13 @@ flowchart TB
   subgraph model-fitting-process
    style model-fitting-process fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px
     direction LR
-    A[data]
-    B[model]
-    D[purpose]
+    D[data]
+    M[model]
+    P[purpose]
   end
-
-  A --> C[fit]
-  B --> C
-  D --> C
+  A[assumptions] --> M
+  M --> F[fit]
+  F --> P
 ```
 
 #### model formula
@@ -1157,6 +1196,9 @@ A distribution function [pdf] for more that one [random] variable.
 #### $n$
 
 $n$  is number of observations in a [tabular data] set
+
+####  natural variability
+
 
 #### normalised randomosed quantile ressiduals
 
@@ -1429,17 +1471,94 @@ A statistical model is a [mathematical model] containing a [stochastic] componen
 
 #### statistical modelling
 
-Statistical modelling is the art of creating a statistical model which represents the data generating mechanism adequately. Statistical model extract information from the data in a way to answer question of interest (see [purpose]).
+Statistical modelling is the art of creating a [statistical model] which represents the [data] adequately. A [statistical model] extract information from the data to answer [question]s of interest (see [purpose]). 
+<!-- and possible the [data generating mechanism]  -->
+ @fig-model shows the [statistical modelling] process. The [data], the [model] and the [question] to be answered by the [data] are inter-related. The model needs [assumptions] to be created and in ordered to be able to be evaluated it also needs a measure of [goodness of fit] an indicator which  measure the distance  between the [data] and the  the [model]. Therefore
+  the  measure of [goodness of fit] depends on both the [data] and the [model].
+ Given the [fit] is an [adequate fit] then by the [interpretation] ofthe model we should be able to answer the [question].  The correct [assumptions] are related with an [adequate fit].
 
 ```{mermaid}
 %%| fig-width: 5
-%%| label: fig-modelling
-%%| fig-cap: "The classical modelling process which uses a single model and tries to improve it"
+%%| label: fig-model
+%%| fig-cap: "The modelling process: the data, the model and the question are inter-related. The model needs assumptions before the fit and an adequate fit help to answer the question."
+flowchart TB
+  subgraph stats-modelling-process
+   style stats-modelling-process fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px
+    direction LR
+    D[data]
+    M[model]
+    Q[question]
+  end
+  A(assumptions) --> M
+  D <--> M
+  Q <--> M
+  M --> F(adequate fit)
+  D <--> Q
+  F --> Q
+  A <--> F
+  G(goodness of fit) --> F
+  M --> G
+  D --> G
+```
+The [statistical modelling] is s process and therefore that there are a lot opportunities for that things to go wrong. In order to investigate this further let us look in more detail. 
+We usually assume (explicitly or implicitly) that there exist a [population] of interest and t [data generating mechanism] which creates the observed [data]/[sample] is see @fig-mod_1.   
+```{mermaid}
+%%| fig-width: 5
+%%| label: fig-mod_1
+%%| fig-cap: "The relationship of the population and the data/sample."
 flowchart LR
-  A[Data] --> B[Assumptions] 
-  B --> C{one-Model}
-  C -->|check| B
-  C --> D[Interpretation & predict]
+  P[population] --> G(data generating mechanism) 
+  G --> D[data]
+
+```
+The [statistical model] is a filter which tries to extract [information] from the [data] either to go back to the [population], a process known as [statistical inference] or to gain knowledge from the [information] of  the data. More specifically this information is needed to answer the [question]s  ans it signify the [purpose] of the study, see @fig-mod_2.  
+```{mermaid}
+%%| fig-width: 5
+%%| label: fig-mod_2
+%%| fig-cap: "Showing how a model is behaving as afilter to extract information from the data"
+flowchart LR
+  D[data] --> M[model] 
+  M --> I(information)
+```
+In order to create a [model] we  need to make  [assumptions]. The assumptions should reflect the [data generating mechanism] but also the [data] itself see @fig-mod_3. The [assumptions] should  account for the [natural variation] in the [data] but also able to capture the relationships between the variables in the [data]. 
+```{mermaid}
+%%| fig-width: 5
+%%| label: fig-mod_3
+%%| fig-cap: "A model need realistic assumptions to capture both the natural variable and ther interrealtioships in the model."
+flowchart LR
+  G(data generating mechanism)  --> D[data]
+  D --> M[model] 
+  A(assumptions) --> M
+  G --> A
+  M --> I(information)
+  D --> A
+```
+The quality of the [information] to extracted in the [data] depends on the flexibility of the [model] and how realistic are those [assumptions]. Wrong assumption could lead to wrong conclusions. This fact was recognise at an early stage of  [statistical modelling] leading to the introduction of [diagnostics] tools to check for the appropriateness of the [assumptions]. A diagnostic is a  [statistic] or a [graphic]al plot which is a function of both the [data] and the [model] and therefore could check whether the assumptions of the [model] are adequate. A lot of the graphical [diagnostics] are based on the [residuals] of the [model] which if the assumptions are correct are expected to behave as [white noise]. @fig-mod_5 shows what we called  the classical statistical modelling process.  There is a loop going around  starting from the [assumptions] to the  [model] to the [fit] to the [diagnostics] and back into the [assumptions].  That is, assumptions are made the model is fitted and if the diagnostics intricate an inadequate fit different assumption are made and the process going into the loop until an [adequate  model] is achieved and the modelling proccess is finished. This process  of  the statistical modelling loop is going back to @BoxJenkins70 in their famous book on time series.      
+
+```{mermaid}
+%%| fig-width: 5
+%%| label: fig-mod_5
+%%| fig-cap: "The classical statistical modelling process which uses a single model and tries to improve it"
+flowchart TB
+  D[data] --> A(assumptions) 
+   A --> M(model)
+   M --> Y[adequate model]
+   M --> W(fit)
+   W --> V(diagnostics)
+   V --> A
+```
+
+```{mermaid}
+%%| fig-width: 5
+%%| label: fig-mod_6
+%%| fig-cap: "The classical statistical modelling process which uses a single model and tries to improve it"
+flowchart TB
+  D[data] --> A(assumptions) 
+   A --> M(model)
+   M --> Y[adequate model]
+   M --> W(fit)
+   W --> V(goodness of fit)
+   V --> A
 ```
 In a modern statistical modelling approach the data are partitioned to help detection of [over fitting] and prediction. @fig-modelling_modern show this new approach of statistical modelling. Instead of a single fitted model $B$ candidate [model]s are [fit]ted and subsequently aggregated (see [stacking]) before [model interpretation] and [model prediction].
 
@@ -1455,6 +1574,16 @@ flowchart LR
   D --> E[interpretation & prediction]
 ```
 The achieve this more  modern approach to statistical modelling the following technique could be used: [boosting] where a lot of week models are fitted to a single data set in such a way that the averaged models supplement each other. This is done by taking into the account the [residuals] of the previously [model fitting]; [bagging] when $B$ models are fitted to $B$ bootstrap [data partition]s and the models are averaged; [stacking] when when $B$ different [model]s are fitted to a single data set (no partition) and the models are averaged.
+
+#### adequate model
+
+#### natural variation
+
+The [natural variation] refers to the variability in the [data]. The idea behind is that even if we were able to collect data more that ones from the same [population],  under similar conditions, the data will be different reflecting the [natural variation] of the data.  This makes necessary to use a [stochastic model].   In [regression analysis] the [natural variation] is reflected in the variation of the [response] variable. Even if we be able to collect data at the same values of the explanatory variables the response will be different. 
+
+#### statistical model
+
+A [statistical model] is a [stochastic model]. that is a [mathematical model] containing probabilistic statements to account for the [natural variation] of the data.  
 
 #### stacking
 
@@ -1494,6 +1623,13 @@ A [sufficient statistic] was a fundamental concept in statiscal inference in tha
 #### summary statistic
 
 A [summary statistic] is another wold for [statistic]
+
+
+
+#### survival function
+
+The [survival function] of a [random] variable  $Y$, denoted here as $S()$,  gives the probability $Y$ to exceed a specific value $Pr(Y>y_o)$.  It is defined as 1 minus the [cdf] of the random variable $Y$,  $S(Y)=1-F(Y)$. 
+
 
 ################################################################################
 
