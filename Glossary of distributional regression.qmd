@@ -108,7 +108,7 @@ Note that an [additive model] is usually easy to [interpretation] but more diffi
 
 #### adequate fit
 
-We call a [model] an [adequate fit] if the [final model] in a [model selection] procedure is an [adequate model]. The question is how do we know that we reach an [adequate fit]?. By [adequate model] we mean a [model] close to the [data] and be able to answer the [questions]. How close to the data a model is can be checked by the performance of the [goodness of fit] measure and by [diagnostics] tools. However the [goodness of fit] measure is often a relative measures in the sense that is useful for comparing between models but not to show if any of then is [adequate fit]. This task mainly lies with [diagnostics] tools. More specificity \[diagnostic\] tools based on [residuals]. The reason is because in most \[stochastic models\], if the the [assumptions] are correct or nearly correct, we expect the [residuals] to behave as a [white noise]. Diagnostic plots demonstrating [white noise] [residuals] are a good sign that an [adequate fit] has been achieved. In conclusion a [adequate fit] can be verified using [residuals] [diagnostics] on the [training] data set in compilation with a good performance in a [goodness of fit] measure.
+We call a [model] an [adequate fit] if the [final model] in a [model selection] procedure is an [adequate model]. The question is how do we know that we reach an [adequate fit]?. By [adequate model] we mean a [model] close to the [data] and be able to answer the [questions]. How close to the data a model is can be checked by the performance of the [goodness of fit] measure and by [diagnostic tool]s. However the [goodness of fit] measure is often a relative measures in the sense that is useful for comparing between models but not to show if any of then is [adequate fit]. This task mainly lies with [diagnostic tool]s. More specificity \[diagnostic\] tools based on [residuals]. The reason is because in most \[stochastic models\], if the the [assumptions] are correct or nearly correct, we expect the [residuals] to behave as a [white noise]. Diagnostic plots demonstrating [white noise] [residuals] are a good sign that an [adequate fit] has been achieved. In conclusion a [adequate fit] can be verified using [residuals] [diagnostics] on the [training] data set in compilation with a good performance in a [goodness of fit] measure.
 
 #### adequate model
 
@@ -125,6 +125,12 @@ An [agent] is the basic unit of interest in a [agent based model]. In statiscal 
 #### agent based model
 
 An [agent based model] is a simulation, [bottom up model], where the unit of interest is called an [agent]. The model is build by simulating the behaviour f the  [agent]s within given enviroments.The [agent]s ar the basic unit of interest and. their  behaviour is studied by assuming simple mathematical or logic rules. The  application of  those simple rules over time  determine the long terms behaviour of the agents. Therefore important part of the model is how to set the rules ans the parameters determine the [agent] behaviour.
+
+	
+#### aggregation rule 
+
+By [aggregation rule] we mean how multiple predictions are combined to produce a single [prediction].
+
 
 #### AIC
 
@@ -178,7 +184,7 @@ see [measure of association].
 
 #### assumptions
 
-Assumptions are axiomatic statements needed to be accepted for the model to work. Models need assumptions because of their simplified nature. The important thing behind [assumptions] is that if the [assumptions] are correct then the model can be adequate and probably useful. There are **explicit** and **implicit** assumptions. The **explicit** assumptions are usually mathematical ones and easy to check using [diagnostics] tools. The **implicit** assumptions more common in [algorithmic model]s are more difficult to check. **Incorrect** assumptions could lead to questionable scientific discoveries. For an [agent based model] the assumptions are about the behaviours of the  [agent]s. For [distributional regression] model there are two set of [assumptions]; i) about he distribution of the respose and ii) how the [explanatory variables] affect the [distribution parameters]. 
+Assumptions are axiomatic statements needed to be accepted for the model to work. Models need assumptions because of their simplified nature. The important thing behind [assumptions] is that if the [assumptions] are correct then the model can be adequate and probably useful. There are **explicit** and **implicit** assumptions. The **explicit** assumptions are usually mathematical ones and easy to check using [diagnostic tool]s. The **implicit** assumptions more common in [algorithmic model]s are more difficult to check. **Incorrect** assumptions could lead to questionable scientific discoveries. For an [agent based model] the assumptions are about the behaviours of the  [agent]s. For [distributional regression] model there are two set of [assumptions]; i) about he distribution of the respose and ii) how the [explanatory variables] affect the [distribution parameters]. 
 
 ::: callout-note
 Maybe as an example put the assumptions of the [linear model] here
@@ -218,7 +224,9 @@ The [backfitting] algorithm is an algorithm discussed by @HastieTibshirani90 for
 
 Bagging,  @breiman1996bagging, refers to [bootstrapping] followed by an [averaging models] procedure. That is, $B$ models are fitted to $B$ bootstrap [data partition]s and the resulting models are then averaged to greate one model. The [random forest] models are [bagging] models since they are a collection of [regression tree] models witch then averaged to crate the final model. 
 
+#### base learner
 
+By [base learner] we mean a individual [model] in the [ensemble].
 
 #### Bernoulli distribution
 
@@ -374,7 +382,6 @@ The integration of statistical [boosting]  to [distributional regression] [model
 We need an  example here 
 :::
 
-#### ensemble
 
 #### bottom up model
 
@@ -382,7 +389,7 @@ A [bottom up model] is a [model] starting at the micro level behaviour of the [s
 
 #### bucket plot
 
-A [bucket plot], @de2022bucket, is a [diagnostics] toot which can detect [skewness] and [kurtosis] in any [vector] in the [data] but more important in the [residuals] ([z-scores]) of a [distributional regression] [model]. Detection of [skewness] and [kurtosis] in the residuals of a [distributional regression] [model] amounts to detection of [skewness] and [kurtosis] in the [response] variable. There two types of [bucket plot]s: i) the first is based on [moment] [summary statistic]s; the second on [centile] based [summary statistic]s. The functions `moment_bucket()` and `centile_bucket()` of the package `gamlss.ggplots` can be used respectively to produce a [bucket plot], in `R`.
+A [bucket plot], @de2022bucket, is a [diagnostic tool] which can detect [skewness] and [kurtosis] in any [vector] in the [data] but more important in the [residuals] ([z-scores]) of a [distributional regression] [model]. Detection of [skewness] and [kurtosis] in the residuals of a [distributional regression] [model] amounts to detection of [skewness] and [kurtosis] in the [response] variable. There two types of [bucket plot]s: i) the first is based on [moment] [summary statistic]s; the second on [centile] based [summary statistic]s. The functions `moment_bucket()` and `centile_bucket()` of the package `gamlss.ggplots` can be used respectively to produce a [bucket plot], in `R`.
 
 @fig-mom_bucket shows a [moment] [bucket plot] of the model `m0` fitted earlier in the section [additive smoothers] where two [smooth function]s [main effect]s `s(area)+s(yearc)` and one [first order interaction], `s(area, yearc)`, were fitted to the [response] Munich `rent` taken from the [data.frame] `rent99` using a Gamma (`GA`) distribution.
 
@@ -424,6 +431,10 @@ This needs more work
 #### candidate model
 
 The [candidate model] is next in line model for [fit] in the range of all possible models to be selected in a [step wise] procedure and it is compared to the [current model].
+
+#### categorical variable 
+
+A [categorical variable] is a vector in the data which takes only few distinct values categorising the [objects] into different classes. In statistics a [categorical variable] is called a [factor] and its values are called the [levels] of the [factor]. 
 
 #### centile
 
@@ -527,11 +538,6 @@ Each [distribution] has its own properties. We called those properties the [char
 
 A \[quantile based measure\] in a [distribution] is defined as a [characteristics of the distribution] based on the [quantile]s rather [moment]s. For example the measure are mbased no the \[mediam\] the [IQR] e.t.c.
 
-#### IQR
-
-Please see [inter quantile range]
-
-#### inter quantile range
 
 #### classification model
 
@@ -679,9 +685,14 @@ library(gamlss.ggplots)
 y_hist(rent99$rent)
 ```
 
+####  diagnostic tool
+
+A [diagnostic tool] is one of the [diagnostics] used in statistical analysis, for more details   see  [diagnostics].
+
+
 #### diagnostics
 
-The diagnostics are statistical or graphical tools for helping to check the [assumptions] of a fitted [model]. Within [distributional regression] [diagnostics] can help to identifying whether the [distribution] of the [response] is fitted well or whether the [term]s in the different [distribution parameters] models are fitted appropriately.
+The [diagnostics] are statistical or graphical tools for helping to check the [assumptions] of a fitted [model]. Within [distributional regression] [diagnostics] can help to identifying whether the [distribution] of the [response] is fitted well or whether the [term]s in the different [distribution parameters] models are fitted appropriately.
 
 #### discrete distribution
 
@@ -695,6 +706,8 @@ We refer to a [random] variable as a [discrete variable] if its values are on th
 
 The term [distribution] refer to a probability [distribution] function [pdf], $f(Y)$. The only property for $f(Y)$ is required is that it should sum up to one. In distributional regression we write the [pdf] of the [response] as $D(Y | \boldsymbol{\theta})$ not $f()$ a notation which could be used for describing the relationships between the [explanatory variables] and the [response]. We are also emphasising that the [pdf] of the response is a function the different [distribution parameters], $\boldsymbol{\theta}$. The function $D(Y | \boldsymbol{\theta})$ describes how the behaviour of the [response] variable is affected by the [explanatory variables] and it is the main [stochastic] component of a [distributional regression].
 
+#### distribution parameter 
+
 #### distribution parameters
 
 Within a [distributional regression] we use the term [distribution parameters] as almost synonymous to [distributional parameters] to refer to the parameters $\boldsymbol{\theta}$ in the [distribution] of the [response] $D(y|\boldsymbol{\theta})$, see also [distributional parameters].
@@ -706,6 +719,11 @@ Theoretical distributions depend on [distribution parameters] $\boldsymbol{\thet
 #### distributional regression
 
 A distributional regression model is an [input-output model] model in which the response $Y$ is assumed to have a [distribution] in which all the parameters of the [distribution] could depend on explanatory variables. This can be represented as $X \rightarrow D(Y|\boldsymbol{\theta}(X))$ where $\boldsymbol{\theta}$ are the k parameters of the distribution.
+
+
+#### diversity
+
+By  [diversity] we mean the qualitative differences between [model]s/[base learners]. 
 
 #### dummy variables
 
@@ -762,6 +780,22 @@ See [Empirical cdf]
 #### elliptical copulas
 
 The [elliptical copulas] are based on the multivariate normal [distribution] and they can capture linear dependencies but no extreme tails
+
+#### ensemble
+
+A model [ensemble] is a method that combines [prediction]s from multiple [model]s to produce a single, usually more accurate and more robust, prediction.  That is, instead of relying on one single [model], many [model]s are [fit] and their predictions are aggregated.
+The main motivation is that different [model]s are on their own more unstable and prone to errors while combining them could reduce the overall [error]. For example,  given models $m_1, m_2, \ldots, m_M$, an ensemble produces 
+
+$$\hat{m} = \text{Aggregate}\big(m_1(x), \ldots, m_M(x)\big).$$ 
+
+Aggregation for [regression analysis] [model] could be a simple or **weighted average** while for [classification model] could be 	**majority vote**. Different types of [aggregation rule]s are:
+
+-  [bagging] which is [bootstrap] plus aggregation of the prediction which reduce variance e.g.  [random forest]
+
+- [boosting] where [model]s where models are fit sequentially and each model focuses on previous [model] residuals a procedure which reduces [bias] and variance, e.g  `AdaBoost`, [gradient boosting], `XGBoost`
+
+- [stacking] which combine different  [model]s  using simple or weighted averaging. In this case the combined  [model]s  are  independently trained  with no interaction between them.
+	
 
 #### empirical copulas
 
@@ -929,11 +963,7 @@ where $\stackrel{\small{ind}}{\sim}$ is read as the vector of the response is "i
 There were two major problems with the assumption for $g(\boldsymbol{\eta})$
 
 
-#### normal distribution 
 
-#### gamma distribution
-
-#### inverse Gaussian distribution
 
 #### GAM
 
@@ -947,6 +977,7 @@ g_1(\boldsymbol{\mu}) &= \textbf{X} \boldsymbol{\beta}+ s_{\mu,1}(\textbf{x}_{\m
  \end{split}
 $$ {#eq-gam}
 
+#### gamma distribution
 
 #### GAMLSS
 
@@ -989,7 +1020,7 @@ $$ {#eq-gamlssmixed} where $\boldsymbol{\gamma}_{k,j}$ are random effect, for $k
 
 #### `gamlss.ggplots`
 
-`gamlss.ggplots` is a package in `R` to help with diagnostics and other graphics using the `ggplot2` package. The functions in the package can be applied to fitted GAMLSS model independently whether were fitted using the [`gamlss`](#gamlss-1) or [`gamlss2`].
+`gamlss.ggplots` is a package in `R` to help with [diagnostics] and other graphics using the `ggplot2` package. The functions in the package can be applied to fitted GAMLSS model independently whether were fitted using the [`gamlss`](#gamlss-1) or [`gamlss2`].
 
 #### `gamlss.dist`
 
@@ -1121,6 +1152,10 @@ By [information criterion] we refer to a [measure of goodness of fit] which it b
 
 By [information theory] we mean the theory of of communication developed by @shannon1948mathematical which is based on the idea of [entropy].
 
+
+
+#### inter quantile range
+
 #### interpretable model
 
 A model is an [interpretable model] if its is easy to explain to others. Most [mathematical model]s but not all [algorithmic model]s are [interpretable model]s. The following words have the same meaning as [interpretable model], **transparent** model, **explainable** model or **comprehensive** model.
@@ -1128,6 +1163,8 @@ A model is an [interpretable model] if its is easy to explain to others. Most [m
 #### interval values
 
 A [random] variable is taking [interval values] if its exact value observed value is not known but we know that it occurred in a specific interval [range] i.e $10< Y <15$. Another expression of this behaviour is [censored values].
+
+#### inverse Gaussian distribution
 
 #### input-output model
 
@@ -1165,7 +1202,10 @@ Two obtain the [interaction] of  two [continuous variable]s just multiply the tw
 Note that [categorical variable]s are represented in the design matrix of a [model] as dummy [vector]s. 
 
 
-#### categorical variable 
+#### IQR
+
+Please see [inter quantile range]
+
 
 #### dummy vectors
 
@@ -1280,7 +1320,7 @@ By linear model we refer to models described by the [assumptions] $\textbf{y}=\t
 
 A function connecting the model predictor with the [distribution parameter] for example $\eta_{\sigma}= g(\sigma)$ The link function ensure that the [distribution parameter] is on the right [range]. For example, since $\sigma$ take values in the positive real line $0< \sigma <- \infty$ modelling sigma as $\eta_{\sigma}=log(\sigma)$ will make sure that $\exp(\eta_{\sigma})$ is always positive. For modelling purposes the the link function $g(\theta)$ its inverse $g^{-1}(\eta_{\theta})$ and the first derivative $d \eta_{\theta}/d\theta$ must be defined.
 
-#### distribution parameter 
+
 
 #### likelihood
 
@@ -1516,6 +1556,8 @@ Neural networks were not invented by a single person; they developed over time t
 
 -   Werbos; Rumelhart, Hinton, Williams 2010s ?? Deep learning boom Many contributors
 
+#### normal distribution 
+
 #### normalized quantile residuals
 
 The [normalized quantile residuals] or [z-scores] are the residuals of a [distributional  regression] [model]. Residuals in a DR model are defined differently from the classical regression models. In classical models the residuals are defined as the difference between the response and its estimated mean value $(y_i-E(y_i)$. [Residuals] in a [distributional regression] model are the [normalised quantile residuals], (NQR) @DunnSmyth96 or [z-scores]. Two transformations are needed to get the z-scores from a fitted distributional model. Let $y_i$ and $F(y_i, \hat{\boldsymbol {\theta}}_i)$ be the $ith$ observation of the response and its fitted cumulative distribution function [cdf], respectively. Then first transformation is to get the probability integral transformed (**PIT**) residuals which are defined as, $$\hat{u}_i = F(y_i, \hat{\boldsymbol {\theta}}_i).$$ {#eq-PITresid} If the distribution of $y_i$ is specified "correctly" then the PIT residuals are expected to behave as identical and independently distributed (i.i.d) random variable from a uniform distribution i.e $u_i \sim U(0,1)$. The problem is, that is rather hard to check deviation from the uniform distribution, so we take the PIT residuals and transform them to z-scores using $$\hat{z}_i = \Phi^{-1}(\hat{u}_i).$$ If the assumed distribution of the response is approximate "correct" the z-scores are i.i.d. standardised normally distributed random variables i.e. $z_i \sim N(0,1).$
@@ -1590,7 +1632,7 @@ The [Occam’s principle](#occams-principle) from the Latin "Entia non sunt mult
 
 #### over fitting
 
-Over fitting happens when the [fit] is too close to the [data] and therefore do not generalised well when try to predict, see also [over fit].
+Over fitting happens when the [fit] is too close to the [data] and therefore do not generalised well when try to [predict], see also [over fit].
 
 #### over fit
 
@@ -1598,7 +1640,7 @@ By [over fit] we mean situations where the model is too close to the actual [dat
 
 #### out of bag
 
-By [out of bag] [data] we refer to [data] that they have not be used to [fit] the [model]. That is, [test] or \[validation\] [data] sets.
+By [out of bag] [data] we refer to [data] that they have not be used to [fit] the [model]. That is, [test] or [validation data] sets.
 
 ################################################################################ 
 
@@ -1606,7 +1648,7 @@ By [out of bag] [data] we refer to [data] that they have not be used to [fit] th
 
 #### pacf
 
-The term [pacf] stands for partial [autocorrelation] function. The [acf] and [pacf] are \[diagnostic\] tools for detecting [autocorrelation] in a [vector], $\text{x}$.
+The term [pacf] stands for partial [autocorrelation] function. The [acf] and [pacf] are [diagnostic tool]s for detecting [autocorrelation] in a [vector], $\text{x}$.
 
 ```{r}
 #| warning: false
@@ -1722,7 +1764,7 @@ A [predictor] is a one to one function of the [distribution parameters]  e.g.  $
 
 #### quantile residuals
 
-The [quantile residuals]  also called [PIT residuals].
+The [quantile residuals]  also called [PIT residuals] see [residuals].
 
 
 
@@ -1880,7 +1922,7 @@ flowchart TB
   I --> Q 
 ```
 
-The question is how do we know that we reach an [adequate fit]?. By [adequate fit] we mean a model close to the [data] and be able to answer the [questions]. How close to the data a model is can be checked by the performance of the [goodness of fit] measure and by [diagnostics] tools. However the [goodness of fit] measure is often a relative measures in the sense that is useful for comparing between models but not to show if any of then is [adequate fit]. This task mainly lies with [diagnostics] tools. More specificity \[diagnostic\] tools based on [residuals]. The reason is because in most \[stochastic models\], if the the [assumptions] are correct or nearly correct, we expect the [residuals] to behave as a [white noise]. Diagnostic plots demonstrating [white noise] [residuals] are a good sign that an [adequate fit] has been achieved. In conclusion a [adequate fit] can be verified using [residuals] [diagnostics] on the [training] data set in compilation with a good performance in a [goodness of fit] measure.
+The question is how do we know that we reach an [adequate fit]?. By [adequate fit] we mean a model close to the [data] and be able to answer the [questions]. How close to the data a model is can be checked by the performance of the [goodness of fit] measure and by [diagnostic tool]s. However the [goodness of fit] measure is often a relative measures in the sense that is useful for comparing between models but not to show if any of then is [adequate fit]. This task mainly lies with [diagnostics tools]. More specificity \[diagnostic\] tools based on [residuals]. The reason is because in most \[stochastic models\], if the the [assumptions] are correct or nearly correct, we expect the [residuals] to behave as a [white noise]. Diagnostic plots demonstrating [white noise] [residuals] are a good sign that an [adequate fit] has been achieved. In conclusion a [adequate fit] can be verified using [residuals] [diagnostics] on the [training] data set in compilation with a good performance in a [goodness of fit] measure.
 
 There are two major statistical problems which could arising with [adequate model]s. The first is that for a given [data] set they could more than one [adequate model]s. The second problem has to do with [over fitting].
 
@@ -1945,7 +1987,7 @@ flowchart TB
   I --> Q[questions]
 ```
 
-The quality of the [information] to extracted in the [data] depends on the flexibility of the [model] and how realistic are the [assumptions]. Wrong [assumptions] could lead to wrong conclusions and therefore to wrong [interpretation]. This fact was recognise at an early stage of [statistical modelling] and lead to the introduction of [diagnostics] tools for checking the appropriateness of the [assumptions]. A diagnostic is a [statistic] or a [graphic] which as a function of both the [data] and the [model] could check whether the assumptions of the [model] are adequate. A lot of the graphical [diagnostics] are based on the [residuals] of the [model] which if the [assumptions] are correct are expected to behave as [vector] of [white noise]. Typical examples are [QQ-plot]s and [worm plot]s. @fig-mod_5 shows what we called the classical statistical modelling process. Note that there is a loop going around starting from the [assumptions], the [model], the [fit], the [diagnostics] and back into the [assumptions]. That is, assumptions are made the model is fitted and if the diagnostics indicate an inadequate [fit] different assumption are made and the process in the loop continues until an [adequate model] is reach and the modelling process is finished. Our impression is that this process of [statistical modelling] was mentioned first by @BoxJenkins70 in their famous book on [time series].
+The quality of the [information] to extracted in the [data] depends on the flexibility of the [model] and how realistic are the [assumptions]. Wrong [assumptions] could lead to wrong conclusions and therefore to wrong [interpretation]. This fact was recognise at an early stage of [statistical modelling] and lead to the introduction of [diagnostic tool]s for checking the appropriateness of the [assumptions]. A diagnostic is a [statistic] or a [graphic] which as a function of both the [data] and the [model] could check whether the assumptions of the [model] are adequate. A lot of the graphical [diagnostics] are based on the [residuals] of the [model] which if the [assumptions] are correct are expected to behave as [vector] of [white noise]. Typical examples are [QQ-plot]s and [worm plot]s. @fig-mod_5 shows what we called the classical statistical modelling process. Note that there is a loop going around starting from the [assumptions], the [model], the [fit], the [diagnostics] and back into the [assumptions]. That is, assumptions are made the model is fitted and if the [diagnostics] indicate an inadequate [fit] different assumption are made and the process in the loop continues until an [adequate model] is reach and the modelling process is finished. Our impression is that this process of [statistical modelling] was mentioned first by @BoxJenkins70 in their famous book on [time series].
 
 ```{mermaid}
 %%| fig-width: 5
@@ -2264,7 +2306,7 @@ The term [white noise] is used to describe a pure [random] process in the sense 
 
 #### worm plot
 
-A worm plot, @vanBuurenFredriks01, is a [diagnostics] tool which could be applied to any standardised [residuals] of a [regression] model but more often to [z-scores] of a [distributional regression] model. A [worm plot] is a trended [QQ-plot]. Detrended to highlight departures from normality.
+A worm plot, @vanBuurenFredriks01, is a [diagnostic tool] which could be applied to any standardised [residuals] of a [regression] model but more often to [z-scores] of a [distributional regression] model. A [worm plot] is a trended [QQ-plot]. Detrended to highlight departures from normality.
 
 ```{r}
 resid_wp(m2)
