@@ -114,6 +114,11 @@ We call a [model] an [adequate fit] if the [final model] in a [model selection] 
 
 We call a [model] an [adequate model] if the [model] represents the [data] well. That is, a model is [adequate model] if it has passed its [diagnostics] checks. A set of many [adequate model]'s is oftem called the [Rashomon set]. Within a [distributional regression] framework we have two types of [adequate model]s to consider. The first has to do of whether the [distribution] of the [response] is fitted adequately the second on whether the chosen [term]s are adequate represent the relationships in the [distribution parameters].
 
+
+#### adequate distribution
+
+Within a [distributional regression], an [adequate distribution] for the [residuals] ([z-scores])  indicates that we do not have any evidence that the assumed [distribution] for the [response] is wrong.  
+
 #### agnostic method
 
 An [agnostic method] in [statistical modelling] is a technique which could apply to any [model] independently if they are [mathematical model]s, [agent based model]s or [algorithmic model]s. Note, however, that a lot of the techniques claimed to be agnostic may depend on the [assumptions] of the model or on the type of [measure of goodness of fit] used to [fit] the model. The [assumptions] and the [measure of goodness of fit] are interconnected with the [model]. Strictly one should defined an [agnostic method] a techniques which is not associated with any of them.
@@ -226,7 +231,7 @@ Bagging,  @breiman1996bagging, refers to [bootstrapping] followed by an [averagi
 
 #### base learner
 
-By [base learner] we mean a individual [model] in the [ensemble].
+A [base learner] is a single  [model] in the [ensemble] of models. The derminology is used in boosting.
 
 #### Bernoulli distribution
 
@@ -315,6 +320,7 @@ See [bootstrapping]
 The method of [bootstrapping], @efron19791977, @efron1992bootstrap, is a way to fit multiple models to a single [data] set by repeatedly [data partition]ing using re-sampling with replacement. The multiple [fitted model]s can be used to obtain [information] about the variability or other properties of the [parameters] in the [model], e.g. [SE], [CI], [bias]. This is done by using the resulted bootstrap distribution of the [parameters], see @fig-data_bootstrapping describing the [bootstrap] process.  The [bootstrap] distributions provide all the extra [information] required about the parameters of the [model]. In this sense, [bootstrapping] complement [Bayesian] statistical [fit]s which use [MCMC] to produce posterior distributions of the [parameters]. In this case   the [information] about the variability comes from [prior distribution] [assumptions] resulting   posteriors simulated  samples of the [parameters]. 
 
 ```{mermaid}
+%%| fig-width: 2
 %%| label: fig-data_bootstrapping
 %%| fig-cap: Bootstrap-partition of data in order to get more information about the parameters of te model."
 flowchart LR
@@ -430,7 +436,7 @@ This needs more work
 
 #### candidate model
 
-The [candidate model] is next in line model for [fit] in the range of all possible models to be selected in a [step wise] procedure and it is compared to the [current model].
+The [candidate model] is next  model to be fittes  [fit] in the line of all possible models to be selected in a [step wise] procedure and it is compared to the [current model].
 
 #### categorical variable 
 
@@ -439,6 +445,12 @@ A [categorical variable] is a vector in the data which takes only few distinct v
 #### centile
 
 A [centile] value is defined as $$100 \times \text{quantile}.$$ Since a [quantile] is taking values from 0 to 1 a [centile] is defined in the interval 0 to 100 for example the [quantile] at $0.50$ or 50% [centile] is the [median]. In practice the term [centile] is used as synonymous to [quantile]. A [centile]/[quantile] is a characteristic of both of the [distribution] of a [random] variable and of a [vector] in the [data]/[sample]. Centiles in the leter case can be defined through the [empirical cdf].
+
+#### centile based measure
+
+A [centile based measure] is equivalent to a \[quantile based measure\]. It describes a [characteristics of the distribution] based on [quantile]/[centile] rather [moment].
+
+For example $\bar{x}$ can be used as estimate of the mean $\mathbb{E}(X)$ of the theoretical [distribution] assumed for $x$ i.e. $\mathbb{E}(X)= \int_{-\infty}^{\infty} X f(X) dx$, where $f(X)$ is the assumes [distribution] for the [vector] $x$.
 
 #### centile estimation
 
@@ -465,6 +477,19 @@ The [Clayton copula] for two random variable $u_1$ and $u_2$ both taking values 
 \theta = \frac{2\tau}{1-\tau}.$
 
 #### concurvity
+
+The term [concurvity] is the nonlinear analogue of [multicollinearity]. In particular, in model which use [smoother]s like the  {GAMs], [concurvity] occurs when one [smooth term] can be approximately expressed as a nonlinear function of one or more other [smooth term]s. So [concurvity] implies  nonlinear dependence between [explanatory variables].
+For example if two [explanatory variables] carry essentially the same information in a nonlinear way, the [model][] has difficulty distinguishing their individual effects.
+For example let  a GAM model be 
+$g(\mathbb{E}[Y]) = \beta_0 + f_1(x_1) + f_2(x_2) + \cdots$
+Concurvity is high if
+$f_1(x_1) \approx h\!\left(f_2(x_2), f_3(x_3), \dots\right)$
+for some (possibly nonlinear) function $h()$. The consequences for [concurvity] are;
+unstable [fit]s or poorly identified [smooth term]s; inflated [CI] bands; wigglier [smooth term]s and finally more difficult [interpretation] for the model's individual effects. Not-linear [correlation coefficient] could be possiblely identify [concurvity]  at a [pre-data analysis] stage. 
+
+
+
+
 
 #### coefficients
 
@@ -534,10 +559,6 @@ Note that in the later  case there are three different possible [range]s:
 
 Each [distribution] has its own properties. We called those properties the [characteristics of the distribution]. Within a [distributional regression] framework and for better [interpretation] we should be ware with both the properties of the [distribution parameters] but also other [characteristics of the distribution] itself. The [characteristics of the distribution] can be defined i) using [moment]s or ii) using [quantile based measures].
 
-#### quantile based measures
-
-A \[quantile based measure\] in a [distribution] is defined as a [characteristics of the distribution] based on the [quantile]s rather [moment]s. For example the measure are mbased no the \[mediam\] the [IQR] e.t.c.
-
 
 #### classification model
 
@@ -568,11 +589,15 @@ A [correlation coefficient] is a pairwise [measure of association] between two [
 
 We have  [collinearity] in a [design matrix] of a [model] if there is a linear depedance between the columns  of the [design matrix].
 
-#### confidence intervals 
+#### confidence interval 
+
+::: callout-note
+defintion
+:::
 
 #### CI
 
-[CI] is and abbreviation for [confidence intervals].
+[CI] is and abbreviation for [confidence interval].
 
 
 #### count data distribution
@@ -621,6 +646,7 @@ The term [data partition] has two different meanings. The fist has to do with [s
 Data partition in the process of [statistical modelling] helps the model building process, [model] [interpretation], the checking for [over fit] and also helps to improve the [statistical inference] by providing extra [information] about variations in the parameters. There are different types of data partition; a **single** partition of a data set provides holdout samples for prediction and validation purposes. A **multiple** partitions as for example [bootstrapping] and [K-fold cross validation] to help inference.
 
 ```{mermaid}
+%%| fig-width: 2
 %%| label: fig-data_split
 %%| fig-cap: Different ways of partitioning data in order to get more information aboout the model."
 flowchart TB
@@ -647,7 +673,7 @@ Data analysis is the art of extraction information from the [data]. In any [data
 
 #### data generating mechanism
 
-The [data generating mechanism] is a set of assumptions on how the [data] are generated. It is often difficult to check those [assumptions] because different [data generating mechanism]s could possible lead to similar results. Thet is a have a [Rashomon effect] on the bdata rather than the. model. In [distributional regression] often the [data generating mechanism] is an assumption abouth the [distribution] of the [response] given the [explanatory variables].
+The [data generating mechanism] is a set of assumptions on how the [data] are generated. It is often difficult to check those [assumptions] because different [data generating mechanism]s could possible lead to similar data sets. That is, a [Rashomon set] where different model perform adequately for given data set. In [distributional regression] often the [data generating mechanism] is the assumption abouth the [distribution] of the [response] given the [explanatory variables].
 
 #### degrees of freedom
 
@@ -663,11 +689,16 @@ The [deviance] is a measure of goodness of fit and defined as $-2 \ell(\boldsymb
 
 #### deviance increment
 
-::: callout-note
-Definition
-:::
+see [deviance incremments] 
+
+#### deviance increments
+
+In [distributional regression] the [deviance] is defined as  $-2 \ell(\boldsymbol{\theta})= \sum_{i=1}^n -2 \log f(y_i|\boldsymbol{\theta}_i)$ where $f(y_i|\boldsymbol{\theta}_i)$ is the assumed [pdf] for the [response]. The [deviance increments] are the individual values $-2 \log f(y_i|\boldsymbol{\theta}_i)$ which make up the deviance. The [deviance increments] can be used as  [diagnostic  tool] to identify observations in which the ditribution did not fot well.   
+
 
 ```{r}
+#| label: fig-deviance-incr
+#| fig-cap: "A typical plot of deviance increments against the obsevation number." 
 library(gamlss.ggplots)
 fitted_devianceIncr(m1)
 ```
@@ -708,6 +739,8 @@ The term [distribution] refer to a probability [distribution] function [pdf], $f
 
 #### distribution parameter 
 
+See [distribution parameters].
+
 #### distribution parameters
 
 Within a [distributional regression] we use the term [distribution parameters] as almost synonymous to [distributional parameters] to refer to the parameters $\boldsymbol{\theta}$ in the [distribution] of the [response] $D(y|\boldsymbol{\theta})$, see also [distributional parameters].
@@ -723,7 +756,7 @@ A distributional regression model is an [input-output model] model in which the 
 
 #### diversity
 
-By  [diversity] we mean the qualitative differences between [model]s/[base learners]. 
+By [diversity] we mean the qualitative differences between [model]'s or [base learner]s. 
 
 #### dummy variables
 
@@ -856,7 +889,7 @@ Explanatory variables in an [input-output model] are the input variables $X$. In
 The [exponential family] is a family of theoretical [distribution]s with the propety of allowing [sufficient statistic]s
 
 ::: callout-note
-Definition
+We need a definition probably from book 2
 :::
 
 #### expected value
@@ -866,7 +899,7 @@ The [expected value] (the [mean] or first [moment]) of a [distribution] is defin
 #### extreme value copulas
 
 ::: callout-note
-Definition
+we need a definition
 :::
 
 ################################################################################ 
@@ -910,6 +943,11 @@ By default `head()` give only the first 6 values of the $n$ length vectors. Note
 head(predict(m1,  type="link"))
 ```
 
+
+#### fitted model
+
+A [fitted model] is a model in which its parameters are estimaed using the data. Seee also [model fitting]
+
 #### feature
 
 A [feature] in [data] analysis is an one of the [explanatory variables] used for the model possible after a [transformation]. In statistical modelling a [feature] is a function of the [explanatory variables] in the [data].
@@ -933,7 +971,15 @@ $$ where: $f_k(x)$ are probability density [pdf]s functions, $\pi_k$ are mixing 
 
 #### first order interaction
 
+::: callout-note
+We need a definition
+:::
+
 #### Frank copula
+
+::: callout-note
+We need a definition
+:::
 
 #### formula
 
@@ -1058,11 +1104,19 @@ wp(resid=y)
 
 #### generalized Tobit model
 
+::: callout-note
+We need a definition probably from book 2
+:::
+
 #### generalized Tobit distribution
+
+::: callout-note
+We need a definition probably from book 2
+:::
 
 #### goodness of fit
 
-A goodness of fit is a measure (a quantity) design to evaluate how close the model is to the data.
+A goodness of fit is a type of distaince measure design to evaluate how close the [model] is to the [data].
 
 #### GAIC
 
@@ -1073,6 +1127,10 @@ GAIC is the Generalise Akaike Information Criterion defined as `deviance` $+k \t
 A [graphic] is a plot which help the analysis of [data]. A post-[fit] graphic that is a plot depending on the [fitted values] of a [model] usually is either a \[diagnostic\] to help checking assumptions or it is there to help the [interpretation] of the model.
 
 #### gradient boosting
+
+::: callout-note
+We need a definition probably from book 3
+:::
 
 #### Gumbel copula
 
@@ -1124,9 +1182,20 @@ truehist(rent99$rent)
 
 #### hierarchical Archimedean copulas
 
+::: callout-note
+We need a definition
+:::
+
 #### hypothesis
 
 The hypothesis is what the researcher tries to understand and answer see also the `purpose` of the study
+
+
+#### hypothesis test
+
+::: callout-note
+We need a definition
+:::
 
 #### hyper parameter
 
@@ -1156,6 +1225,10 @@ By [information theory] we mean the theory of of communication developed by @sha
 
 #### inter quantile range
 
+::: callout-note
+We need a definition probably from book 2
+:::
+
 #### interpretable model
 
 A model is an [interpretable model] if its is easy to explain to others. Most [mathematical model]s but not all [algorithmic model]s are [interpretable model]s. The following words have the same meaning as [interpretable model], **transparent** model, **explainable** model or **comprehensive** model.
@@ -1165,6 +1238,10 @@ A model is an [interpretable model] if its is easy to explain to others. Most [m
 A [random] variable is taking [interval values] if its exact value observed value is not known but we know that it occurred in a specific interval [range] i.e $10< Y <15$. Another expression of this behaviour is [censored values].
 
 #### inverse Gaussian distribution
+::: callout-note
+We need a definition
+:::
+
 
 #### input-output model
 
@@ -1218,7 +1295,6 @@ data(rent99)
 head(with(rent99,model.matrix(formula(~area+location))), 15)
 ```
 
-
 #### intercept
 
 In any (linear) design matrix of a [model] the intercept represent the constant of the model. In [regression analysis] the constant is included in the model by default. So any [formula] will include the constant unless is taken out using in the formula using `-1`.
@@ -1260,11 +1336,6 @@ AIC(m_1, m_2, k=0)
 ```
 
 
-#### categorical variable
-
-A [categorical variable] is a [vector] in the data which take only restriced values.  Those variables are called [factor]s in [statistical analysis]  
-
-
 
 #### inference
 
@@ -1282,17 +1353,63 @@ The [explanatory variables] in a [regression analysis] same as the input in an [
 
 ## J
 
+#### joint distribution
+
+::: callout-note
+We need a definition
+:::
+
+
+
 ################################################################################ 
 
 ## K
 
 #### K-fold cross validation
 
-A K-fold Cross Validation provides [training] and [test] data for all the observations by going through all the K-folds, It provides unique `fitted values` and `residualas` and in addition provides multiple $K-1$ values for fitted values and residualas for the training $K-1$ folds.
+A [K-fold cross validation] process provides [training] and [test] data for all the observations by going through a  K-fold  [data partition]. The [data] are shuffle and slit into K data sets of approximately equal sizes. Then data from the K-1-folds are use to [fit] the [model] and the remaining fold to evaluate the performance of the [model] e.g. getting prediction fitted values and test data residuals see @fig-k-fold. By the time the process is finish a [K-fold cross validation]  provides unique [test] `fitted values` and [test] `residuals`. In addition provides multiple $K-1$ values from the fitted values and residuals obtained durring the [training] fits. Note that each fold is used once as [test] data while the [training] data uses k−1 folds. For a [final model] we can use the [test] fitted values and [test] residuals to check the overall performance of the model. Since all the measures to check the performance are obtain from test data over-fitting] ca be laso checked.
+
+The special cases of [K-fold cross validation] is when $K = n$ which implies that t there are $n$ model to be fitted is called  [leave-one-out cross validation]. Stratified k-fold preserves class proportions
+
+
+```{mermaid}
+%%| fig-width: 2
+%%| label: fig-k-fold
+%%| fig-cap: "How k-fold cross validation is working: it utilised the data partition to create fitted values and residuals from the test data to create a model evaluation based only on test data"
+flowchart LR
+    D[Data] --> S[Shuffle <br/> & Split]
+
+    S --> F1[fit folds 2...K]
+    S --> F2[fit folds 1,3...K]
+    S --> F3[...]
+    S --> Fk[fits folds 1,...K-1]
+
+    F1 --> T1[test fold 1]
+    F2 --> T2[test fold 2]
+    F3 --> T3[...]
+    Fk --> Tk[test fold K]
+
+    T1 --> R1[test fitted values & resid <br/>  from fold 1]
+    T2 --> R2[test fitted values & resid <br/>  from fold  2]
+    T3 --> R3[test fitted values & resid <br/> from fold  ...]
+    Tk --> Rk[gest fitted values & resid <br/> from fold  K]
+
+    R1 --> A[check <br/>  performance]
+    R2 --> A
+    R3 --> A
+    Rk --> A
+```
+
 
 #### kurtosis
 
+::: callout-note
+We need a definition probebly from book 2 
+:::
+
 #### kurtosis parameter
+
+A kurtosis parameter is a {shape parameter] of the [distribution] which effect how fat are the tails of the distribution.  
 
 ################################################################################ 
 
@@ -1300,7 +1417,17 @@ A K-fold Cross Validation provides [training] and [test] data for all the observ
 
 #### LASSO
 
+::: callout-note
+We need a definition
+:::
+
 #### least squares
+
+The method of [least squares] is oldest method used to [fit] a [regression model]. 
+
+::: callout-note
+We need more here 
+:::
 
 #### level
 
@@ -1310,11 +1437,17 @@ By [level]s we refer to the distinct values of a [factor].
 #### learner
 In [boosting] methodology a basic [learner] is a simple [model] with the property that  for [prediction] purpose, it has to do a little bit better than the average prediction. The idea is that if we average a lot of **complementary** **sequential** [learner]s we would be able to produce an [adequate fit]. By complementary we mean [model]s each capturing a little different aspect of the [data]. By sequential we mean that each learner tries to improve from the the previous by weighting more [observation]s in the larger [residuals] in the previous [model].
 
+#### leave-one-out cross validation
 
+See [K-fold cross validation].
 
 #### linear model
 
 By linear model we refer to models described by the [assumptions] $\textbf{y}=\textbf{X}\boldsymbol{\beta}+e$ where $e_i \sim N(\boldsymbol{0}, \sigma^2)$. That is the relationship between the response and the explanatory variables is linear determined by the coefficients $\boldsymbol{\beta}$ and the error term has a normal [distribution] with constant variance $\sigma^2$. The unknwon parameters in this case are the $\boldsymbol{\beta}$ and $\sigma^2$. I we know those parameters we can predict the behaviour of the response if the model is correct.
+
+::: callout-note
+Do we  need more?
+:::
 
 #### link function
 
@@ -1327,6 +1460,11 @@ A function connecting the model predictor with the [distribution parameter] for 
 The likelihood function is define as the [probability] of observing the [sample] seeing not as a function of the random variable involed but as a function of the parameters of its distribution. For example, let the random vector variable $Y$ to come from an assumed [distribution] $f(\textbf{Y}|\boldsymbol{\theta})$. We obsrved the $n$ dimensional vector $\textbf{y}$. If in addition we assume that the elements of $\textbf{y}$ are independed fraom each other, then the likelihood funtion for $\boldsymbol{\theta}$ is defined as $$L(\boldsymbol{\theta})=\prod_{i=1}^{n} f(y_i|\boldsymbol{\theta})$$ and its log-likelihood as
 
 $$\ell(\boldsymbol{\theta})=\sum_{i=1}^{n} \log f(y_i|\boldsymbol{\theta})$$ In both cases the functions are seen as functions of the parameters $\boldsymbol{\theta}$ rather than of the ranom variable $\textbf{y}$. Note also that the assumed [data generating mechanism] plays a role in the construction of the likelihood function. If we suspect that the data are not independent from each other the definition of the likelihood sgould be different.
+
+#### likelihood ratio test 
+::: callout-note
+We need a definition ans example 
+:::
 
 #### log likelihood
 
@@ -1350,6 +1488,9 @@ The [lower model] is the simplest possible model in the range of all possible mo
 
 #### main effect
 
+::: callout-note
+We need a definition
+:::
 #### Markov Chain Monte Carlo
 
 [Markov Chain Monte Carlo], [MCMC],  are a class of algorithms for sampling from complex probability distributions, especially Bayesian posterior distributions.
@@ -1360,6 +1501,10 @@ MCMC stands for [Markov cChain Monte Carlo] — a class of [algorithm]s for samp
 
 
 #### marginal distribution
+
+::: callout-note
+We need a definition
+:::
 
 #### mathematical model
 
@@ -1403,13 +1548,38 @@ A [mean] is defined either as one of the [characteristics of the distribution] o
 
 A [median] is defined either as one of the [characteristics of the distribution] of a [random] variable or as a characteristic of a [vector] in the [data] set. Let $F(Y)$ be the [cdf] of the random variable $Y$ then the [median] of $Y$ is defined as the value of $Y$ satisfying the equation $0.50=F(Y)$ or $\text{median}(Y)=F^{-1}(0.50)$ where $F^{-1}()$ is the inverse of the [cdf] also known as the [quantile function]. For [vector] in the [data]/[sample] the median can be defined similarly using the [empirical cdf] of the [vector].
 
+
+#### missing observartions
+
+The idea of [missing observations] are [data] points that were intended to be recorded but have no observed value for one or more of the [vector]s of variables.  The [data generating mechanism] on how the  [[missing observations] were  generated it  matters for [model] analysis:
+
+-	MCAR – **Missing Completely At Random**; The mechanism of the missing observations is unrelated to any data (observed or unobserved). The complete-case analysis is unbiased but inefficient.
+	
+-	MAR – **Missing At Random**; the mechanism of the missing observations depends only on the  observed variables Likelihood so methods based  on multiple imputation are valid.
+	
+-	MNAR - **Missing Not At Random**. The missing mechanism depends on the unobserved values themselves. This type of missing values need and  explicit modelling of the mossing mechanism or **sensitivity** analysis.
+
+The consequences of missing values are	a loss of [information] and [power], potential [bias] in estimates and complications in model fitting and interpretation
+
+For more information about the handing of missing values within  [distributional regression] we commenter the book @van2018flexible.
+
+
 #### mode
 
 A [mode] is defined either as one of the [characteristics of the distribution] of a [random] variable or as a characteristic of a [vector] in the [data] set. The [mode] as one of the [characteristics of the distribution] indicates which the value of a [random] variable $X$ in which it has its higher [pdf] value. In a [vector]s in the [data], $\textbf{x}$, the [mode] indicates the value of $\textbf{x}$ with the highest frequency of occurring.
 
 #### moment
 
+::: callout-note
+We need a definition probably from book 2
+:::
+
 #### mixed distribution
+
+::: callout-note
+We need a definition probably from book 2
+:::
+
 
 #### questions
 
@@ -1440,7 +1610,7 @@ A measure of goodness of fit is usually an [empirical Risk] measure. For exampe 
 A [model] is a simplification of reality to provide simple way to understand the structure of a problem. There are different types of [model]s according to [purpose] of the study. The [purpose] of the study is defined by the [questions] the investigator who contact the study need to answer. In [data analysis] we can think of a [model] as a filter which tries to extract the important information from the data while disregard the non-relevant see @fig-filter.
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-width: 2
 %%| label: fig-filter
 %%| fig-cap: "The model acts as filter to extract  important information  from the data."
 flowchart LR
@@ -1480,13 +1650,13 @@ The term [model average] or [stacking] is when the [final model] is chosen by av
 
 #### model fitting
 
-A [model fitting] process involves the [data], the [model] (which depends on [assumptions]) and the [purpose] of the study. The assumed [model] is fitted to the [data] by minimise a [measure of goodness of fit]. @fig-fit shows a single [fit] to the [data] which should reflect the [purpose] of the study. Note that we will need a [model selection] procedure to make sure that we end up with an [adequate fit]. A [adequate fit] provides evidence that we have not [under fit] but we could have [over fit]. Over fit could be checked with [test] data. A single [fit] provides unique [fitted values] and [residuals] for both [training] and [test] data sets.
+A [model fitting] process involves the [data], the [model] (which depends on [assumptions]) and the [purpose] of the study. The assumed [model] is fitted to the [data] by minimise a [measure of goodness of fit] which should depend on the  [purpose]. @fig-fit shows a single [fit] to the [data] which should reflect the [purpose] of the study. Note that we will need a [model selection] procedure to make sure that we end up with an [adequate fit]. A [adequate fit] provides evidence that we have not [under fit] but we could have [over fit]. Over fit could be checked with [test] data. A single [fit] provides unique [fitted values] and [residuals] for both [training] and [test] data sets.
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-width: 2
 %%| label: fig-fit
 %%| fig-cap: "The model fitting process needs both data and model which to conform with the purpose of the study  "
-flowchart TB
+flowchart LR
   subgraph model-fitting-process
    style model-fitting-process fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px
     direction LR
@@ -1494,17 +1664,21 @@ flowchart TB
     M[model]
     P[purpose]
   end
-  M --> F(fit)
-  
-  M <--> D
-  D <--> P
+  D <--> M
+  P <--> D
   M <--> P
-  F --> P
+  P --> Q
+  M --> F(fit)
+Q[measure of fit] <--> F
 ```
 
 #### model formula
 
-A model formula in R takes a
+A model formula in R takes 
+
+::: callout-note
+We need a definition 
+:::
 
 #### model selection
 
@@ -1520,6 +1694,10 @@ The [model prediction] is the state, of a [statistical modelling] process in whi
 
 #### multicollinearity
 
+::: callout-note
+We need a definition
+:::
+
 #### multivariate distribution
 
 A [distribution] function [pdf] for more that one [random] variable.
@@ -1534,7 +1712,19 @@ $n$ is number of observations in a [tabular data] set
 
 #### natural variability
 
+See [natural variation]. 
+
+
+
+#### natural variation
+
+The [natural variation] refers to the variability in the [data]. The idea behind is that even if we were able to collect data more that ones from the same [population], under similar conditions, the data will be different reflecting the [natural variation] of the data. This makes necessary to use a [stochastic model]. In [regression analysis] the [natural variation] is reflected in the variation of the [response] variable. Even if we be able to collect data at the same values of the explanatory variables the response will be different.
+
 #### normalised randomosed quantile ressiduals
+
+::: callout-note
+We need a definition
+:::
 
 #### neural network
 
@@ -1557,6 +1747,10 @@ Neural networks were not invented by a single person; they developed over time t
 -   Werbos; Rumelhart, Hinton, Williams 2010s ?? Deep learning boom Many contributors
 
 #### normal distribution 
+
+::: callout-note
+We need a definition probably from book 2
+:::
 
 #### normalized quantile residuals
 
@@ -1626,6 +1820,10 @@ We usually refer to the rows of a [tabular data] as the [observations]. Note tha
 
 #### ordinary differential equations
 
+::: callout
+We need a definition 
+:::
+
 #### Occam’s principle {#occams-principle}
 
 The [Occam’s principle](#occams-principle) from the Latin "Entia non sunt multiplicanda praeter necessitatem" (“Entities should not be multiplied beyond necessity.”) it says that "among competing explanations, the one with the fewest assumptions should be preferred". The principle does not say the simplest explanation is always true but a simpler models is preferable if explain the data equally well and complexity should not be introduce unnecessary. In [statistical modelling] for [mathematical model] it means [model] with fewer parameters are preferable if they explain the model well or more generally if two models fit the data similarly, choose the one with fewer predictors. Note that if models fit the data similarly they belong the [Rashomon set] of relevant models.
@@ -1642,9 +1840,22 @@ By [over fit] we mean situations where the model is too close to the actual [dat
 
 By [out of bag] [data] we refer to [data] that they have not be used to [fit] the [model]. That is, [test] or [validation data] sets.
 
+#### outliers
+
+::: callout-note
+We need a definition 
+:::
+
 ################################################################################ 
 
 ## P
+
+
+#### p-value 
+
+::: callout-note
+We need a definition 
+:::
 
 #### pacf
 
@@ -1666,7 +1877,15 @@ The principal of parsimony is what is also known as [Occam’s principle](#occam
 
 #### partial effects
 
+::: callout-note
+We need a definition probably from book 3
+:::
+
 #### partial differential equations
+
+::: callout-note
+We need a definition probably
+:::
 
 #### parameters
 
@@ -1674,18 +1893,22 @@ We refer to [parameters] as an generic term for all the unknown quantities withi
 
 #### Poisson distribution
 
+::: callout-note
+We need a definition probably from book 2
+:::
+
 #### population
 
-The population is often the object we would like to study. The population is related to the [purpose] of the study. The idea behind is that we collect a [sample] ([data]) from the [population] of interest and use a [model] to drew [statistical inference] about the [population]. The process of [statistical inference] it is shown in @fig-population. We need information about the [population] but we only have a [sample]/[data] form the population which is assumed to be obtained after a \[data generation mechanism\]. We make [assumptions] to create [model] which is then use to say something about the [population]. Going from the model to the population is called [statistical inference]. Note that any [statistical inference] is heavily depends on the [model] which itself depends on the [assumptions] and the \[data generation mechanism\]. If anything go wrong with the [assumptions] \[statiscal inference\] can be wrong.
+The population is often the object we would like to study. The population is related to the [purpose] of the study. The idea behind is that we collect a [sample] ([data]) from the [population] of interest and use a [model] to drew [statistical inference] about the [population]. The process of [statistical inference] it is shown in @fig-population. We need information about the [population] but we only have a [sample]/[data] form the population which is assumed to be obtained after a [data generating mechanism]. We make [assumptions] to create [model] which is then use to say something about the [population]. Going from the model to the population is called [statistical inference]. Note that any [statistical inference] is heavily depends on the [model] which itself depends on the [assumptions] and the [data generating mechanism]. If anything go wrong with the [assumptions] [statistical inference] can be wrong.
 
 ```{mermaid}
+%%| fig-width: 2
 %%| fig-cap: "Statistical inference: how to go from the sample to the population."
-%%| fig-width: 5
 %%| label: fig-population
 flowchart TB
-  P{population} 
+  P[population] 
   D(data generation mechanism)  
-  S{sample-data} 
+  S[sample-data] 
   M[model] 
   I(statistical inference)
   A(assumptions)
@@ -1700,6 +1923,9 @@ flowchart TB
 
 #### principle component regression
 
+::: callout-note
+We need a definition probably from the paper
+:::
 
 #### properties of the distribution
 
@@ -1715,23 +1941,31 @@ By [power transformation] in [distributional regression] framwork we mean the [t
 
 #### purpose
 
-The purpose of the study is the [hypothesis] the study is working on.
+The [purpose] of the study is the [hypothesis] the study is working on which in turn depends on the [questions] need to be answered.
 
 #### pdf
 
+A [pdf] is the [probability distribution function] for a [random] variable.  The definition of a [random] variable is that it is associated with a [distribution]. Let  $Y$ be a random variable associated with [distribution] $f(Y)$, we denote this as $Y \sim f(Y)$.  The only property that the function $f(Y)$ must have is that it should add up to one.   
+
 #### penalised least squares
+
+::: callout-note
+We need a definition
+:::
 
 #### PIT residuals
 
-The [PIT residuals] stands for the probability integral transformed residuals. Within a [distributional regression] framework are defined as, $$\hat{u}_i = F(y_i| \hat{\boldsymbol {\theta}}_i).$$ {#eq-PITresid} for $i=1\ldots,n,$ where $F(.,| \hat{\boldsymbol {\theta}}_i)$ is the [cdf] of the fitted [model]. If the [distribution] of $y_i$ is specified "correctly" then the [PIT residuals] are expected to behave as identical and independently distributed (i.i.d) random variable from a [uniform distribution] i.e $u_i \sim U(0,1)$. While the above definion of IT residuals works perfectly for [continuous distribution]s are not ideal for [discrete distribution]s especially if the [range] of the response is limited to small [range] i.e. $0,1,\ldots,10$, For [mixed distribution]s where there is small amount of discrete values or for [censored response]s. A randomisation of the PIT residuals between the values $y_i$ and $y_i+1$ usually solves the problem see for example Chapter 10 of @Stasinopoulosetal2017.
+The [PIT residuals] stands for the probability integral transformed residuals. Within a [distributional regression] framework The PIT are defined as, $$\hat{u}_i = F(y_i| \hat{\boldsymbol {\theta}}_i).$$ {#eq-PITresid} for $i=1\ldots,n,$ where $F(.,| \hat{\boldsymbol {\theta}}_i)$ is the assumed [cdf] of the fitted [model]. If the [distribution] of $y_i$ is [adequate] for the [data] then the [PIT residuals] are expected to behave as identical and independently distributed (i.i.d) random variable from a [uniform distribution] i.e $u_i \sim U(0,1)$. While the above definition of [PIT residuals] works perfectly for [continuous distribution]s the PIT resuduals are not ideal for [discrete distribution]s especially if the [range] of the response is limited e.g.  $0,1,\ldots,10$. The problem appears  for a [mixed distribution] or a [censored response] variable. In [mixed distributions]  there is a small amount of discrete values which with disturb the look of the residuals. In a [censored response] we do not know the exact value of the [response] to calculate the correct PIP.  A randomisation of the [PIT residuals] between the values $y_i$ and $y_i+1$ in discrete cases usually solves the problem  see for example Chapter 10 of @Stasinopoulosetal2017. The problem is that in ths case we have dumplcate resudial values to consider. 
+
+Not that the probability integral transformed   plays an important role in [copula] theory since a [copula], $C(.)$, is a multivariate [distribution] define on a $(0,1)$ [range] after a transformation of marginal [random] variables, e.g. let $f_1(Y)$ and $f_2(Y)$  be two marginal [pdf]s them the variable $u_1= F_1(Y)$ and $u_2= F_2(Y)$ are defined the two dimensional [copula] $C(u_1, u_2)$.
 
 #### prediction
 
-By [prediction], in a standard [regression analysis], we mean using the [model fitting] to predict the behaviour of the [response]. Note, that in a [distributional regression] [model] there are two uncertainties  associated with predicting of any future value of $Y$: i) uncertainty about the assumed [distribution] of $Y$ ans; ii) uncertainty about the [model fitting].
+By [prediction], in a standard [regression analysis], we mean using the [model] [fit] to predict the behaviour of the [response]. Note, that in a [distributional regression] [model] there are two uncertainties  associated with predicting of any future value of $Y$: i) uncertainty about the assumed [distribution] of $Y$ ans; ii) uncertainty about the [model fitting].
 
 #### prediction interval
 
-A [prediction interval] is a [confidence interval] intended to demonstrate the uncentaintly about future values of a quantity of interest. 
+A [prediction interval] is a [confidence interval] intended to demonstrate the uncertainty about future values of a quantity of interest. 
 
 
 
@@ -1745,29 +1979,95 @@ In [GLM]'s a **linear** [predictor] is $\boldsymbol{\eta}$, with fitted values d
 <!-- In [distributional regression] a [predictor] helps to model one of the [distribution parameters] i.e. $\boldsymbol{\theta}_i$. It help the [statistical modelling] process by ensuring that the [distribution parameter] $\boldsymbol{\theta}_i$ is always in the correct range. Consider the following example, let us assume that $0 < \boldsymbol{\theta}_i < \infty$ that is, $\boldsymbol{\theta}_i$ is always positive. If we modelled $\boldsymbol{\theta}_i$ as a function of explanatory variables i.e. $\boldsymbol{\theta}_i= c+s(x_1)+ s(x_2)$ occationally maybe $\boldsymbol{\theta}_i$ could go to negative values. But if we model the log of $\boldsymbol{\theta}_i$ using the [link function] $\eta_{\boldsymbol{\theta}_i}=\log(\boldsymbol{\theta}_i)=c+s(x_1)+ s(x_2)$ the parameter $\boldsymbol{\theta}_i= \exp(\eta_{\boldsymbol{\theta}_i})$ is always positive. -->
 A [predictor] is a one to one function of the [distribution parameters]  e.g.  $\boldsymbol{\eta}=g_{\theta}(\boldsymbol{\theta})$ where $g_{\theta}()$ is the [link function]  which when modelling the parameter as a function of [explanatory variables] insures that the [distribution parameter] will be in the right [range].
 
+#### pre-data analysis
 
+We call a  preliminary data analysis or [pre-data analysis] the stage od the analysis which inspect the data,  before, and to help modelling. There three main reasons to do this analysis.
+
+
+i) to know your data better by looking at its **structure**; e.g.  the size, whether  [continuous variable]s or [factor]s and by taking nto the account [missing observations] in the [data]; 
+
+ii) to **identify** [outliers], [transformation]s and associations between  [term]s.
+
+iii) possible [data partition]s.
+
+@fig-pre-data shows  how  the [pre-data analysis] could help with modelling.  
+
+```{mermaid}
+%%| fig-width: 2
+%%| label: fig-pre-data
+%%| fig-cap: "Pre-analysis of the data involves knowing more about the structure, identify peculiarities and portioning of the data."    
+flowchart TB
+  D[Data] --> P(preliminary data <br/>  analysis) 
+  P --> S(structure)
+  P --> I(identify)  
+  P --> A(partition)
+  S --> M[model]
+  I --> M
+  A --> M
+```
 
 
 #### prior weights
 
+We define as [prior weights] the predefined weights assigned to observations in a [data] set before  a [model] [fit].  The [prior weights] reflect the perceive relative importance  of observations in the  analysis. 
+
+Most of the fitting [model] functions in `R` have the option  `weights` for defining [prior weights], e.g. `lm(y~x,weights=wt)`.  
+
 #### probability
+
+The word [probability] is defined as a numerical measure, between 0 and 1, which shows  how likely an event is to occur. 
+
+#### probability distribution function
+
+A  [probability distribution function] is the [distribution]  function associated with a [random] variable, see also [pdf]. 
 
 ################################################################################ 
 
 ## Q
 
+
 #### QQ-plot
+
+A [QQ-plot], (a [quantile]-[quantile] plot), is a [graphic] [diagnostic tool] for comparing the distribution of a [vector] in  the [data] set  to a theoretical distribution by plotting their corresponding quantiles against each other. 
+
+Within a [distributional regression] a [QQ-plot] is used for checking  whether the [residuals]/[z-scores] are normally distributed as it would be expected  is the assumed distribution for the [response ] is an [adequate distribution]. 
 
 #### quantile
 
+::: callout-note
+We need a definition probably from book 2
+:::
+
+#### quantile based measures
+
+A \[quantile based measure\] in a [distribution] is defined as a [characteristics of the distribution] based on the [quantile]s rather [moment]s. For example the measure are mbased no the \[mediam\] the [IQR] e.t.c.
+
+
 #### quantile function
+
+The [quantile function]if is the inverse of the [cdf], e.g. $F^{-1}(p)$. It maps  probabilities, range $[0.1]$, of a [random] variable $Y$ to the actual values of $Y$.
+The [quantile function] provides an easy way to obtain quantile values of any random variable. In `R` notation the [quantile function] starts with `q`, e.g. `qNO()` for the [quantile function] of a [normal distribution]. 
+
+```{r}
+#| warning: false
+#| fig-cap: "The quantile function of a BCT distribution with mu=1, sigma=.1, nu=1, tau=5."
+#| label: fig-Q-function
+#| 
+Qfun <- function(p) {qBCTo(p, mu=1, sigma=.1, 
+                           nu=1, tau=5)}
+p9 <- ggplot(data.frame(u = c(0, 1)), aes(x = u)) +
+        stat_function(fun = Qfun, lwd=1.5)+
+        ylab("Q-function")
+p9
+```
+
 
 #### quantile residuals
 
 The [quantile residuals]  also called [PIT residuals] see [residuals].
 
 
-
+################################################################################
 ## R
 
 #### $r$
@@ -1812,7 +2112,16 @@ A [regression analysis] is an statistical [input-output model] analysis, analysi
 
 #### regression tree
 
+::: callout-note
+We need a definition 
+:::
+
 #### reference curves
+
+::: callout-note
+We need a definition probably from book 1
+:::
+
 
 #### residuals
 
@@ -1853,9 +2162,14 @@ The SBC is another name for [BIC]. It stand for the Schwarz Bayesian Criterion f
 
 #### scale parameter
 
+::: callout-note
+We need a definition probably from book 2
+:::
+
 #### Sklar's theorem
 
 The Sklar's theorem , (@sklar1959fonctions) states that every multivariate [cdf] $F(x_1,\dots, x_r)$ with marginals [cdf]s $F1(x1)$, $\ldots$, $F_r(x_r)$ can be written as $$F(x_1,\ldots,x_r) = C_r[F_1(x_1),\ldots,F_r(x_r)]$$ for some appropriate r-dimensional copula $C_r$.
+
 
 #### selection of terms
 
@@ -1867,23 +2181,18 @@ Skewness is a statistical measure indicating whether a sample [vector] is symmet
 
 #### skewness parameter
 
+::: callout-note
+We need a definition probably from book 2
+:::
+
 #### simulation model
 
 A [simulation model] is a [model] in which is computer simulated several times usually in thousand, in order to determine the future behaviour of the [subjects] of interest according the the [variables] in the model.
 
-#### supervised learning model
-
-A [supervised learning model] is a regression model in which a [response] exist.
 
 #### statistic
 
 The term [statistic] refers to a function of the [data]/[sample]. For example, the mean of the vector $\textbf{x}$ in the [data] defined as $\bar{x}= \frac{1}{n}\sum_{i=1}^{n} x_i$ is a [statistic], since it is a function of the [data]. A [statistic] captures properties of the [sample] the same way that [moment]s and \[centile based measures\] caption properties of a theoretical distribution. In the past, it was common practice, to equate [statistic]s with their equivalent [distribution] characteristic to draw inference from the [population]. The practice almost abandoned after the introduction of [MLE].
-
-#### centile based measure
-
-A [centile based measure] is equivalent to a \[quantile based measure\]. It describes a [characteristics of the distribution] based on [quantile]/[centile] rather [moment].
-
-For example $\bar{x}$ can be used as estimate of the mean $\mathbb{E}(X)$ of the theoretical [distribution] assumed for $x$ i.e. $\mathbb{E}(X)= \int_{-\infty}^{\infty} X f(X) dx$, where $f(X)$ is the assumes [distribution] for the [vector] $x$.
 
 #### statistical inference
 
@@ -1895,10 +2204,19 @@ A statistical model is a [mathematical model] containing a [stochastic] componen
 
 #### statistical modelling
 
-Statistical modelling is the art of creating a [statistical model] to represents the [data] adequately. A [statistical model] extract information from the data to answer the [questions] of interest. The [questions] are the [purpose] of the study. Statistical modelling is a process. @fig-model shows how the [statistical modelling] process works: the [data], the [model] and the [questions] to be answered from the [data] are all inter-connected. Typicaly the data are collected to answer the questions and the data do that. Any [model] needs [assumptions] to be created and also needs a [measure of goodness of fit] as a way to evaluate its performance. The measure of [goodness of fit] is measuring the distance between the [data] and the [model] and therefore depend on both the [data] and the fitted [model]. Given the [fit] is an [adequate fit], the [interpretation] of the model helps to answer the [questions]. @fig-model describe the structure of [statistical modelling] process. Finding an [adequate model] is the essence of statistical modelling.
+Statistical modelling is the art of creating a [statistical model] to represents the [data] adequately.  @fig-mod_2 shows the [statistical model] as a filter which extract [information] from the [data]. This either because we would like to go back to the [population], a process known as [statistical inference] or because we would like to gain knowledge from the [information] in the data, a process known as [data analysis]. The [information] is needed to answer the [questions] posed by the researcher which are essential the [purpose] of the study.
+```{mermaid}
+%%| fig-width: 2
+%%| label: fig-mod_2
+%%| fig-cap: "Showing how a model is behaving as afilter to extract information from the data"
+flowchart LR
+  D[data] --> M[model] 
+  M --> I(information)
+```
+The will refer to [questions] are the main [purpose] of the study. Statistical modelling is a process. @fig-model shows how the [statistical modelling] process works: the [data], the [model] and the [questions] to be answered from the [data] are all inter-connected. Typically the [data] are collected to answer the [questions] and the [model] is the filter to get the important information for answering the [questions]. The fist question every statistical modelled has to answer is whether the [data] or the [model] are apple to answer the [questions].   But any [model] needs [assumptions] and also needs a [measure of goodness of fit] as a way to evaluate its performance. The measure of [goodness of fit] is measuring a **distance** between the [data] and the [model] and therefore is a function of both the [data] and the fitted [model]. Given the [fit] is an [adequate fit], the [interpretation] of the model helps to answer the [questions].  Finding an [adequate model] is the essence of any statistical modelling process so next we spend time to discuss how we can achieve that. That is, how to find an [adequate model] and how do we know whether the [mode is adequate.
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-width: 2
 %%| label: fig-model
 %%| fig-cap: "The modelling process: the data, the model and the questions are inter-related. The model needs assumptions before the fit and an adequate fit help to answer the questions."
 flowchart TB
@@ -1922,14 +2240,31 @@ flowchart TB
   I --> Q 
 ```
 
-The question is how do we know that we reach an [adequate fit]?. By [adequate fit] we mean a model close to the [data] and be able to answer the [questions]. How close to the data a model is can be checked by the performance of the [goodness of fit] measure and by [diagnostic tool]s. However the [goodness of fit] measure is often a relative measures in the sense that is useful for comparing between models but not to show if any of then is [adequate fit]. This task mainly lies with [diagnostics tools]. More specificity \[diagnostic\] tools based on [residuals]. The reason is because in most \[stochastic models\], if the the [assumptions] are correct or nearly correct, we expect the [residuals] to behave as a [white noise]. Diagnostic plots demonstrating [white noise] [residuals] are a good sign that an [adequate fit] has been achieved. In conclusion a [adequate fit] can be verified using [residuals] [diagnostics] on the [training] data set in compilation with a good performance in a [goodness of fit] measure.
+@fig-mod_5 shows what we called the **classical statistical modelling process**  mentioned by @BoxJenkins70 in their famous  [time series] book.  It starts from the [data] and after going through a loop it ends with the [adequate model]. The loop is going around the [assumptions], the [model], the [fit], (using an appropriate [measure of goodness of fit]), the [diagnostics] and back into the [assumptions]. That is, assumptions are made the model is fitted and if the [diagnostics] and the [measure of goodness of fit] indicate an inadequate [fit] different assumption are made and the process in the loop continues until an [adequate model] is reach and the modelling process is finished. 
+
+```{mermaid}
+%%| fig-width: 2
+%%| label: fig-mod_5
+%%| fig-cap: "the classical statistical modelling process introducing a loop between assumptions, model, fit and diagnostics"
+flowchart TB
+  D[data] --> A(assumptions) 
+   A --> M(model)
+   M --> Y[adequate model]
+   M --> W(fit)
+   G[goodness of fit] <--> W
+   W --> V(diagnostics)
+   V --> A
+```
+
+
+Since the main task of [statistical modelling] is the find an [adequate model]  the question is how do we know that we find one?. By [adequate fit] we mean a model close to the [data] and be able to answer the [questions]. How close to the data a model is can be checked by the performance of the [goodness of fit] measure and by [diagnostic tool]s. However the [goodness of fit] measure is often a relative measures in the sense that is useful for comparing between models but not to show if any of then is [adequate fit]. This task mainly lies with [diagnostics tools]. More specificity [diagnostics] tools based on [residuals]. The reason is because in most [stochastic model]s, if the the [assumptions] are correct or nearly correct, we expect the [residuals] to behave as a [white noise]. Diagnostic plots demonstrating [white noise] [residuals] are a good sign that an [adequate fit] has been achieved. In conclusion a [adequate fit] can be verified using [residuals] [diagnostics] on the [training] data set in compilation with a good performance in a [goodness of fit] measure.
 
 There are two major statistical problems which could arising with [adequate model]s. The first is that for a given [data] set they could more than one [adequate model]s. The second problem has to do with [over fitting].
 
 The set of all [adequate model]s sometime is called the [Rashomon set]. This is a set of different fitted [model]s all of them [adequate model]s, believable, and with no good argument to discard them see @fig-rashomon.
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-width: 2
 %%| label: fig-rashomon
 %%| fig-cap: "Showing the process of creating a Rashomon set of models"
 flowchart TB
@@ -1949,30 +2284,19 @@ flowchart TB
 Since [statistical modelling] is a process there are a lot occasions in it can go wrong. Mostly things can go wrong when the wrong [assumptions] are made about the [model] explicitly or implicitly. would like to investigate this further so we look the process in more details. Explicitly or implicitly we assume that there exist a [population] of interest and there is [data generating mechanism] which creates the observed [data]/[sample] as in @fig-mod_1.
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-width: 2
 %%| label: fig-mod_1
 %%| fig-cap: "The relationship of the population and the data/sample."
 flowchart LR
-  P[population] --> G(data generating mechanism) 
+  P[population] --> G(data <br/>  generating mechanism) 
   G --> D[data]
 
-```
-
-@fig-mod_2 shows the [statistical model] as a filter which extract [information] from the [data]. This either because we would like to go back to the [population], \[a process known as [statistical inference]\] or because we would like to gain knowledge from the [information] in the data, a process kmown as [data analysis]. The [information] is needed to answer the [questions] posed by the researcher which are essential the [purpose] of the study.
-
-```{mermaid}
-%%| fig-width: 5
-%%| label: fig-mod_2
-%%| fig-cap: "Showing how a model is behaving as afilter to extract information from the data"
-flowchart LR
-  D[data] --> M[model] 
-  M --> I(information)
 ```
 
 In order to create a [model] we need to make [assumptions]. The [assumptions] should reflect the [data generating mechanism], the [data] itself but also the [purpose] of the study, see @fig-mod_3. Note that the assumtion also effect the measure of [goodness of fit] One should always ask the question on "whether the [data] or the [model] could answer the [questions]. The [assumptions] should account for the [natural variation] in the [data] but also able to capture the relationships between the variables in the [data].
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-width: 2
 %%| label: fig-mod_3
 %%| fig-cap: "A model need realistic assumptions to capture both the natural variable and ther interrealtioships in the model."
 flowchart TB
@@ -1987,44 +2311,26 @@ flowchart TB
   I --> Q[questions]
 ```
 
-The quality of the [information] to extracted in the [data] depends on the flexibility of the [model] and how realistic are the [assumptions]. Wrong [assumptions] could lead to wrong conclusions and therefore to wrong [interpretation]. This fact was recognise at an early stage of [statistical modelling] and lead to the introduction of [diagnostic tool]s for checking the appropriateness of the [assumptions]. A diagnostic is a [statistic] or a [graphic] which as a function of both the [data] and the [model] could check whether the assumptions of the [model] are adequate. A lot of the graphical [diagnostics] are based on the [residuals] of the [model] which if the [assumptions] are correct are expected to behave as [vector] of [white noise]. Typical examples are [QQ-plot]s and [worm plot]s. @fig-mod_5 shows what we called the classical statistical modelling process. Note that there is a loop going around starting from the [assumptions], the [model], the [fit], the [diagnostics] and back into the [assumptions]. That is, assumptions are made the model is fitted and if the [diagnostics] indicate an inadequate [fit] different assumption are made and the process in the loop continues until an [adequate model] is reach and the modelling process is finished. Our impression is that this process of [statistical modelling] was mentioned first by @BoxJenkins70 in their famous book on [time series].
+The quality of the [information] to extracted in the [data] depends on the flexibility of the [model] and how realistic are the [assumptions]. Wrong [assumptions] could lead to wrong conclusions and therefore to wrong [interpretation]. This fact was recognise at an early stage of [statistical modelling] and lead to the introduction of [diagnostic tool]s for checking the appropriateness of the [assumptions]. A diagnostic is a [statistic] or a [graphic] which as a function of both the [data] and the [model] could check whether the assumptions of the [model] are adequate. A lot of the graphical [diagnostics] are based on the [residuals] of the [model] which if the [assumptions] are correct are expected to behave as [vector] of [white noise]. Typical examples are [QQ-plot]s and [worm plot]s. 
 
-```{mermaid}
-%%| fig-width: 5
-%%| label: fig-mod_5
-%%| fig-cap: "the classical statistical modelling process introducing a loop between assumptions. model, fit and diagnostics"
-flowchart TB
-  D[data] --> A(assumptions) 
-   A --> M(model)
-   M --> Y[adequate model]
-   M --> W(fit)
-   W --> V(diagnostics)
-   V --> A
-```
 
 In a modern statistical modelling approach the data are partitioned to help detection of [over fitting] and prediction. @fig-modelling_modern show this new approach of statistical modelling. Instead of a single fitted model $B$ [candidate model]s are [fit]ted and subsequently aggregated (see [stacking]) before [model interpretation] and [model prediction].
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-height: 3
 %%| label: fig-modelling_modern
 %%| fig-cap: "The modern modelling process uses more models and aggregates them"
-flowchart LR
-  A[part. Data] --> B[Assumptions] 
-  B --> C{fit K-Models}
-   C -->|check| B
-  C --> D[stacking]
-  D --> E[interpretation & prediction]
+flowchart TB
+  A(data <br/>  partition) --> B[Assumptions] 
+  B --> C(stacking  <br/>  models)
+  C -->|check| B
+  C --> D(aggregate)
+  D --> E(interpretation)
 ```
 
 The achieve this more modern approach to statistical modelling the following technique could be used: [boosting] where a lot of week models are fitted to a single data set in such a way that the averaged models supplement each other. This is done by taking into the account the [residuals] of the previously [model fitting]; [bagging] when $B$ models are fitted to $B$ bootstrap [data partition]s and the models are averaged; [stacking] when when $B$ different [model]s are fitted to a single data set (no partition) and the models are averaged.
 
-#### fitted model
 
-A [fitted model] is a model in which its parameters are estimaed using the data. Seee also [model fitting]
-
-#### natural variation
-
-The [natural variation] refers to the variability in the [data]. The idea behind is that even if we were able to collect data more that ones from the same [population], under similar conditions, the data will be different reflecting the [natural variation] of the data. This makes necessary to use a [stochastic model]. In [regression analysis] the [natural variation] is reflected in the variation of the [response] variable. Even if we be able to collect data at the same values of the explanatory variables the response will be different.
 
 #### statistical model
 
@@ -2042,6 +2348,14 @@ The [scope] of a [step wise selection] procedure specify the range of all possib
 
 see [scope].
 
+
+#### score test  
+
+::: callout-note
+We need a definition
+:::
+
+
 #### step wise
 
 See [step wise selection]
@@ -2051,7 +2365,7 @@ See [step wise selection]
 A [step wise selection] procedure is a way of selecting [term]s in a [regression analysis]. The procedure to work needs a [scope] which specify the range of all possible [candidate model]s to be checked. Usually there is an order in the [scope], The [main effect]s go before [first order interaction]s and before the higher order interactions. The scope should contain a [lower model] and and [upper model]. The procedure also needs two competitive models; the [current model] and the [candidate model]. Those two models are compared using an appropriate measure of [goodness of fit] and the "best" model is them selected as the new [current model] this is shown in @fig-step_wise.
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-width: 2
 %%| label: fig-step_wise
 %%| fig-cap: "The step-wise approache for selecting a term"
 flowchart TB
@@ -2065,7 +2379,7 @@ flowchart TB
 The [starting model] becomes the [current model] as soon the procedure is starting. The procedure can go **forwards** (that is, after setting the [starting model] to the [current model]) trying to fit only more complicated models in the scope see @fig-step_wise_forwards;
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-width: 2
 %%| label: fig-step_wise_forwards
 %%| fig-cap: "The forward selection of terms "
 flowchart LR
@@ -2076,7 +2390,7 @@ flowchart LR
 The procedure can go **backwards**, that is, trying to fit only simpler models in the scope see @fig-step_wise_backwards;
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-width: 2
 %%| label: fig-step_wise_backwards
 %%| fig-cap: "The backwards selection of terms "
 flowchart RL
@@ -2087,7 +2401,7 @@ flowchart RL
 Or the procedure can got **both** ways, that is, choosing the best model either way from the [current model].
 
 ```{mermaid}
-%%| fig-width: 5
+%%| fig-width: 2
 %%| label: fig-step_wise_both
 %%| fig-cap: "The selection of terms going  in both directions."
 flowchart LR
@@ -2102,6 +2416,11 @@ A fitted [model] to start the [step wise] selection procedure for selecting term
 
 
 #### standard errors
+
+::: callout-note
+We need a definition
+:::
+
 
 #### SE
 [SE] is and abbreviation for [standard errors].
@@ -2132,6 +2451,13 @@ A [smooth function] $s()$ is a term in a [model] design to model non-linear rela
 
 A smooth model is a model containing smooth functions. For example the simpler smooth model is $\textbf{y}= s(\textbf{x})+\boldsymbol{\epsilon}$.
 
+#### smooth term
+
+::: callout-note
+We need a definition probably from book 1
+:::
+
+
 #### smoother
 
 A smoother is a \[smooth\] non-parametric function design to model non-linear relationships see [smooth function].
@@ -2151,6 +2477,12 @@ A [sufficient statistic] was a fundamental concept in statiscal inference in tha
 #### summary statistic
 
 A [summary statistic] is another wold for [statistic]
+
+
+#### supervised learning model
+
+A [supervised learning model] is a regression model in which a [response] exist.
+
 
 #### survival function
 
@@ -2184,6 +2516,11 @@ The [target] variables is the [response] variable in a [regression analysis]
 A [time series] [data] set is a data set when observations were obtained over time and therefore that is a high probability that they are not independently distributed but there is autocorrelation between sequential observations. A [time series] analysis is a methodology to deal with a \[time seriess\] [data].
 
 #### Tobit model
+
+::: callout-note
+We need a definition probably from book 2
+:::
+
 
 #### top down model
 
@@ -2240,7 +2577,7 @@ A [training] data set is the [data] set in which the [model] is [fit]ted.
 
 #### transformation
 
-By [transformation] we mean usualy a [vector] transformation, that is, a transformation of one of the columns of the [data] in something that it is more suitable for [statistical modelling]. In a [distributional regression] framework we rarely transforming the [response] variable, since the variability of the response is part of its assumed distribution. For example if we beleive that the response is highly \[skew\] to the left we caassume the log-[distribution] for $Y$ i.e `LOGNO` or `logTF`. Transformations in the $X$'s sometime do help the modelling process. Typically is if would suspect non-linearity in the relatioship and we would like ot use a [smoother] to model it ideally the $X$s should be equal spaced with no outliers. A [power transformation] could help this. In [centile estimation] when we are dealling with a single $X$ variable (often `age`) a [transformation] of the $X$ maybe is necessary to achieve a good [model]. \[reference here $\ldots$ Rigby et al. 2026\]. Note that the timing for creating a new [feature] by transforming $X$ could be achieved before or during the [fit]ting a [model]. For the formal case see the function `trans()` in the package `gamlss.prepdata` for the later case see Fasiolo at al. $\ldots$.
+By [transformation] we mean usualy a [vector] transformation, that is, a transformation of one of the columns of the [data] in something that it is more suitable for [statistical modelling]. In a [distributional regression] framework we rarely transforming the [response] variable, since the variability of the response is part of its assumed distribution. For example if we beleive that the response is highly \[skew\] to the left we caassume the log-[distribution] for $Y$ i.e `LOGNO` or `logTF`. Transformations in the $X$'s sometime do help the modelling process. Typically is if would suspect non-linearity in the relationship and we would like ot use a [smoother] to model it ideally the $X$s should be equal spaced with no outliers. A [power transformation] could help this. In [centile estimation] when we are dealing with a single $X$ variable (often `age`) a [transformation] of the $X$ maybe is necessary to achieve a good [model]. \[reference here $\ldots$ Rigby et al. 2026\]. Note that the timing for creating a new [feature] by transforming $X$ could be achieved before or during the [fit]ting a [model]. For the formal case see the function `trans()` in the package `gamlss.prepdata` for the later case see Fasiolo at al. $\ldots$.
 
 ################################################################################ 
 
@@ -2254,7 +2591,28 @@ A [model] under fits the [data] if it is not close enough to the data. The close
 
 #### uniform distribution
 
-#### univariate\` distribution
+A [uniform distribution] is a probability distribution, pdf], in which all values in a given range are equally likely. For continuous variable the most common case when the [random] variable $X$ is define in the range $(0,1)$ but it can be defined in any [range] $(\alpha,\beta)$. Often is denoted as $\text{U}(\alpha,\beta)$ and its probability density function is
+$$
+\begin{split}
+f(x) & = \dfrac{1}{b-a}, \qquad  a \le x \le b \\
+     & = 0, \quad  \quad  \quad \quad \text{otherwise}
+\end{split}
+$$
+It has mean $\frac{1}{2}$ and variance $\frac{1}{12}$. A  uniform [discrete  distribution] is a probability distribution, [pdf], in which each value in a finite set  $x_1, x_2, \ldots, x_n$, has the same probability:
+$$
+P(X = x_i) = \frac{1}{n}, \qquad i = 1,\ldots,n.
+$$
+Its mean is $(x_1+\cdots+x_n)/n$, and its variance depends on the spacing of the values.
+A typical example of a [uniform] [discrete  distribution] is the distribution of a fair six sided die;
+$$
+P(X = k) = \frac{1}{6}, \quad k = 1,2,3,4,5,6.
+$$
+Note that the [uniform distribution] is the distribution with the highest [entropy]. That is, a uniform distributed variable contains no [information]. 
+
+
+#### univariate  distribution
+
+A [univariate  distribution] involves only one [random] variable. Originally GAMLSS was developed for one [response] variable therefore its distribution was a [univariate  distribution]. 
 
 #### under fitting
 
@@ -2312,7 +2670,17 @@ A worm plot, @vanBuurenFredriks01, is a [diagnostic tool] which could be applied
 resid_wp(m2)
 ```
 
-################################################################################ 
+#### Wald test 
+
+The [Wald test] is a large-sample hypothesis tests used to assess whether one or more model parameters equal specified values. Let an estimator $\hat{\boldsymbol{\theta}}$ with estimated covariance matrix $\widehat{\mathrm{Var}}(\hat{\boldsymbol{\theta}})$. We would like to test the [hypothesis] $H_0: \boldsymbol{\theta} = \boldsymbol{\theta}_0$. The Wald statistic is defined as
+$$W = (\hat{\boldsymbol{\theta}}-\boldsymbol{\theta}_0)^\top
+\widehat{\mathrm{Var}}(\hat{\boldsymbol{\theta}})^{-1}
+(\hat{\boldsymbol{\theta}}-\boldsymbol{\theta}_0),$$
+which asymptotically follows a $\chi^2_q$ distribution, where $q$ is the [degrees of freedom] for fitting the specific [model]. In the special case of a  single parameter:
+we can use $z = \frac{\hat{\theta}}{\mathrm{SE}(\hat{\theta})}$
+which implies that  $z^2 \sim \chi^2_1$. Small [p-value] of the test reject $H_0$ and conclude the the parameter(s) differ from the null value. With large p-value we have  insufficient evidence against $H_0$.  The [Wald test] is widely used in [LM]'s and [GLM]'s. It can be use [GAM]'s for testing smooths or parametric terms but it is not recommended. While the [Wald test] is simple and computationally cheap and do not required the refitting the specific [model], It relies on large-sample (asymptotic) normality so it 	is perform poorly with small [sample]s. Its very sensitive to specific parametrization and scaling and it is Less reliable when parameters are near their boundary [range]. Likelihood ratio test (LRT) are more reliable but required two [fit]s;  one with the specific [term] in and one with the [term] out. The 	[score test] evaluates slope at the null hypothesis  without fitting the full model.
+
+
 
 ################################################################################ 
 
