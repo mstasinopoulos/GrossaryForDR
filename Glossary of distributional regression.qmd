@@ -86,13 +86,13 @@ Smooth first order interaction models have relatively easier [interpretation].
 
 #### additive model
 
-An additive model occurs when the contribution of each [term]sin a [model] is added to the rest of the terms in the [formula]. Let $x_1$ abd $x_2$ be two [continuous variable]s and $f_1$ and $f_2$ to be two [factor]s. The [formula] $y \sim b_1 x_1 + s_2(x_2) + f_1*f_2 + s_{12}(x_1, x_2, \texttt{by}=f_2)$, will fit a linear [term] for $x_1$ a [smoother] for $x_2$, a linear first order interaction for the [factor]s $f_1$ and $f_2$ and a varied coefficient [smoother] for the first order interaction for for $x_1$ a and $x_2$ varying according to factor $f_2$.
+An additive model occurs when the contribution of each [term] in a [model] is added to the rest of the terms in the [formula]. Let $x_1$ abd $x_2$ be two [continuous variable]s and $f_1$ and $f_2$ to be two [factor]s. The [formula] $$y \sim b_1 x_1 + s_2(x_2) + f_1*f_2 + s_{12}(x_1, x_2, \texttt{by}=f_2),$$ will fit a linear [term] for $x_1$ a [smoother] non-linear function for $x_2$, a linear first order interaction for the [factor]s $f_1$ and $f_2$ and a varied coefficient smooth term  for the first order interaction for for $x_1$ a and $x_2$, that is,  varying  $x_1$ a and $x_2$ according to different levels of the factor $f_2$.
 
 ```{r}
 #| warning: false 
 library(gamlss)
 m1 <- gamlss2(rent~area+s(yearc) + location*cheating +
-            s(area, yearc, by=cheating), data=rent99, famlily=GA) 
+  s(area, yearc, by=cheating), data=rent99, famlily=GA) 
 summary(m1)
 ```
 
@@ -104,11 +104,16 @@ The fitted smooth curves can be plotted by
 plot(m1)
 ```
 
-Note that an [additive model] is usually easy to [interpretation] but more difficult to reach because one has to decide which [term]s should be included in the [model]. The [additive model]s need more thinking on how to reach them while a [machine learning] [model] let the computer to do the hard work. Which we should trust best depends on the [purpose] of the study. My personal view in this that we should \textbf{not} let the computers decide when the life of people is stake see also [black box].
+Note that an [additive model] is usually easy for [interpretation] but more difficult to achieve. This because in order to get an [adequate model] when you use additive terms you have to  decide in advance which [term]s should be included in the [model] and how. An [additive model] need more thinking on how to reach an [adequate model] while a [machine learning] [model] let the computer to do the hard work but makes it hard for [interpretation]. Which [model] we should trust best depends on the [purpose] of the study and the [questions] to answer. 
+
+
+<!-- My personal view in-line with  in this that we should \textbf{not} let the computers decide when the life of people is stake see also [black box]. -->
 
 #### adequate fit
 
-We call a [model] an [adequate fit] if the [final model] in a [model selection] procedure is an [adequate model]. The question is how do we know that we reach an [adequate fit]?. By [adequate model] we mean a [model] close to the [data] and be able to answer the [questions]. How close to the data a model is can be checked by the performance of the [goodness of fit] [objective measure] and by [diagnostic tool]s. However the [goodness of fit] [objective measure] is often a relative measures in the sense that is useful for comparing between models but not to show if any of then is [adequate fit]. This task mainly lies with [diagnostic tool]s. More specificity \[diagnostic\] tools based on [residuals]. The reason is because in most \[stochastic models\], if the the [assumptions] are correct or nearly correct, we expect the [residuals] to behave as a [white noise]. Diagnostic plots demonstrating [white noise] [residuals] are a good sign that an [adequate fit] has been achieved. In conclusion a [adequate fit] can be verified using [residuals] [diagnostics] on the [training] data set in compilation with a good performance in a [goodness of fit] [objective measure].
+We call a [model] an [adequate fit] if the [final model] in a [model selection] procedure is an [adequate model].  By [adequate model] we mean a [model] close to the [data] and  able to answer the [questions] posed by the study. How close to the data a model is can be checked by the performance of the [goodness of fit] [objective measure] and by [diagnostic tool]s in both [training] and [test] [data]. However the [goodness of fit] [objective measure] is often a relative measures in the sense that is useful for comparing between models but not to show if any of the model is [adequate fit]. This task mainly lies with [diagnostic tool]s. More specificity [diagnostics] based on [residuals]. The reason is because in most [stochastic model]s, if the the [assumptions] are correct or nearly correct, we expect the [residuals] to behave as a [white noise]. Diagnostic plots demonstrating [white noise] [residuals] are a good sign that an [adequate fit] has been achieved. In conclusion a [adequate fit] can be verified using [residuals] [diagnostics] on the [training] data set in compilation with a good performance in a [goodness of fit] [objective measure].
+
+<!-- The question is how do we know that we reach an [adequate fit]?. -->
 
 #### adequate model
 
@@ -1748,7 +1753,18 @@ We need a definition
 
 #### model selection
 
-A [model selection] is a procedure to select a [final model] given the [data] and a set of different [candidate model]s. The [model selection] in a GAMLSS framework has two meanings: i) how to choose the [distribution] of the response and ii) how to find which explanatory variables and how affects the [distribution] of the response. In a GAMLSS model the distribution is affected through the [distributional parameters].
+A [model selection] is a procedure to select a [final model] (hopefully an [adequate model] to answer  the [questions] in the [data]) from  a set of different [candidate model]s. 
+
+
+The [model selection] in a GAMLSS framework has two tasks: 
+
+
+i) to choose the [distribution] of the [response] and 
+
+ii) and to find **which** [explanatory variables] and **how** they affects the [distribution] of the [response]. 
+
+In a GAMLSS [model] the [distribution] of the [response]  is affected through the [distributional parameters] so the the idea is the find out which [parameter] is effected and how by the [explanatory variables]. Note that the "which" part has to do with [variable importance] while the how part on whether the  effect is linear or nonlinear and whether there are [interactions] between the [explanatory variables]
+
 
 #### model interpretation
 
@@ -1960,11 +1976,41 @@ The principal of parsimony is what is also known as [Occam’s principle](#occam
 We need a definition probably from book 3
 :::
 
-#### partial differential equations
+#### partial differential equation
 
-::: callout-note
-We need a definition probably
-:::
+A [partial differential equation] (PDE) is an equation that involves partial derivatives of a function and	a function of two or more independent variables. If a function depends on more than one variable, for example $z = u(x, y)$ then its derivatives with respect to $x$ and $y$ are partial derivatives $\frac{\partial z}{\partial x}, \ \frac{\partial z}{\partial y}$. A PDE is an equation involving these derivatives. There are **first order**, $\frac{\partial z}{\partial x} + \frac{\partial z}{\partial y} = 0$, and **second order**, $\frac{\partial^2 z}{\partial x^2} = 0$, PDE's. First-order PDE constrains the tangent plane of the surface at every point. Second order PDE, measure **curvature** of the surface.
+
+Some important PDEs
+are;
+ 
+ - the _heat equation_ (diffusion): $\frac{\partial z}{\partial y} = k \frac{\partial^2 u}{\partial x^2}$ whete the first derivative is proportional to the second, 
+
+ -  the _wave equation_: $\frac{\partial^2 z}{\partial t^2} = c^2 \frac{\partial^2 z}{\partial x^2}$ and 
+
+- the _Laplace equation_:
+$\frac{\partial^2 z}{\partial x^2} +
+\frac{\partial^2 z}{\partial y^2} = 0$
+
+For equations of the form $ A z_{xx} + B z_{xy} + C z_{yy} = 0$ The PDE are classified using the $B^2 - 4AC$ as
+
+- _elliptic_  when  $B^2 - 4AC < 0$ (Laplace equation)
+
+-	_parabolic_ if  $B^2 - 4AC = 0$ (heat equation) or 
+
+- _hyperbolic_ if  $B^2 - 4AC > 0$ (wave equation)
+
+DEs are important because are used to describe, heat flow,	fluid dynamics, electromagnetism, quantum mechanics, population dynamics, 	finance (e.g., Black–Scholes equation) etc. Goemetricaly the function $z = z(x,y)$ defines a surface in 3D. The first derivatives $\frac{\partial z}{\partial x}, \frac{\partial z}{\partial y}$. are slopes of the surface in the $x$-direction and $y$-direction and together they form the _gradient vector_ $\nabla z = \left(\frac{\partial z}{\partial x}, \frac{\partial z}{\partial y}\right)$. Geometrically the gradient points in the direction of steepest ascent and its length is the steepest slope.
+
+A PDE is a rule that restricts how the tangent plane and curvature of a surface behave at every point. It doesn’t just describe the actual function but describes how the shape of the surface is allowed to bend and tilt everywhere.
+
+
+In differential geometry we study **manifolds**. If the function $z = u(x,y)$ exist 
+then its graph  $(x,y,z(x,y))$ is a 2-dimensional surface embedded in $\mathbb{R}^3$. Differential geometry studies: tangent planes, curvature, geodesics and intrinsic structure. A PDEs often describe geometric properties of these surfaces.
+At each point of a surface we have a tangent plane. The gradient
+$\nabla z = (z_x, z_y)$ determines that plane. A first-order PDE $F(x,y,u,u_x,u_y)=0$
+geometrically: restricts which tangent planes are allowed. o a first-order PDE defines a constraint on the tangent bundle of the surface. This is why characteristics appear — they are curves along which the tangent constraint propagates. Second derivatives measure curvature. In differential geometry we define, Gaussian curvature, Mean curvature and Second fundamental form.  For a surface $z(x,y)$, curvature depends on $u_{xx}, u_{xy}, u_{yy}$ so the  second-order PDEs often prescribe curvature.
+
+
 
 #### parameters
 
@@ -2335,21 +2381,28 @@ If the answer is yes, [assumptions] are needed to build the [model]. The [assump
 
 <!-- Probably, at this stage, we would have to decide the type of model we would like to use; should be a [mathematical model] or an [algorithmic model]?. -->
 
-Note that most [model]s analysing [data] use mathematics to model the relationships between variables. For example, in [distributional regression] each of the [parameters] of the [distribution] is a function of the [explanatory variables], e.g. $$\boldsymbol{\theta}_i= G(\textbf{x}_1, \textbf{x}_2, \ldots, \textbf{x}_r).$$ The task of a [model] is to estimate $G()$. Subsequently we will use the definition of a [mathematical model] as a model in which the interpretation of $G()$ is simple and the definition of an [algorithmic model] as one in which the the interpretation of $G()$ is difficult. Our definition is in line to @breiman2003statistical distinction between [data modelling] and [algorithmic modelling] but we did not like [data modelling], because it is implies any [model] involving [data]. We use instead the distinction between [mathematical model]s and [algorithmic model]s. If in addition a [model] contains a [stochastic] part, that is, it relies on [probability] statements, the we have a [statistical model] or \[stocastic model\[\].
+Note that most [model]s analysing [data] use mathematics to model the relationships between variables. For example, in [distributional regression] each of the [parameters] of the [distribution] is a function of the [explanatory variables], e.g. $$\boldsymbol{\theta}_i= G(\textbf{x}_1, \textbf{x}_2, \ldots, \textbf{x}_r).$$ One of the tasks of a [model selection] is to estimate $G()$ accurately. Subsequently we will use the definition of a [mathematical model] as a model in which the interpretation of $G()$ is simple and the definition of an [algorithmic model] as one in which the  interpretation of $G()$ rather difficult so we treat it as a [black box]. Our definition is in line to @breiman2003statistical distinction between [data modelling] and [algorithmic modelling]. I our case  we did not like the [data modelling], because it is implies any [model] involving [data]. We use instead the distinction between [mathematical model]s and [algorithmic model]s (even though the latest have mathe mathematic in it).  If in addition a [model] contains a [stochastic] part, that is, it relies on [probability] statements, the we have a [statistical model] or [stochastic model].
 
-Any [statistical model] needs an [objective measure], a function describing the **distance**, between the [data] and the [model]. We would divide the [objective measure] in two components accord to in which [data] are used to evaluate it;
+Any [statistical model] needs an [objective measure], a function describing the **distance**, between the [data] and the [model]. We would like to divide the [objective measure] in two components accord to in which [data] are used to evaluate it;
 
--   [training measure]: a [goodness of fit] [measure] evaluated at the [training] [data], and used at the [model fitting] stage to [fit] the model;
+-  a [training measure] is  a [goodness of fit] [measure] evaluated at the [training] [data], and used at the [model fitting] stage to [fit] the model;
 
--   [test measure]: a [goodness of fit] [measure] evaluated at the [test] [data], for [model comparison] and [prediction] performance.
+-  a  [test measure] is a [goodness of fit] [measure] evaluated at the [test] [data], for [model comparison] and [prediction] performance.
 
-Note that the same [objective measure] can be used for both the [training] and the [test] data, when [data partition] is involved. Both the [test] and [training] [measure]s should be relevant to the [questions]. For example, if the interested lies in the tail behaviour of the [response] we should never use an [test] or [training] [measure] concentrating at the centre of the distribution of the [response] e.g. [MSE].
+Note that the same [objective measure] can be used for both the [training] and the [test] data, when [data partition] is involved. Both the [test] and [training] [measure]s should be relevant to the [questions] to be answered. For example, if the interested lies in the tail behaviour of the [response] we should never use an [test] or [training] [measure] concentrating at the centre of the distribution of the [response] likefor example, [MSE].
 
 <!-- Usually fitting is done at the [training] data set, and called  the [training measure].  In our  opinion, the comparison should be  done  on the [test] [data] using a [test measure]. The two measure could be the same or different, but in both cases should be evaluated at partitioned data.  It is the researchers choice whether to use the same [measure] or not.  -->
 
 `Do not use a test measure, concentrating in the center of the distribution i.e. MSE, if the questions are related to the behaviour of the tail of the distribution of the response`.
 
-After a [model selection] procedure an [adequate model] is selected, and the [interpretation] of the model begins to help answering the [questions]. Using a [model selection] procedure to find an [adequate model] is the essence of any [statistical modelling] process.
+After a [model selection] procedure an [adequate model] is selected, and the [interpretation] of the model begins to help answering the [questions]. Using a [model selection] procedure to find an [adequate model] is the essence of any [statistical modelling] process. A [model selection] procedure tries to identify the model best suited for the [data]. For distributional regression it involves two distinct step.
+
+- identify the [distribution] for the [response];
+
+- identify **which** [explanatory variables] and  **how**  it affect the distribution of the [response]. 
+
+
+The "which" part is associated with [variable importance] and the  "how" part is associated on whether the effect is linear of not and whether there are [interactions] in the model.  
 
 <!-- so next we spend more time to examining how we can achieve that. Note that  in order to prove that we have an  [adequate model] we have to show that the is no proof for the opposite. -->
 
@@ -2796,6 +2849,19 @@ $$ Note that the [uniform distribution] is the distribution with the highest [en
 #### univariate distribution
 
 A [univariate distribution] involves only one \[random\] variable. Originally GAMLSS was developed for one [response] variable therefore its distribution was a [univariate distribution].
+
+#### `update()`
+
+The R function `update()` takes a fitted model and updates part of it. We found the function helpful in testing whether a model [fit]ted functions are sensitive when evaluated at the [test] [data]. For example
+
+```{r}
+
+```
+
+
+
+
+
 
 #### under fitting
 
