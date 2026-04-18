@@ -1,5 +1,5 @@
 ---
-title: "A Lexicon of Distributional Regression Models"
+title: "A Lexicon for Distributional Regression Models"
 format:
   html: default 
   pdf: default 
@@ -11,7 +11,7 @@ author: GAMLSS working party
 bibliography: book2026.bib  
 ---
 
-## Introduction
+## Preface
 
 This is a lexicon of terms and ideas related to statistical modelling in general but more specifically to [distributional regression] models. The lexicon started on ideas presented in the talk [Regression Models; how to adapt for climate change challenges](https://mstasinopoulos.github.io/Brazil2025-talk/talk_2.html#/title-slide) given by Mikis Stasinopoulos, University of Greenwich, to the XVII Encontro Mineiro de Statistica on Octomber 2025, in Lavras, Brazil. It was soon realised that there is also a gap between the [statistical modelling] terminology and the terminology used by other data analysis scientists. For example, the [response] variable a well known expression to describe the variable of interest in a [regression analysis] it is called the [target] in [machine learning]. Similarly the [explanatory variables] are refer to as [feature]s. The present lexicon is trying to close this gap by describing both definitions. An addition was decided to include at several places of the lexicon, `R` output if we thought that this would facilitate the understanding of the ideas and concepts presented here.
 
@@ -52,7 +52,7 @@ head(da)
 The [accumulated local effects], [ALE], @apley2020visualizing, is a model [agnostic method] for the [interpretation] of [term]s in a [model]. It is showing how [explanatory variables] affects the predictions value of the model. It works even with correlated [explanatory variables], by analysing differences in predictions across local intervals rather than averaging whole predictions. ALE avoids issues with [multicollinearity] or [concurvity] by focusing on the change in predictions within local windows, therefore providing more accurate and unbiased global explanations for [variable importance].
 
 ::: callout-note
-provide an example here
+how it works and provide an example
 :::
 
 #### acf
@@ -86,7 +86,7 @@ Smooth first order interaction models have relatively easier [interpretation].
 
 #### additive model
 
-An additive model occurs when the contribution of each [term] in a [model] is added to the rest of the terms in the [formula]. Let $x_1$ abd $x_2$ be two [continuous variable]s and $f_1$ and $f_2$ to be two [factor]s. The [formula] $$y \sim b_1 x_1 + s_2(x_2) + f_1*f_2 + s_{12}(x_1, x_2, \texttt{by}=f_2),$$ will fit a linear [term] for $x_1$ a [smoother] non-linear function for $x_2$, a linear first order interaction for the [factor]s $f_1$ and $f_2$ and a varied coefficient smooth term  for the first order interaction for for $x_1$ a and $x_2$, that is,  varying  $x_1$ a and $x_2$ according to different levels of the factor $f_2$.
+An additive model occurs when the contribution of each [term] in a [model] is added to the rest of the terms in the [formula]. Let $x_1$ abd $x_2$ be two [continuous variable]s and $f_1$ and $f_2$ to be two [factor]s. Then the [formula] $$y \sim b_1 x_1 + s_2(x_2) + f_1*f_2 + s_{12}(x_1, x_2, \texttt{by}=f_2),$$ will fit a linear [term] for $x_1$ a [smoother] (non-linear function) for $x_2$, a linear first order interaction for the [factor]s $f_1$ and $f_2$ and a varied coefficient smooth term  for the first order interaction for for $x_1$ a and $x_2$, that is,  varying  the smooth term $x_1$  and $x_2$ according to different levels of the factor $f_2$. A varying coefficient term, @HastieTibshirani93, is a specific type of interaction. Next  we fit the above  additve model;
 
 ```{r}
 #| warning: false 
@@ -104,20 +104,22 @@ The fitted smooth curves can be plotted by
 plot(m1)
 ```
 
-Note that an [additive model] is usually easy for [interpretation] but more difficult to achieve. This because in order to get an [adequate model] when you use additive terms you have to  decide in advance which [term]s should be included in the [model] and how. An [additive model] need more thinking on how to reach an [adequate model] while a [machine learning] [model] let the computer to do the hard work but makes it hard for [interpretation]. Which [model] we should trust best depends on the [purpose] of the study and the [questions] to answer. 
+Note that an [additive model] is usually easy for [interpretation] but more difficult to reach. This because, in order to get an [adequate model], when you use only additive terms you have to decide in advance which [term]s should be included in the [model] and how. An [additive model] need more thinking on how to reach an [adequate model] while a [machine learning] [model] let the computer to do the hard work but  it is lot harder for [interpretation]. Which [model] we should trust best depends on the [purpose] of the study and the [questions] to answer. 
 
 
 <!-- My personal view in-line with  in this that we should \textbf{not} let the computers decide when the life of people is stake see also [black box]. -->
 
 #### adequate fit
 
-We call a [model] an [adequate fit] if the [final model] in a [model selection] procedure is an [adequate model].  By [adequate model] we mean a [model] close to the [data] and  able to answer the [questions] posed by the study. How close to the data a model is can be checked by the performance of the [goodness of fit] [objective measure] and by [diagnostic tool]s in both [training] and [test] [data]. However the [goodness of fit] [objective measure] is often a relative measures in the sense that is useful for comparing between models but not to show if any of the model is [adequate fit]. This task mainly lies with [diagnostic tool]s. More specificity [diagnostics] based on [residuals]. The reason is because in most [stochastic model]s, if the the [assumptions] are correct or nearly correct, we expect the [residuals] to behave as a [white noise]. Diagnostic plots demonstrating [white noise] [residuals] are a good sign that an [adequate fit] has been achieved. In conclusion a [adequate fit] can be verified using [residuals] [diagnostics] on the [training] data set in compilation with a good performance in a [goodness of fit] [objective measure].
+We call a fitted [model] an [adequate fit] if the [final model] of a [model selection] procedure is an [adequate model].  By [adequate model] we mean a [model] close to the [data] and also able to answer the [questions] posed by the study. How close to the data a model  can be, is checked by the performance of the [goodness of fit] [objective measure] and by [diagnostic tool]s for both the [training] and [test] [data]. However, the [goodness of fit] [objective measure] is often a relative measures in the sense that is useful for comparing between models but not to show if any of the model is [adequate fit] or not. This task mainly lies with the [diagnostic tool]s. More specificity [diagnostics] based on [residuals]. The main reason is because most [stochastic model]s, if the the [assumptions] of the [model] are correct (or nearly correct), we expect the [residuals] to behave as a [white noise]. Diagnostic plots demonstrating [white noise] [residuals] are a good sign that an [adequate fit] has been achieved, especially if they they are performed on test data. In conclusion a [adequate fit] can be verified using [residuals] [diagnostics] on the [training] and/or the [test] [data] sets and in combination with a good performance of a [goodness of fit] [objective measure].
 
 <!-- The question is how do we know that we reach an [adequate fit]?. -->
 
 #### adequate model
 
-We call a [model] an [adequate model] if the [model] represents the [data] well. That is, a model is [adequate model] if it has passed its [diagnostics] checks. A set of many [adequate model]'s is oftem called the [Rashomon set]. Within a [distributional regression] framework we have two types of [adequate model]s to consider. The first has to do of whether the [distribution] of the [response] is fitted adequately the second on whether the chosen [term]s are adequate represent the relationships in the [distribution parameters].
+We call a [model] an [adequate model] if the [model] represents the [data] well. That is, a model is [adequate model] if it has passed its [diagnostics] checks. A set of many [adequate model]'s is oftem called the [Rashomon set]. 
+
+Within a [distributional regression] framework we have two types of [adequate model]s to consider. The first has to do of whether the [distribution] of the [response] is fitted adequately and the second on whether the chosen [term]s are adequate represent the relationships for the [distribution parameters].
 
 #### adequate distribution
 
@@ -125,15 +127,22 @@ Within a [distributional regression], an [adequate distribution] for the [residu
 
 #### agnostic method
 
-An [agnostic method] in [statistical modelling] is a technique which could apply to any [model] independently if they are [mathematical model]s, [agent based model]s or [algorithmic model]s. Note, however, that a lot of the techniques claimed to be agnostic may depend on the [assumptions] of the model or on the type of [objective measure] of [goodness of fit] used to [fit] the model. The [assumptions] and the [objective measure] of [goodness of fit] are interconnected with the [model]. Strictly one should defined an [agnostic method] a techniques which is not associated with any of them.
+An [agnostic method] in [statistical modelling] is a technique which could apply to any [model] independently whether  are [mathematical model]s, [agent based model]s, [algorithmic model]s etc. However. a lot of the techniques claimed to be agnostic usually depend on  [assumptions] for the model or on the type of [objective measure] of [goodness of fit] used to [fit] the model. The [assumptions] and the [objective measure] of [goodness of fit] are interconnected with the [model]. Strictly one should defined an [agnostic method] as a techniques which is not associated with any of them.
 
 #### agent
 
-An [agent] is the basic unit of interest in a [agent based model]. In statiscal modelling werefer to the basic units of the study as \[objects\].
+An [agent] is the basic unit of interest in a [agent based model]. In statistical modelling we refer to the basic units of the study as objects.
 
 #### agent based model
 
-An [agent based model] is a simulation, [bottom up model], where the unit of interest is called an [agent]. The model is build by simulating the behaviour f the [agent]s within given enviroments.The [agent]s ar the basic unit of interest and. their behaviour is studied by assuming simple mathematical or logic rules. The application of those simple rules over time determine the long terms behaviour of the agents. Therefore important part of the model is how to set the rules ans the parameters determine the [agent] behaviour.
+An [agent based model] is a simulation [bottom up model], where the unit of interest is an [agent] and where the simulation is done to predict the behaviour of the agents under different [scenario]. The model is build by simulating the behaviour of the [agent]s within given environment. The [agent]s are the basic unit of interest and their behaviour is studied by assuming simple mathematical or logic rules on how they are behaving. The application of those simple rules over time determine the long terms behaviour of the agents. Therefore important part of the model is how to set the basis rules of the [agent] behaviour.
+
+
+::: callout-note
+an example
+:::
+
+
 
 #### aggregation rule
 
@@ -141,11 +150,17 @@ By [aggregation rule] we mean how multiple predictions are combined to produce a
 
 #### AIC
 
-[AIC] stands for the Akaike Information Criterion, @Akaike73b. [AIC] it is a measure of [goodness of fit] based on [entropy] measures used to compare different fitted models. The [AIC] is defined as the [deviance] \$ + 2 \times df\$ where $df$ are the [degrees of freedom] and 2 stands for the **penalty**, see [GAIC] and [BIC]. The [model] with the minimum [AIC] is considered the best.
+[AIC] stands for the Akaike Information Criterion, @Akaike73b. The [AIC] it is a measure of [goodness of fit] based on [entropy] measures used to compare different fitted models. The [AIC] is defined as 
+$$
+D + $+2\times df
+$$
+
+where $D$ is the [deviance]; $df$ are the [degrees of freedom] and 2 stands for the **penalty**, see also [GAIC] and [BIC]. The [model] with the minimum value of [AIC] is considered the best.
 
 ```{r}
 AIC(m0,m1)
 ```
+for example, model `m1` is beter than `mo`.
 
 #### ALE
 
@@ -153,17 +168,17 @@ AIC(m0,m1)
 
 #### algorithm
 
-An algorithm is a step-by-step computational procedure designed to perform a specified task. For example, in [machine learning] a typically model is $Y=g(X)+\epsilon$, where $\epsilon$ is the [error]. The task of [machine learning] is to find the unknown function $g()$, which connect the [explanatory variables] with the [response].
+An algorithm is a step-by-step computational procedure designed to perform a specified task. For example, in [machine learning] a typically model is $Y=g(X)+\epsilon$, where $\epsilon$ is the [error]. The task of [machine learning] is to find the unknown function $g()$, which connect the [explanatory variables] with the [response]. This aims could be achieved or my a mathematical model which specifies the form of $f()$ or by an algorithm model which just calculate $f()$  numerically following certain rules.
 
 #### algorithmic model
 
-An algorithmic model is a model based on an algorithm. In [regression] typically an algorithmic model trying to model $X \rightarrow Y$, through an unknown function $g()$ i.e. $Y=g(X)$. No explicit assumptions are made for the unknown function $g()$ but a lot of implicit [assumptions] depending on the type of algorithm used. Note that an [algorithmic model], like a [mathematical model], can be a deterministic or a [stochastic model]. The [stochastic model] can be written as; $Y=g(X)+ \boldsymbol{\epsilon}$ where the last term in the equation is the [error], that is, a \[random\] variable usually a [white noise]. The [error] is the stochastic part of the [model].
+An algorithmic model is a model based on an algorithm. In [regression] an algorithmic model tries to model $Y$ given $X$, i.e. $X \rightarrow Y$, through an unknown function $g()$ i.e. $Y=g(X)$. No explicit mathematical assumptions are made for the unknown function $g()$ but a lot of implicit [assumptions] depending on the type of algorithm used on how $Y$ react to $X$. Note that an [algorithmic model], like a [mathematical model], can be deterministic or  [stochastic model]. The [stochastic model] can be written as; $Y=g(X)+ \boldsymbol{\epsilon}$ where the last term in the equation is the [error] term, that is, a [random] variable usually  assumed to be independently identically distributed (iid). The [error] is the stochastic part of the [model].
 
 
 
 #### algorithmic modelling
 
-
+In an algorithmic model the function $f()$ which describe the relationship between $X$ and $Y$ i.e. $Y=f(X)$ is not modelled mathematically but using simple algorithmic rules.  
 
 #### Archimedean copulas
 
@@ -175,11 +190,17 @@ The [Archimedean copulas] are a wide class of families of copula with subclass;
 
 -   the [Frank copula] with symmetric dependence and not fat tail dependence.
 
--   the \[Joe copula\] with strong upper tail dependence and more flexible than [Gumbel copula]
+-   the [Joe copula] with strong upper tail dependence and more flexible than [Gumbel copula]
 
 -   the [extreme value copulas] suitable for modelling jointly extreme values. (Gumbel–Hougaard, Galambos, Hüsler–Reiss) Popular in hydrology, climate extremes and Risk analysis.
 
--   the \[vine copulas\] (or pair copula constructions) whicjh are highly flexible, built from bivariate copulas with types: i) C-vines copula ii) D-vines copula and iii) R-vines copula. All have the advantages that handle high dimensions couls mix different copula families and have very flexible dependence structures. They are widely in Finance, Insurance and Machine learning.
+-   the [vine copulas] (or pair copula constructions) which are highly flexible multivariate copulas built from bivariate copulas with types: 
+
+      i) C-vines copula 
+      ii) D-vines copula and 
+      iii) R-vines copula. 
+      
+All have the advantages that handle high dimensions couls mix different copula families and have very flexible dependence structures. They are widely in Finance, Insurance and Machine learning.
 
 -   the [hierarchical Archimedean copulas] (HAC) which allow nested Archimedean copulas, clustering of dependence and in genaral are more flexible than single [Archimedean copulas]
 
@@ -188,7 +209,7 @@ The [Archimedean copulas] are a wide class of families of copula with subclass;
 -   the \[special purpose copulas\] like the \[Plackett copula\] the \[FGM copula\] (Farlie–Gumbel–Morgenstern) whicj allow limited dependence and the Marshall–Olkin copula with asymmetric dependence.
 
 ::: callout-note
-No definition is given ans more work needed here
+No definition is given so more work needed here
 :::
 
 #### association measures
@@ -197,7 +218,15 @@ see [measure of association].
 
 #### assumptions
 
-Assumptions are axiomatic statements needed to be accepted for the model to work. Models need assumptions because of their simplified nature. The important thing behind [assumptions] is that if the [assumptions] are correct then the model can be adequate and probably useful. There are **explicit** and **implicit** assumptions. The **explicit** assumptions are usually mathematical ones and easy to check using [diagnostic tool]s. The **implicit** assumptions more common in [algorithmic model]s are more difficult to check. **Incorrect** assumptions could lead to questionable scientific discoveries. For an [agent based model] the assumptions are about the behaviours of the [agent]s. For [distributional regression] model there are two set of [assumptions]; i) about he distribution of the respose and ii) how the [explanatory variables] affect the [distribution parameters].
+Assumptions are axiomatic statements needed to be accepted for the model to work. Models need assumptions because of their simplified nature. The important thing behind [assumptions] is that if the model [assumptions] are correct then the model can be useful. There are 
+
+- **explicit** and 
+- **implicit** assumptions. 
+
+The **explicit** assumptions are usually mathematical ones and easy to check using [diagnostic tool]s. The **implicit** assumptions more common in [algorithmic model]s are more difficult to check. **Incorrect** assumptions could lead to questionable scientific discoveries. For an [agent based model] the assumptions are about the behaviours of the [agent]s. For [distributional regression] model there are two set of [assumptions]; 
+
+ i) about the [distribution] of the [response] and 
+ ii) how the [explanatory variables] affect the [distribution parameters].
 
 ::: callout-note
 Maybe as an example put the assumptions of the [linear model] here
@@ -205,9 +234,9 @@ Maybe as an example put the assumptions of the [linear model] here
 
 #### autocorrelation
 
-The term [autocorrelation] in a vector $\textbf{x}$ implies that sequential values of $\textbf{x}$ depend on previous values. Autocorrelation is very common on [time series] data and can be detected using [acf] and [pacf] functions.
+The term [autocorrelation] refer to a vector $\textbf{x}$ and implies that sequential values of the vector $\textbf{x}$ depend on previous values e.g. $x_t$ may depends on $x_{t-1}$. Autocorrelation is very common in [time series] data and can be detected using the [acf] and [pacf] functions.
 
-In [distributional regression] one should check whether the [z-scores] are autocorrelated especially when the data ar time series ones. Checking autocorrelaty ion can be done acheoved eadily using the `gamlss,.ggplts` package with `resid_plots()` ans option `theme="ts"`;
+In [distributional regression] one should check whether the [z-scores] (the [residuals]) are autocorrelated especially when the data ar time series. Checking for autocorrelation can be done achieved easily using the `gamlss.ggplots` package with `resid_plots()` and option `theme="ts"`;
 
 ```{r}
 #| warning: false 
@@ -232,11 +261,11 @@ example?
 
 #### backfitting
 
-The [backfitting] algorithm is an algorithm discussed by @HastieTibshirani90 for fitting more that one smoother in a [formula] for a [model].For distributional regression is explained in Chapter 3 of @Stasinopoulosetal2017.
+The [backfitting] algorithm is an algorithm discussed by @HastieTibshirani90 for fitting more that one smoother in a [formula] for a additve [model]. For distributional regression see the  explaination given in Chapter 3 of @Stasinopoulosetal2017.
 
 #### bagging
 
-Bagging, @breiman1996bagging, refers to [bootstrapping] followed by an [averaging models] procedure. That is, $B$ models are fitted to $B$ bootstrap [data partition]s and the resulting models are then averaged to greate one model. The \[random forest\] models are [bagging] models since they are a collection of [regression tree] models witch then averaged to crate the final model.
+Bagging, @breiman1996bagging, refers to [bootstrapping] followed by an [averaging models] procedure. That is, $B$ models are fitted to $B$ bootstrap [data partition]s and the resulting models are then averaged to create a single   model. The random forest models are [bagging] models since they are a collection of [regression tree] models witch  averaged to crate a final model.
 
 #### base learner
 
@@ -244,7 +273,7 @@ A [base learner] is a single [model] in the [ensemble] of models. The derminolog
 
 #### Bernoulli distribution
 
-The [Bernoulli distribution] is special case of the [binomial distribution] when $n=1$. A Bernoulli \[random\] variables has range of values $0$ or $1$. The Benrouli distribution is ideal for modelling \[classification models\] which heve only two outcomes e.g. "yes", "no" , "dead", "alive", "presend" absend". The expected value of a Benrouli \[random\] variable is $\mathbb{E}(Y)=p$ with variance $p(1-p)$. A Bernoulli [response] variable is modelled using **logistic regression**. The [Bernoulli distribution] is a specuoal case of the [binomial distribution] therefore both belong to the [exponential family].
+The [Bernoulli distribution] is special case of the [binomial distribution] when $n=1$. A Bernoulli random variables has range of values $0$ or $1$. The Bernoulli distribution is ideal for modelling classification models when thare are only two outcomes e.g. "yes", "no" , "dead", "alive", "present" absent". The expected value of a Bernoulli random variable is $\mathbb{E}(Y)=p$ with variance $$\mathbb{V}(Y)=p(1-p)$. A Bernoulli [response] variable is modelled using **logistic regression**. The [Bernoulli distribution] is a specuoal case of the [binomial distribution] therefore both belong to the [exponential family].
 
 @fig-bernoulli shows three realization of the [Bernoulli distribution] at different levels of probability $p=(0.1,0.3,0.5)$
 
@@ -276,13 +305,13 @@ A [Bayesian method] is a statistical method using the [Bayesian rule] as a mode 
 
 #### Bayesian rule
 
-The [Bayesian rule] defines the posterior distribution of parameter $\boldsymbol{\theta}$ given a [sample] $\textbf{y}$ as: $$ f( \boldsymbol{\theta}|\textbf{y}) = \frac{f(\textbf{y}|\boldsymbol{\theta}) f(\boldsymbol{\theta})}{f({\textbf{y}})}$$ where $f(\boldsymbol{\theta})$ is the prior distribution of the parameter, $\boldsymbol{\theta}$, and $f( \textbf{y}|\boldsymbol{\theta})$ is the probability of observing the sample $\textbf{y}$, that is the [likelihood] function.
+The [Bayesian rule] defines the posterior distribution of parameter $\boldsymbol{\theta}$ given the [sample] $\textbf{y}$ as: $$ f( \boldsymbol{\theta}|\textbf{y}) = \frac{f(\textbf{y}|\boldsymbol{\theta}) f(\boldsymbol{\theta})}{f({\textbf{y}})}$$ where $f(\boldsymbol{\theta})$ is the prior distribution of the parameter, $\boldsymbol{\theta}$, and $f( \textbf{y}|\boldsymbol{\theta})$ is the probability of observing the sample $\textbf{y}$, that is the [likelihood] function.
 
 #### bias
 
-The [bias] measures the systematic difference between an [estimator]’s average value and the \[true parameter\]. Bias appear in several place in statistical analysis Let $\hat{\theta}$ to be an [estimator] of the parameter $\theta$.$$\text{bias}(\hat{\theta})
+The [bias] measures the systematic difference between an [estimator]’s average value and the true parameter value. Bias appear in several place in statistical analysis Let $\hat{\theta}$ to be an [estimator] of the parameter $\theta$.$$\text{bias}(\hat{\theta})
  = \mathbb{E}[\hat{\theta}] - \theta $$ The [estimator] is called unbiased if $\mathbb{E}[\hat{\theta}] = \theta$. The [bias] in [bootstrap] is defined as $$\widehat{\text{Bias}}_{\text{boot}}
-= \overline{\theta^*} - \hat{\theta}$$ where $\hat{\theta}$ is the [estimate] using the original data and $\overline{\theta^*}$ is the mean of the $B$ \[estimate\[\]s of $\theta$ in each [bootstrap] [fit]. The [bias]–variance trade-off in a machine learning model $Y=f(X)+\epsilon$ is has to do with the expected prediction error which decomposes as: $$\mathbb{E}\big[(Y - \hat{f}(X))^2\big]
+= \overline{\theta^*} - \hat{\theta}$$ where $\hat{\theta}$ is the [estimate] using the original data and $\overline{\theta^*}$ is the mean of the $B$ estimates of $\theta$ in each [bootstrap] [fit]. The [bias]–variance trade-off in a machine learning model $Y=f(X)+\epsilon$ is has to do with the expected prediction error which decomposes as: $$\mathbb{E}\big[(Y - \hat{f}(X))^2\big]
 = \text{Bias}^2 + \text{Variance} + \sigma^2$$ where $\sigma^2$is the assumed (constant) variance or the [error] $\epsilon$ while $\text{Variance}$ is the variance of the estimator. High [bias] implies that the model is too simple, [under fitting], while high variance implies that the model is too complex, [over fitting].
 
 #### BIC
@@ -291,7 +320,7 @@ BIC is the Bayesian information criterion of @Schwarz78. Within a [distributiona
 
 #### binomial distribution
 
-The pdf of a binomial distributed \[random\] variable is: $$f(Y|p)= \binom{n}{p} p^{p} (1-p)^{n-p}$$ where $Y$ takes values in the [range] $0,1,2,\ldots,n$, $n$ is called here the **binomial denominator** and the parameter $p$ is a probability parameter taking values $0<p<1$. Note that $\binom{n}{p}$ can be written also as;\
+The pdf of a binomial distributed [random variable] is: $$f(Y|p)= \binom{n}{p} p^{p} (1-p)^{n-p}$$ where $Y$ takes values in the [range] $0,1,2,\ldots,n$, $n$ is called here the **binomial denominator** and the parameter $p$ is a probability parameter taking values $0<p<1$. Note that $\binom{n}{p}$ can be written also as;\
 $$ \binom{n}{p} =\frac{\Gamma(n+1)}{\Gamma(y+1) \Gamma{(n-y+1)}}$$ For more details see pp. 521-522 of @Rigbyetal2019. The expected value of the [distribution] is $\mathbb{E}(Y)=np$ and the variance is $\mathbb{V}ar(Y)=np(1-p)$. @fig-binomial show the three different binomial distributions with binomial denominator equal to 10 and different probabilities at
 
 ```{r}
@@ -548,9 +577,38 @@ i)  the real line; $(-\infty , \infty)$, ;
 ii) the positive real line; $(0, \infty)$,
 iii) continuous on a finite interval $(0 , 1)$.
 
+####  Conditional expectations
+
+##### Discrete case
+
+$\mathbb{E}(Y \mid X=x)= \sum_y y P(Y=y \mid X=x)$ That is multiply each possible value of $Y$ by its conditional probability given $X=x$ and sum.
+
+##### Continuous case
+
+$\mathbb{E}(Y \mid X=x)= \int_{-\infty}^{\infty} y f_{Y|X}(y)$. In regression theory $\mathbb{E}(Y\mid X)= m(X)$ is a function of $X$. (linear if we assume normality).
+
+The conditional mean is itself a random variable.
+
+##### Conditional mean of the sum of two variables
+
+$\mathbb{E}(X + Y \mid Z) = \mathbb{E}(X \mid Z) + \mathbb{E}(Y \mid Z)$. Always true and no distributional assumptions needed.
+
+
 #### compositional data
 
 By [compositional data] in regression we mean [response] variables which parts of a whole sum to 1 or 100%. Compositional [response] variables need special handling within standard regression. A compositional [response] has the property that $\mathbf{y} = (y_1,\dots,y_D), \quad y_i > 0,\quad \sum_{i=1}^D y_i = 1.$ A compositional [response] within [distributional regression] can be modelled using the Dirichlet distribution which is a generalization of the beta distribution, the same way as the multinomial distribution is a generalization of the \[binomial\] distribution.
+
+#### covariance
+
+The [covariance] between two random variables $X$ ans $Y$ is defined as; 
+$$
+\begin{split}
+\operatorname{Cov}(X,Y)  & = \mathbb{E}\left[ (Y-\mathbb{E}(Y))(X-\mathbb{E}(X) \right] \\
+          & =  \mathbb{E}\left[ (Y-\mu_Y) (X-\mu_X) \right]\\
+           & =  \mathbb{E}\left[X,Y\right]- \mathbb{E}\left[X\right] \mathbb{E}\left[X\right]\\
+\end{split}
+$$ Note that $\operatorname{Cov}(X,Y)=0$ do not implies independence apart from the normal distribution. Also $\operatorname{Cov}(X,Y) = \operatorname{Cov}(X,\mathbb{E}[Y|X])$ which is crucial in regression theory.
+
 
 #### characteristics of the distribution
 
@@ -993,25 +1051,25 @@ We need a definition
 
 #### formula
 
-The term [formula] and formulae refer to the `R` [formula] e.g. `y ~ x1 + x2` which is used in the definition of [model]s like [GLM]. The [formula] is a symbolic model language, not arithmetic where the idea behind is based on the @WilkinsonRogers73 paper which introduced it as a symbolic language to describe linear and ANOVA models. In in particular:
+The term [formula] and formulae refer to the `R` [formula] e.g. `y ~ x1 + x2` which is used in the definition of [model]s like [GLM]. The [formula] is a symbolic model language, not arithmetic where the idea behind is based on the @WilkinsonRogers73 paper which introduced it as a symbolic language to describe linear and ANOVA models. In  particular in a formula we define:
 
 -   main effects
 
 -   [interactions] and
 
--   nesting
+-   nesting.
 
-For example in the [formula] , `rent~area+yearc+area:yearc`, the variable before $\sim$, `rent`, is the [response] variable. The second part of the formula `area+yearc+area:yearc` represent additive main effect for `area` and `yearc` and first order interaction for `area` and `yearc`. That is, everything after $\sim$ specifies how [explanatory variables] enter in the [model]. Note that for a [distributional regression] there could be more than one formulae, one for each of the [parameters] of the [distribution]. The wide use of [formula] is because [formula] matches statistical thinking, separates model specification from estimation, can be extended easily and works across different classes of models. The following symbols are used in an `R` formula.
+For example in the [formula] , `rent~area+yearc+area:yearc`, the variable before $\sim$, `rent`, is the [response] variable. The second part of the formula `area+yearc+area:yearc` represent additive main effect for `area` and `yearc` and first order interaction for `area` and `yearc`. That is, everything after $\sim$ specifies how [explanatory variables] enter in the [model]. Note that for a [distributional regression] there could be more than one formulae, one for each of the [parameters] of the [distribution]. The wide use of [formula] in statistical modelling is because the [formula] matches statistical thinking by  separating model specification from estimation and  can be extended easily and works across different classes of models. The following symbols are used in an `R` formula.
 
 | symbol  | meaning                               |
 |---------|:--------------------------------------|
 | $\sim$  | is modelled as                        |
 | \+      | include term                          |
 | :       | interaction between two or more terms |
-| \*      | main effects plus interactions        |
+| \*      | main effects plus interactions  between terms |
 | -1 or 0 | remove intercept                      |
-| /       | nesting                               |
-| \^      | interaction order                     |
+| /       | nesting (factors within a factor )                              |
+| \^      | order of interaction i.e \^2 first order interaction                     |
 
 : Symbols used in a formula
 
@@ -1271,7 +1329,7 @@ We need a definition
 
 #### input-output model
 
-An input-output model is a model where the variables $X$, the input, affect the variables $Y$, the output i.e. $X \rightarrow Y$. Input-output model are [supervised learning model]s since the [response]/\[targer\] variable, $Y$, always exist. @breiman2003statistical use the diagram $$
+An input-output model is a model where the variables $X$, the input, affect the variables $Y$, the output i.e. $X \rightarrow Y$. Input-output model are [supervised learning model]s since the [response]/[target] variable, $Y$, always exist. @breiman2003statistical use the diagram $$
 X  {\longrightarrow}  \fbox{NATURE} {\longrightarrow} Y, \ 
 $$ to describe an [input-output model]. The problem is that nature is too complex so we use a [model] to approximate nature and how is working. $$
 X  {\longrightarrow}  \fbox{Model} {\longrightarrow} Y \
@@ -1701,7 +1759,7 @@ Whether a model is useful depends on the [purpose] and whether could answer the 
 
 #### model average
 
-The terms [model average], [model aggregation] and [stacking] are almost synonymous and indicate that the [final model] is chosen by type of averaging between different [fit]ted [model]s. This is in compaction for choosing a single [model] and is a way of summarizing the results from multiple fitted models. The [model average] couls be advantageous if the fitted models complement each other. For example, in a [distributional regression] framework, this could mean that one model fit the [tail] of the [distribution] better while the other fits the middle of the data in the response better. By averaging the [model]s well we could possible fit both the middle and the [tail] well. There are a lot different techniques to average [model]s. In [distributional regression] a possibility is a [finite mixture] [distribution] with elements all the fitted distributions. For example $$ f_F(y_i)= \sum_{i=k}^{K} f_k(y_i| \hat{\boldsymbol{\theta}}^{k}_{i}) $$ where $i=1,2,\ldots, n$ and we assumed K different [model]s with assumed distributions $f(|\boldsymbol{\theta}^{k})$.
+The terms [model average], [model aggregation] and [stacking] are almost synonymous and indicate that the [final model] is chosen by type of averaging between different [fit]ted [model]s. This is in compaction for choosing a single [model] and is a way of summarizing the results from multiple fitted models. The [model average] could be advantageous if the fitted models complement each other. For example, in a [distributional regression] framework, this could mean that one model fit the [tail] of the [distribution] better while the other fits the middle of the data in the response better. By averaging the [model]s well we could possible fit both the middle and the [tail] well. There are a lot different techniques to average [model]s. In [distributional regression] a possibility is a [finite mixture] [distribution] with elements all the fitted distributions. For example $$ f_F(y_i)= \sum_{i=k}^{K} f_k(y_i| \hat{\boldsymbol{\theta}}^{k}_{i}) $$ where $i=1,2,\ldots, n$ and we assumed K different [model]s with assumed distributions $f(|\boldsymbol{\theta}^{k})$.
 
 #### model aggregation
 
@@ -1807,11 +1865,17 @@ The [natural variation] refers to the variability in the [data]. The idea behind
 
 Let us have two model $m_1$ and $m_2$. We say $m_1$ is nested in model $m_2$ and denote it as $m_1 \in m_2$, if $m_1$ is a special case of $m_2$. The idea of [nested models] is easily defined in [mathematical model]s. For example let $m_1$ be a linear model with only one explanatory variable $x_1$, i.e, $\beta_0+\beta_1 x_1$ and $m_2$ a linear model with two explanatory variable $x_1$ and $x_2$, i.e. $\beta_0+\beta_1 x_1+\beta_2 x_2$. We say that $m_1$ is nested to $m_2$ because $m_1$ can be obtained by $m_2$ by setting the parameters $\beta_2=0$.
 
+
+
+
+
 #### normalised randomosed quantile ressiduals
 
 ::: callout-note
 We need a definition
 :::
+
+
 
 #### neural network
 
@@ -1840,6 +1904,56 @@ Neural networks were not invented by a single person; they developed over time t
 ::: callout-note
 We need a definition probably from book 2
 :::
+
+
+##### bivariate normal distribution
+
+The bivariate Normal distribution for random vatiables $X$ and $Y$ is denoted as:  
+
+$$
+\begin{pmatrix}
+X \\
+Y
+\end{pmatrix}
+\sim N
+\left(
+\begin{pmatrix}
+\mu_X \\
+\mu_Y
+\end{pmatrix},
+\begin{pmatrix}
+\sigma_X^2 & \sigma_{XY} \\
+\sigma_{XY} & \sigma_Y^2
+\end{pmatrix}
+\right)
+$$ The continional expectation of $Y$ given $X$ is: $\mathbb{E} (Y \mid X = x) = \mu_Y \frac{\sigma_{XY}}{\sigma_X^2} (x - \mu_X)$ or using the correlation coefficint and since $\sigma_{XY} = \rho \sigma_X \sigma_Y$ we can write it as: $$\mathbb{E}(Y \mid X = x)= \mu_Y +\rho \frac{\sigma_Y}{\sigma_X} (x - \mu_X).$$ Note the conditional variance is $\operatorname{Var}(Y \mid X)=\sigma_Y^2 (1 - \rho^2)$ which\
+not depend on $x$ and it is smaller than the marginal variance. The conditional mean is a straight line, also the best linear predictor and exactly the regression line. In fact its  slope is $\beta_1 = \frac{\sigma_{XY}}{\sigma_X^2}$ so linear regression arises naturally from the normal model.
+
+If $\rho = 0$ it implies that $E(Y \mid X) = \mu_Y$ For jointly normally distributed variables, zero correlation implies independence. (This is special to the Normal distribution.)
+
+Notice also that the classical linear regression model: $$Y = \beta_0 + \beta_1 X + \varepsilon$$ with $\varepsilon \sim N(0, \sigma^2)$ is equivalent to assuming a joint Normal distribution for both Y and X.
+
+##### The multivariate normal distribution
+
+Let $\textbf{X}$ and $\textbf{Y}$ be vectors of random variables then if they are normally distributed their distribution can be written as $$
+\begin{pmatrix}
+\textbf{X}\\
+\textbf{Y}
+\end{pmatrix}
+\sim N
+\left(
+\begin{pmatrix}
+\boldsymbol{\mu}_X \\
+\boldsymbol{\mu}_Y
+\end{pmatrix},
+\begin{pmatrix}
+\boldsymbol{\Sigma}_{XX} & \boldsymbol{\Sigma}_{XY} \\
+\boldsymbol{\Sigma}_{YX} & \boldsymbol{\Sigma}_{YY}
+\end{pmatrix}
+\right)
+$$ Then the conditional expectation of $\textbf{Y}$  given  $\textbf{X}$ is:  $$E(\textbf{Y}  \mid \textbf{X} = \textbf{x}) = \boldsymbol{\mu}_Y + \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1}(\textbf{x} - \boldsymbol{\mu}_X)$$ and $\operatorname{Var}(\textbf{Y} \mid \textbf{X}) = \boldsymbol{\Sigma}_{YY} -\boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}.$
+
+
 
 #### normalized quantile residuals
 
@@ -2204,9 +2318,18 @@ $r$ is the number of [explanatory variables] or [input variables] in the data ƒ
 
 The word \[random\] is used as equivalent to [stochastic]. A \[random\] [model] means that there are some [probability] statements in the [assumptions] of the [model].
 
+#### random
+
+see  [randon variable].
+
+
 #### random variable
 
 A [random variable], $Y$, is a variable which has a [probability] [distribution]. We denote this as $Y \sim f( Y| \boldsymbol{\theta})$ where the symbol $\sim$ reads as "is distributed" and where $f()$ denote a [probability] [distribution] function [pdf] and the $| \boldsymbol{\theta}$ notation emphasise that useful theoretical distributions are depending on an unknown [vector] of [distribution parameters] $\boldsymbol{\theta}$. The more the parameters in $\boldsymbol{\theta}$ the more flexible the [distribution] is. Another important feature of a random variable is the specification of its [range] $\mathbb{R}(Y)$. The [range] is very important when we assume a distribution for the [response] variables.
+
+#### random process
+
+A sequences of values generated by a probability mechanism, ofren called a [stochastic process].
 
 #### range
 
@@ -2912,7 +3035,7 @@ The basic idea of a [vine copula] is, for a given [data] set, to build a multiva
 
 #### white noise
 
-The term [white noise] is used to describe a pure \[random\] process in the sense that knowing the past values will tell tell you nothing about the future values. More precise is refers to a sequence $\{\varepsilon_t\}$ of a \[random\] variable with $\mathbb{E}[\varepsilon_t] = 0$ $\operatorname{Var}(\varepsilon_t) = \sigma^2 < \infty$ and $\operatorname{Cov}(\varepsilon_t, \varepsilon_{t-k}) = 0$ for all $k \neq 0$. If in addition we assumed that $\varepsilon_t \sim \mathcal{N}(0,\sigma^2)$ then we have a [Gaussian white noise]. Note that [independence] implies [white noise] but the oposite is not correct unless we have a [Gaussian white noise].
+The term [white noise] is used to describe a pure [random] process in the sense that knowing the past values of te process do not help to predict the future values. More precise is refers to a sequence $\{\varepsilon_t\}$ of a \[random\] variable with $\mathbb{E}[\varepsilon_t] = 0$  $\operatorname{Var}(\varepsilon_t) = \sigma^2 < \infty$ and $\operatorname{Cov}(\varepsilon_t, \varepsilon_{t-k}) = 0$ for all $k \neq 0$. That is, a process with zero mean, constant variance  and independent observations. If in addition we assumed that $\varepsilon_t \sim \mathcal{N}(0,\sigma^2)$ then we have a [Gaussian white noise]. Note that [independence] implies [white noise] but the oposite is not correct unless we have a [Gaussian white noise].
 
 #### worm plot
 
