@@ -1,18 +1,28 @@
 ---
-title: "Data and statistical Modelling"
+title: "Data Modelling"
+
 
 format:
   html: default 
   pdf:  default 
-number-sections: false   
+number-sections: true   
 number-depth: 4
 editor: visual
 quarto: add leovan/quarto-pseudocode
 bibliography: book2026.bib  
 appendix-style: plain
-author: Mikis Stasinopoulos, Robert Rigby,  Fernanda De Bastiani, Julian Merder, ...  
+
+author: 
+- Mikis Stasinopoulos, 
+- Julian Merder, 
+- Fernanda De Bastiani, 
+- Thomas Kneib, 
+- Andy Meir,
+- Konstantinos Pateras,
+- Robert Rigby.  
+
 abstract: > 
-  This article  defines data modelling  as a _proccess_. It identify the basisc components of the process  as the _data_, the _question_ and the _model_ and build a flow diagram for a data modelling process based  on the basic omponents bule also on extra componemts associated with the basic.  By identifying the components of data modelling we are hoping to point out to pitfall and where things could go wrong.  We also introduce the idea of _focus statistical modelling_ where the modeller's _measure of goodness of fit_ is created  specifically to answer  the  _question_ at hand.
+  This article  defines data modelling  as a _proccess_. It identifies the basics three components of the process  as the _data_, the _question_ and the _model_ and build a pipeline for the data modelling process based on those basic components together with few extra  associated componemts.  By identifying all crucial components  of the data modelling process, we are hoping to point out to pitfall and where things could go wrong. We feel that this is crucial in times when automation seems to effect all part of life.  We also introduce  the idea of _focus statistical modelling_ where the modeller's _measure of goodness of fit_ is created  specifically to answer  the  _question_ at hand.
     
 keywords:
   - assumptions 
@@ -21,121 +31,143 @@ keywords:
   - stacking 
   - model average 
   - goodneds of fit
+  - focus statsisical modelling
 ---
-
-
-
 
 ## Introduction {#sec-introduction}
 
-Data modelling is the art of developing a statistical model to answer the **questions** the scientist want. It has to do with the *formulation* of a probabilistic model, the *estimation* of its parameters, its *validation*, its *comparison* with other relevant models, and finally its *interpretation*. The first attempt, to our knowledge, to define  a statistical modelling process is a flow diagram  presented in the classical 1970 time series book by Box and Jenkins,  [see page 18 of @BoxJenkins70].  Since then very few attempts were made to update it or to generalised it using  new ideas emerged in the last few  yeas.  Even within the Statistical modelling community the situation is similar. For example, the  International Statistical Modelling Workshop, IWSM,  a conference running for over 40 years, surprisingly, has no attempt to define what do we mean by *Statistical Modelling*.  The situation remind us of the statistical concept of *skewness*. Everyone know what skewness is, but mathematically it is a rather difficult concept to define, @vanZwet64. Statistical and data modellers practice modelling every day, they assumed  models, fit them, compared them, checked them and interpreted them, but what is the process  underling data analysis?  Where things can go wrong?  In this paper, we attempt to do that by firstly define the three maim components of the the data process, the **data**, the **question** and the **model**.   We proceed by defined  extra components associated with those main components,  and then try to connect all components in a flow diagram.    We do not expect to get everything right but we would like to start a discussion which hopefully would lead to a better understanding of the data modelling process and how to improve it by avoiding its pitfalls.  
+Data modelling is the art of developing a statistical model to answer the **questions** the scientist want. It has to do with the formulation of a *probabilistic* model, the *estimation* of its parameters, its *validation*, its *comparison* with other relevant models, and finally its *interpretation* to answer the right question and to take the right evidence based decision. There are not many attempts, to describe the process of data/statistical modelling from the beginning to the end. The first attempt, to our knowledge, is a flow diagram presented in the classical 1970 time series book of Box and Jenkins, [see page 18 of @BoxJenkins70]. Since then very few attempts were made to update it or to generalised it using new ideas emerged in the last few yeas. Within the statistical modelling community the situation is similar. For example, the International Statistical Modelling Workshop, IWSM, is a yearly conference running for over 40 years devote to promote statistical/data modelling . Surprisingly, within the conference, there has been no attempt to define what do we mean by *Statistical Modelling*. (Notice that in this article we will use *data modelling* and *statistical modelling* as interchangeable). The situation is reminiscence of the statistical concept of *skewness*. Everyone understand what skewness is, but mathematically it is a rather difficult concept to define, see @vanZwet64. Data and statistical modellers practice data modelling every day, they assumed models, fit them, compared them, checked them and interpreted them. Here thought we would like to ask the questions: what is the process underling data modelling? where things can go wrong? can we apply the same rigour we apply to statistical modelling to machine learning models?
+
+We attempt to do that by firstly define the three maim components of the data modelling process, the **data**, the **question** and the **model**. Then we proceed by defined the extra components associated with the functionality of those three main components, and consequently we are trying to connect all components together in a pipeline of data modelling process, (creating a flow chart). We do not expect to get everything right but we would like to start a discussion which hopefully would lead to a better understanding of the data modelling process, and the time of the AI hype, how to make it more rigours for proper scientific use.
 
 <!-- Our basic argument starts with the idea that data modelling is a *process* composed of distinct *components*. The characterization of these components, would helps us to understanding better the structures of the process and to improve it.  -->
 
-In addition we would like to emphasize the concept of *focused statistical modelling* (FSM), that is, aligning the model choice and comparison to the specific questions of the study. For example, in our experience, it is not good to base model comparison on a mean square error, a measure evaluating how good the model fit the middle part of the distribution of the response variable when the main interest of the study lies in the tail of the distribution, see  @rigby2026letter. The middle of the distribution could perfectly fitted by the  model but this do not tells whether the tail of the response variable is fitted well or not.  As a motivating data set, we will use a simple example of distributional regression,  @merder2026distributional  and  @stasinopoulos2024generalized. In this example we require the fitting  of reference curves in which the fitted model is used to identify individuals at risk using the concept of _z-scores_.
+In addition we would like to emphasize the concept of **focused statistical modelling** (FSM), that is, aligning the model choice and comparison to the specific questions of the study. The concept of FSM reflects our experience to find practitioners using inappropriately measures of goodness of fit a to fit and compare models. For example using the mean square error which is a measure of how good the model fit the middle part of the distribution of the response variable when the main interest of the study lies in the tail of the distribution, see @rigby2026letter. For a particular data set, the middle of the distribution could perfectly fitted by a model but this do not tells whether the tail of the response variable is fitted well or not.
+
+As a motivating example of our discussion on data modelling, we will use a simple example of a distributional regression, @merder2026distributional and @stasinopoulos2024generalized. It is an example, of centile estimation where we require to fit reference curves and where a lower quantile curve can be used to identify individuals at risk.
+
+@sec-basic introduces the basic three components of data modelling processes: the **data**, the **question** and the **model**. The ideas based on those basic components are the subjects of @sec-data, @sec-question and @sec-model, respectively. Components associated with the basic components, like; the *assumtpions*, @sec-assumptions, the *fitting* of a model (fit), @sec-fit, the *measures of goodness of fit*, (MGoF), and the *model interpretation* (mi) are discussed next. A flow diagram connecting those components together is presented in @sec-statistical_modelling. Conclusions are drawn in section @sec-conclusions. The example, the ALB, data set, @judah2025reference, is presented through out the article after the relevant concepts are introduced.
 
 
-
-@sec-basic introduces the basic components of all data modelling processes, the  **data**, the  **question** and the  **model**. Those basic components are also the subjects of  @sec-data,  @sec-question,  @sec-model, respectively.  Associated with those components are extra modelling components,  like  _assumtpions_, @sec-assumptions, _fit_, @sec-fit, _measures of godness of fit_,   _model interpretation_ e.t.c. Those are discussed next. A   flow diagram connecting those componets is presented in @sec-statistical_modelling. Conclusions are drawn in section @sec-conclusions. The example, the ALB, data set,  is presented through out the article after the  relevant concepts are  introduced.      
-
-
-## Basic components  {#sec-basic}
-
-Basic components
+## Basic components {#sec-basic}
 
 The three fundamental components of any data modelling are.
 
-- the **data** 
+- the **data**
 
-- the **question** and 
+- the **question** and
 
 - the **model**.
 
-The **data** are  the source of information to answer the **question**. The **question** is the **purpose** of the study what the scientist would like to answer using the data. The **model**  is the means, to extract right information from the **data** to answer the **question** (see @sec-model for more on the model).  
+The **data** are the source of information to answer the **question**. The **question** is the **purpose** of the study. Scientists would like to answer the **question** based on *evidence* from the **data**. The **model** is the means, to extract the *evidence*, the right information, to answer the **question** in order to make an informative *decision*.
 
+![The question, the data and the model natural interrelationship](Question_Data_answer.png){#fig-question width="70%" height="250px"}
 
-![The question, the data and the model interrelationship](Question_Data_answer.png){#fig-question width="70%" height="250px"}
+All three basic components are interconnected. The **data** are collected to answer the **question**. The **model** is the filter to extract the right information to answer the **question**. The **model** can not extract information which is not in the **data**. The **data** can not answer questions if the information is not there. The **model** should be an appropriate model for answering the **question**. While in @fig-question we show the natural direction of the relationships, this should not taken as fixed. There are occasions in which different direction is true. For example the **data** exist in advance and prompt to answer the **question** rather the other way around. In those cases the direction of the diagram is from the **data** to the **question** to the **model** to extract the information to answering the question.
 
-All three basic components are interconnected. The **data** are collected to answer the **question**. However, occasionally the opposite is true, the **data** exist and prompt answering the  **question**. The **model** is the filter to extract the right information to answer the **question**. The  **model** can not extract information which is not in the **data**. The **data** can not asnswer question if the information is not there. The **model** should be an appropriate model for answer the **questions**.
+Before any data analysis start, the following questions should be asked by the practitioners:
 
+- do the **data** contain the right information to answer the **question**?
 
-One before start any data analysis has to ask 
+- are the **data** reliable?
 
-- do the data contain the right information to answer my question?
+- is the **model** the right model to answer the **question**?
 
-- are my data reliable? 
+- is the **question** clear enough to solve the scientific argument?
 
-- is the **model** the right one to answer the **question**?
-
-- is my question clear enough to solve the scientific argument?
-
-
-
-In the next three Sections  we are trying to describe what we understand as the functionality of the basic three components and who they operate in each analaysis.  @sec-data describe the **data**,  
-
+In the next three Sections we are trying to describe in more detail the basic three underline components of data modelling.
 
 ## Data {#sec-data}
 
-Over forty years ago **data analysis** was the realm of statisticians. Today statistician still play an important role, but data analysis is the major subject of data scientists, numerical analysts, data modellers, data miners, machine learners, and artificial intelligent researchers to mention few. They all used data to extract information about the word we are living in.  What it went wrong for the statistician?  One explanation is that mathematical statisticians who dominate the statistical community in the 80's were sort-sighted but this is only partially explain the diminishing role  of statisticians.  Anothe explanation is that the emphasis of data analysis have changed, from answering simple questions to attempting modelling  more complex  situations.  Computer power was expanding really fast for  last few decades allowing  computations that were unimaginable few years ago. 
+Over forty years ago **data analysis** was the realm of statisticians. Today statistician still play an important role, but data analysis is the major subject of data scientists, numerical analysts, data modellers, data miners, machine learners, and artificial intelligent researchers to mention few. They all used data to extract information about the word we are living in. What it went wrong for the statistician? One possible explanation is that mathematical statisticians who dominate the statistical community in the 80's were too sort-sighted. But this only partially explained the diminishing role of statisticians. A more sensible explanation is that statistical model could cope only with relatively simple and mostly unrealistic situations while improvent in data storage and computer power require answer to more complex models and for bigger data. In the last few decades the computer power was expanding really fast allowing complexity and computations that were unimaginable few years ago.
 
 <!-- The following arguments try to explain this more;  -->
 
-### tabular 
+### Small and Big data
 
-Older data sets appeared almost exclusively in a **tabular** form, that is, as 2-dimensional arrays (matrices, spreadsheets) where rows are the individual subject of study and columns  are the different variables collected on individuals. Recently data could appear in any readable computer file form. Often information from those data files need to be extracted to make it suitable for data analysis.   This extraction is often called **feature extraction**. Throughout this paper we will assumed  that  **data** are already in a tabular form and are ready for mathematical modelling analysis. 
+Few years ago, *Small*, say less that a hundreds observations, were typical. The problem with small data is that they have limited amount of information on individuals of interest. *Big data* on the other hand, usually in the thousand or even in million of observations, contain lot more information. Modern data sets are also fast-changing, and often needs specialized storage and processing tools. Typical example is the billions of social-media events, sensor readings, or transaction logs. The nature of the question to ask from the data has also change radically. While data were used to gain knowledge about nature, now are used to explore people weakness for gain. Before, the computational revolution, data were used to answer questions of scientific interest. Now they are used to predict the behaviour of individuals and this without any regard for *reproducibility*, a cornerstone of scientific research.
 
-### reliability
+Note that one way to compare fifferent data sets is using the *3 Vs*:
 
-Data reliability and robustness pops out very often in any scientific work.  If the data are not reliable then any conclusion drawn from the data will be questionable.  So the integrity of the data is crucial. A related concept is the concept of contamination  when we have reasons to believe that the majority of data are OK but a small minority is not. 
+- *Volume* : big data have lot more records,
+- *Velocity*: how often the data can be obtained, do they arrive continuously and rapidly,
+- *Variety*: they can include text, images, video, logs, and other formats.
 
+<!-- Small data couls be  usually analyzed with Excel. Big data often uses distributed systems such as Spark, Hadoop, cloud data warehouses, or streaming platforms. The computer power expansion lead to data Model need to be more flexible (more complex)  -->
 
+Typically older data sets appeared almost exclusively in a **tabular** form, that is, as 2-dimensional arrays (matrix) where there are
 
-### data generation mechanism  {#sec-data-_generating_mechanism}
+- $n$ rows, the number of individual subjects of the study and
+- $r$ columns, the different variables collected on the individuals.
 
-The **data generation mechanism**,  (DGM), is a set of assumptions which defines how the data are generated. Those  **assumptions** applied to the **data** rather than the **model** like in   @sec-assumptions.  Earlier statistical work was relying heavily on the idea of  **data generation mechanism** to fit a model. That is,  a combination of **data** and **model** **assumptions**. That was criticised by  @breiman2003statistical  in his famous paper  "Statistical Modeling: The Two Cultures” mainly because the  data generation mechanism can not easily verified. In fact, there are more that one way the data could arise. We would like to agree with him in this. Assumptions about the data generating mechanism are often unnecessary and mostly un-testable. While DGM's could help out understanding are not necessary for data modelling.    
+Often we refer to $n$ as the *size* or *sample size* and $r$ as the width of the data, respectively. For most tabular data have $n>r$ but we also have data with $n<r$ which usually need special attention since not all models are suitable for this form. The common word to describe tabular data is *spreadsheet*. We mention abobe that **data** could appear in any readable computer file format. The information from those data files often needed to be extracted into a tabular form in order to make it suitable for standard data analysis. This transformation of the the original data into a suitable tabular form for futher analaysis is called **feature extraction**. Feature extraction is a very important part of machine learning modelling. In this paper. we will not to spend more time on feature extraction but we will assumed that the **data** are already in a suitable tabular form for modelling. However we would like to pointed out that the transformation part of feature extraction in done automatically in *deep learning* models. Deep learning is part of *machine learning* when a neural network model is used with multiple hidden layer.
 
+### Partition {#sec-data-partition}
 
-There is however a part of the data generating mechanism assumptions we need to observe. This part concerns whether the data where generated independently ot not. For example, with
+Partitioning the **data** into different part is a rather recent development in data modelling. It started as a way to improve inference in statistical modeling, see @stone1978cross, @efron1992bootstrap but it proves to be a great tool to detect *over-fitting* (see @sec-model) in data modelling. The idea is simple spit the data into *training* and *test* data. Use the *training* data to **fit** the model and the **test** data to evaluate its performance. With big data data partition is easy to implement with smaller data $K^{th}$ cross validation or *bootstrapping* is recommended.
 
-- **Independent** observations, we believe that each rows in the data do not depends on  other rows. This lead to specific **measure of goodness of fit** which account for indepenance.  
-
--  **depended** observations  we believe the rows in the data are related. This could be because we have;
-
-   - _time-series_ data so consequential rows over time are related,
-   
-   - _spatial data_,  so rows from neighbouring areas are related,  (note we can have  both space and time relationships) or because there is a  
-   
-   - _cluster dependence_ in th data. This means that there is a categorical variable (factor) in the data  which affects the interdependence of the observations, in that, observations within a level of the factor are correlated but observation  between  clusters (levels) are independent.
-
-Any dependency in the rows of the  data has a profound effect on the type of **measure of goodness of fit**  used to **fit**   the **model**.
-
-
-The more recent idea of a **generative model** is related to  the data generation mechanism. A  **generative model**   is a model which can reproduce data "similar" to the actual **data**. In this case the **model** is the data generation mechanism. In the literature to verify the "similarity" of the actual data to the model generated data the Maximum Mean Discrepancy (**MMD**) is used.  `Mikis: At least if variables are continuous but I am not sure about that` 
-
-
-### small/big data 
-
-### data partition  {#sec-data-partition}
-
-Partitioning the data is a rather recent development in data modelling. It started as a way for improving inference on the coefficients of a model, see @stone1978cross,  @efron1992bootstrap  but it proves to be a great tool for preventing _over-fitting_  (see @sec-model) in data modelling. The idea is simple spit the data into _training_ and _test_ data. Use the _training_ data to **fit** the model and the **test** data to evaluate its performance.
-
-Formally,  let the data $D$  partitioned into $2$ non-overlapping groups:
-$$
+Formally, let the data $D$ partitioned into $2$ non-overlapping groups: $$
 D=D_{train}\cup D_{test},
 \qquad
-D_{train}\cap D_{test}= \varnothing \quad (j\ne k).$$
-The subset in  $D_{train}$ is used to **fit** the model and the subset  $D_{test}$ to **evaluate** its performance and to compare  different competitive models. Note that the partition requires the assumption that the two data  sets contain similar  information, that is, the two data sets are _exchangeable_. That is, they can be switched without affecting the results. Exchange-ability can be tested using MMD.    
- 
- 
+D_{train}\cap D_{test}= \varnothing \quad (j\ne k).$$ The subset in $D_{train}$ is used to **fit** the model and the subset $D_{test}$ to **evaluate** its performance and to compare different competitive models. Note that the data partition requires the assumption that the two data sets have similar information. That is, that the two data sets are *exchangeable*. In this case they can be switched without affecting the results. Exchange-ability can be tested using MMD but again the problem can be avoided using *bootstrap* or $K^{th}$ cross validation.
 
-### ALB data  {#sec-ALB-data}
+::: callout-important
+I think MMD can be used to check if the partinion is exchangeable (if all variables are continuous?) in the data but when I tried did not not work. I may made a mistake it needs more checking.
+:::
 
-As an example, to demonstrate data modelling, we will use data from Judah \textit{et al.} (2025), who provide reference ranges for liver function tests in a population of healthy pregnancies after adjusting for the effect of gestational age and other maternal demographic characteristics. Here, for simplicity, we will adjust only for gestational age, the most important factor. Therefore, we only have two (continuous) variables in the **data** set: 
+### Reliability, robustness and missing data
 
-- gestational age (`ga`): the *covariate* and 
--  albumin (`ALB`): the *response*. 
+Data *reliability* and *robustness* pops out very often in any data modelling work. If the data are not reliable then any conclusion drawn from the **model** given the **data** is questionable. So the integrity of the data is crucial to any data modelling. Data reliability is out of the scope of this article.
 
-`ALB` is an indicator of how well the liver is functioning. The data were obtained at different times during fetal scans, so they are cross-sectional data, that is, they are coming from 3429 different women and therefore  they can be treated as independent observations even though there are gaps in gestational age. The data can be found in the the data set`ALB` in the R package `gamlss.data` and are shown in @fig-thedata.
+Data *robustness* appear in two district forms:
+
+- *outliers* in the variables and
+- *contamination of the data*.
+
+*Outliers*, for a particular variable in the **data**, are observations with values far way from the rest of the observations. Outliers could create problems in modelling. For example, some summary statistics like the mean and the variance are very sensitive in the present of outliers. In regression modelling, @sec-input_output, outliers either in the *response* or the *covariates* could create problems. (`reference`)
+
+*Contamination* has to do with the believe that certain percentage of the data are collected or recorder wrongly. A *robust model* should take this into account so the results would reflect the bulk of the data and not the contaminations. (`reference`)
+
+A related problem is **missing** observations in the data. Missing observations could be concentrated in one or two variables, in his case those those variables could be ignored, or could be spread along several variables in the **data** set and can not ignored. The question with any missing observations in data situation is how the **model** building process is affected by the **missing** observations. (`reference`)\::: callout-important Bayesian analayis could be possible help modelling different data generate mechanism (DGM's)
+
+::: callout-important
+Data analytics tools could help to robustify the data.
+:::
+
+### Data generation mechanism (DGM) {#sec-data-_generating_mechanism}
+
+The **data generation mechanism**, (DGM), is a set of **assumptions** describing how the data were generated. Those are **assumptions** applied to the **data** rather than the **model** see @sec-assumptions. Earlier statistical work was relying heavily on the idea of how about the **data** are generated. That was criticised by @breiman2003statistical in his famous paper "Statistical Modeling: The Two Cultures” mainly because the data generation mechanism is not verifiable. There are more one way the data could have risen and from the data itself we are not able to say which one is more appropriate. We would like to agree with him in this. Assumptions about the data generating mechanism are often unnecessary and often untestable. DGM assumptions while useful for understanding and interpreted the process are not necessary for data modelling. However there is a part of the DGM assumptions we always need in data modelling. This is whether the data where generated independently or not.
+
+- with **independent** observations, we believe that each rows in the data set is generated independently of the other rows in the data,
+
+<!-- This assumtpion lead to specific **measure of goodness of fit** which account for independence.   -->
+
+- with **depended** observations we believe the rows in the data are somehow correlated. This could be because we have;
+
+  - *time-series* data so consequential rows over time are correlated,
+
+  - *spatial data*, so rows from neighbouring areas are correlated,
+
+  - simultaneously *time-series* and *spatial data*, or
+
+  - *cluster dependence* in th data. This means that there is a categorical variable (factor) in the data which affects the interdependence of the observation, because observations within a level of the factor are correlated but observation between clusters (levels) are independent.
+
+Any dependency in the rows of the data has a profound effect on the type of **measure of goodness of fit** used to **fit** the **model**.
+
+The more recent idea of a **generative model** is related to the DGM. A **generative model** is a model which can reproduce **data** "similar" to the observe data. Any adequate **model** can be seen as a DGM. By *adequate* model we mean a model which has a good MGoF, see @sec-MGoF, but which also pass diagnostics test looking to question the assumtpions of the **model**, see @sec-diagnostics. In the literature, to verify the "similarity" of the actual data and data generated by the model generated data the Maximum Mean Discrepancy (**MMD**) is used.
+
+::: callout-important
+Bayesian analayis could be possible help modelling different data generate mechanism (DGM's)
+:::
+
+### ALB data {#sec-ALB-data}
+
+As an example, to demonstrate data modelling, we will use data from @judah2025reference, who provide reference ranges for liver function tests in a population of healthy pregnancies after adjusting for the effect of gestational age and other maternal demographic characteristics. Here, for simplicity, we will adjust only for gestational age, the most important factor. Therefore, we only have two (continuous) variables in the **data** set:
+
+- gestational age (`ga`): the *covariate* and
+- albumin (`ALB`): the *response*.
+
+`ALB` is an indicator of how well the liver is functioning. The data were obtained at different times during fetal scans, so they are cross-sectional data, that is, they are coming from 3429 different women and therefore they can be treated as independent observations even though there are gaps in gestational age. The data can be found in the the data set`ALB` in the R package `gamlss.data` and are shown in @fig-thedata.
 
 ```{r}
 #| warning: false 
@@ -154,141 +186,107 @@ load(file="/Users/dimitriosstasinopoulos/Dropbox/github/gamlss.data/data/ALB.rda
 library(gamlss2)
 plot(ALB~ga, data=ALB, xlab="gestational age")
 ```
-::: callout-important
-Bayesian analayis could be possible help modelling different data generate mechanism (DGM's)
 
-Data analytics tools could help to robustify  the data.
-:::
+## Question {#sec-question}
 
+By **question** we mean the **purpose** of the study. The **question**(s) is what the researcher is trying to answer from the **data**.
 
+Most of the statistical departments forty years ago were occupied by mathematical statisticians. The leading statistician at the time were too arrogant to hear the **question**(s) that the researchers were asking and too busy to fight between themselves in the debate between frequentist and Bayesian school of thoughts of statistical inference. They were obsessed developing models and theory which was mathematical sound but pretty unrealistic for practical purposes. They have fallen close to what now we called **Maslow’s hammer**; “I suppose it is tempting, if the only tool you have is a hammer, to treat everything as if it were a nail.” Not all statisticians were like this. The following remarkable quote appears in page 13 @Tukey1962 : "Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise." Mathematical statisticians were very keen to provide theorem, most of them concerning asymptotic theory which hardy answered any practical questions. Few partitioner's are caring on what happen if $N$, the number of observations, goes to infinity. People want to know what their data really tell them. The additional problem with asymptotic theory is that no one knows at which points $n$ is big enough to be considered that it reach its asymptotic behaviour? What is the length of a string? Bayesian statisticians, on the other hand, did try to address real problems, see Chapter 1 an 2 of @mcelreath2018statistical, but at the time they were inhibited by their methodology. Monte Carlo Markov Chain (MCMC) a simulation computer intensive methodology, widely used today to fit Bayesian models, was invented in the 40's but only rediscover in late 80's.
 
+If you are using the "correct" model for your data, Bayesian inference is probably the best way to answer any questions about uncertainty in your data. But how do you know you have the "correct" model? We generality believe that "the type of statistical inference used (frequentist or Bayesian) is less important for answering the **question** than having a good model for the data. That is, we believe that using the right model to answer the questions is more important than using the right type of inference. The type of inference also should be connected with the **question**.
 
-## Question  {#sec-question}
+While the statistical models forty years ago were too simplistic to realistically, answer the **question** asked, the computer power was increased exponentially and according to Moore's law. Moore's law stating "that the number of transistors on an integrated circuit would roughly double every two years"". Moore's law happen to be a very accurate description of reality until recently where while transistor density continues to improve the pace is slower. Moor's law allow the fitting of more complicated **models** and the fitting of larger **data** sets. The science of *data mining* was created as a way of extracting information from very large data sets.
 
-By **question** we mean  the  **purpose** of the study. The **question**(s) is what the researcher is trying to answer from the **data**.
+### Types of questions
 
-Most of the statistical departments forty years ago were occupied by mathematical statisticians. The leading statistician at the time were too arrogant to hear the **question**(s)  that the researchers were asking and too busy to fight between themselves in the debate between frequentist and Bayesian school of thoughts of statistical inference. They were obsessed developing models and theory with sound mathematical background but pretty unrealistic for practical purposes. They have fallen close to what now we called **Maslow’s hammer**; “I suppose it is tempting, if the only tool you have is a hammer, to treat everything as if it were a nail.” Not all statisticians were like this. The following remarkable quote appears in page 13  @Tukey1962 : "Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise." Mathematical statisticians were very keen to provide theorem, (most of them concerning asymptotic theory) which hardy answered any practical questions. Few partitioner's are caring on what happen if $N$, the number of observations, goes to infinity. People want to know what their data really tell them.  The  additional problem  with asymptotic theory  is that no one knows at which points $N$ is big enough to be considered that it reach its asymptotic behaviour? What is the length of a string? Bayesian statisticians, on the other hand, did try to address real problems, see Chapter 1 an 2 of @mcelreath2018statistical, but at the time they were inhibited by their methodology. Monte Carlo Markov Chain (MCMC) a simulation computer intensive methodology, widely used today to fit Bayesian models, was invented in the 40's but only rediscover in late 80's.  
+Data modelling is develop to answer questions of scientific interest. We would like to divide the questions into two categories;
 
-If you are using the "correct" model for your data, Bayesian inference is probably the best way to answer any questions about uncertainty in your data. But how do you know you have the "correct" model? We genereraly believe that "the type of statistical inference used (frequentist or Bayesian) is less important for answering the **question** than having a good model for the data. That is, we  believe that using the right model to answer the questions is more important than using the right type of inference. The type of inference should be connected with the **question**.
+- **scientific hypotheses**: a scientific hypothesis is testable claim about how the world works. For example, $H_o:\text{Does the new drug lowers average blood pressure.}$ A scientific hypothesis concerns on whether a claim is true or well-supported by the evidence of experimental data, however scientific hypothesis and inference relies heavily on the **reproducibility** of the results.
 
-While the statistical models forty years ago were too simplistic to realistically, answer the **question** asked, the computer power was increased exponentially and according to Moore's law. Moore's law stating  "that the number of transistors on an integrated circuit would roughly double every two years"". Moore's law happen to be a very accurate description of reality until recently where while transistor density continues to improve the pace is slower. Moor's law allow the fitting of more complicated **models** and the fitting of larger **data** sets. The science of *data mining* was created as a way of extracting information from very large data sets. 
-
-## type of questions
-
-Data modelling is develop to answer question of  scientific interest.  Those could be divided into;
-
-- **scientific hypothesis**: a testable claim about how the world works. For example, $H:\text{ Does the new drug lowers average blood pressure.}$ It concerned with whether a claim is true or well-supported by the  evidence of experimental data and scientific inference. 
-
-- **decisions** concerned with what action to take when the true state of the world is not fully known.   
+- **decisions**: decitions are concerning with what action to take when the true state of the world is not fully known or understood.
 
 <!-- It uses probabilities, consequences, costs, and benefits , for example "should we prescribe the drug?"  -->
 
-One could argue that both cases are "decisions under uncertainty" but in the former the decisions are far more reaching that in the later. We would like to think that  **scientific hypothesis** need "strong" evidence from the  **data** to become the consensus  of scientific knowledge. In **decisions**  the scope is lot smaller. For example, If on the evidence  we have, we decide to cross the railway line, the  consequence could be fatal but it will effect a smaller set of people.   There is a tendency in data modelling to classify models as _inferential_ or _predictive_ the first is associated with **scientific hypothesis** the later with  **decisions**.  We would like to  argue here that it is the **question** determine whether a model is _predictive_. The same model could be  be use for both estimation and prediction but it is  **question** which make the model predictive or not.   
+One could argue that both cases are "decisions under uncertainty" but the former takes decisions that are far more reaching that the later. We would like to think that
 
-### ALB question  {#sec-ALB-question}
+- **scientific hypothesis** need **strong** evidence from the **data** to become the consensus of scientific knowledge and it must be well supported by **reproducible** results.
+- **decisions** have a smaller scope and the results are applied on a smaller scale. For example, if on the evidence, we decide to cross a railway line, the consequence could be fatal but it will effect only a small set of people. So the consequence of the decision would effect a small set of people and the *scope* of the study will be narrow. I general we should we should always ask ourselves whether the impact of the study would effect a large number of people or not and if it does the standard of proof should be higher.
 
-The aim of the  Albumin (`ALB`) data  is to identify people with abnormally at low `ALB` values given their gestational age. Clinically those  people are at higher risk. 
-The way we approach this is first to fit a adequate  **model** to the data and then use its residuals (z-scores) to identify the unusual observations at the lower tail.   
+There is a tendency in data modelling to classify models as *inferential* or *predictive*. The first is associated with **scientific hypothesis** while the later with **decisions** under uncertainty. We would like to argue, that, it is the **question** which determine whether a model is *predictive* or not. The same model can be be used for both estimation and prediction but the **question** gives the model its predictive flavour, not the other way around. Another imporant point is that the **question** is closely related to the objective **measure of goodness of fit**, MGoF of @sec-MGoF.
 
+A hypothesis is associated with statistical inference. Inference is dealing with estimates, confidence intervals, p-values, predictions, or posterior probabilities. Scientific inference is the broader claim about the world: what mechanism is operating, whether a treatment causes an outcome, whether a theory is credible, or whether a result generalizes beyond the study. A statistically significant association, for example, is not automatically scientific evidence of causation. Scientific inference additionally depends on study design, measurement quality, confounding, plausible mechanisms, robustness, replication, and external validity. In conclution statistics is a tool for quantifying uncertainty; science uses it alongside theory and design to learn about reality.
 
+### ALB question {#sec-ALB-question}
 
-Concluding this section we would like to emphasise again the importance of the **question**. Without the question we should not do  any statistical modelling but   before we embark in to our analysis, we should also ask ourselves;  
+The aim of the Albumin (`ALB`) data is to identify people with abnormally at low `ALB` values given their gestational age. Clinically those people are at higher risk. The way we approach this is first to fit a adequate **model** to the data and then use its residuals (z-scores) to identify the unusual observations at the lower tail.\
+Note however that the model should be able to fit the tail of the data well in. order to be able to identify the "true" hight case ib the tail of the resposne
 
-
-
-Summarizing, we have the **data**, and the **question** and we will try to build a **model** to answer the **questions**. 
-
+Summarizing, we have the **data**, and the **question** and we will try to build a **model** to answer the **questions**.
 
 ::: callout-important
 Statistical modelling should be use the best available tools to answer the **question** of the study
 :::
 
-
 ## Model {#sec-model}
 
- 
-A **model**  is a simplification of reality. We use term **model** widely i.e.  _toy models_, *fashion model*  but here we are interested in **mathematical** models where mathematical equations are use to describe reality. A model is the filter from which we extract usefull information from the data.  We are  firm believers of George Box quote;
+A **model** is a simplification of reality. We use term **model** widely i.e. *toy models*, *fashion models* e.t.c. Here we are interested in **mathematical** models that is, models where mathematical equations are use to describe reality. One couls think of the model as the filter from which we would like to extract the most useful information from the data to answer the question while discard the less relevant. We are firmly believers of George Box quote;
 
-> `all models are wrong but some are useful`, 
+> `all models are wrong but some are useful`,
 
-see @box1979robustness.  There is no true model. The models are there to help us understand things. They are not reality. In fact the scientific consensus is that our brain uses models. Those models were developed during our evolutionary process to cope with the outside world (`please give reference here`). That is, what we think is reality  it is what our brain models tell us to believe. How useful a model is,  depends on its purpose. The models in our brains are good enough for our evolutionary survival, statistical model are useful whether they could answer correctly the **question** of the study. The question eveybody should ask in the beging of any analysis is 
+see @box1979robustness. There is no true model. The models are here to help us understand things. They are not reality. In fact the scientific consensus is that our brains use models. Those models were developed during our evolutionary process to cope with the outside world (`please give reference here`). That is, what we think is reality it is what our brain models tell us to believe. How useful a model is, depends on its purpose. The models in our brains are good enough for our evolutionary survival, statistical model are useful whether they could answer correctly the **question** of the study.
 
+### Input-output model {#sec-input_output}
 
-
-
-### Input-output  {#sec-input_output}
-We will  concentrate only on **regression** type of models since they constitute more that 90% of statistical modelling techniques. Regression models are **input-output** models, @fig-InputOutput. The input represent **explanatory variable(s)**, (**covariates**), $X$, and the output the **response** (**target**, **labels**) variable(s), $Y$. We are trying to model the response $Y$ given the $X$. In mathematical terms we are trying to model the response variable $Y$ as a function of $X$. Regression model are *supervised* model since a **target** variable, always exist.
+Next we will concentrate only on **regression** type of models. This, because, we would like to more specific to some of the concepts we will use later but also because regression models constitute more that 90% of statistical/data modelling techniques. Regression models are **input-output** models, @fig-InputOutput. The input represent **explanatory variable(s)**, (**covariates**), $X$, and the output the **response** variable(s), the **target** variable(s), the **labels**, $Y$. We are trying to model the response $Y$ given the $X$. In mathematical terms we are trying to model the response variable $Y$ as a function of $X$. Regression models are *supervised* models since a **target** variable, always exist.
 
 ![Input-output model](input_output.png){#fig-InputOutput width="70%" height="60px"}
 
-We will follow @breiman2003statistical arguments trying to describe how a regression model is functioning. Generally we assume that the $X$ explanatory variables affect the response $Y$,
-$$    X  {\longrightarrow}  \fbox{NATURE} {\longrightarrow} Y. 
-    $$ but "Nature" is too complex  and in order to understand it better we need a **model**.
-$$    X  {\longrightarrow}  \fbox{Model} {\longrightarrow} Y. 
-    $$ A model, is the mechanism on how $X$ affect $Y$. Mathematically  this relationship can be represented by an unknown function $G()$;
-$$    X  {\longrightarrow} \fbox{G()}  {\longrightarrow} Y,
-    $$ that is, $X$ affect $Y$ thought $G()$. The task of the modeller is to try to unravel the unknown function $G()$ 
+We will follow @breiman2003statistical arguments trying to describe the functionality of regression models. In general we believe that $X$ the explanatory variables affect the response $Y$, $$    X  {\longrightarrow}  \fbox{NATURE} {\longrightarrow} Y. 
+    $$ but nature is too complex. In order to understand nature we need a **model**. $$    X  {\longrightarrow}  \fbox{Model} {\longrightarrow} Y. 
+    $$ A **model**, describes on how $X$ affect $Y$. Mathematically this relationship can be represented by an unknown function $G()$; $$    X  {\longrightarrow} \fbox{G()}  {\longrightarrow} Y,
+    $$ that is, $X$ affect $Y$ thought the unknown function $G()$. The function $G()$ can be specified in advance, using w a *mathematical model*, see @sec-mathematical_model, or left unspecified to be determined by the data using an \_algorithmic model, see @sec-algorithmic_model. The task of the modeller is to try to unravel the function $G()$
 
-In data modelling the model is not completely *deterministic*. In a lot of practical situation, $Y=G(X)$ is not sufficient to model $Y$  because there exist a **natural error** variation associated with $Y$. The reasoning behind this natural error variation come from the observation that if we could repeat the experiment several times even with identical $X$ values, the response $Y$ will be somehow slightly different. This difference in behaviour of the response constitutes the natural error associated with $Y$. In statistical terms, $Y$ has a distribution. In fact, it has a conditional distribution $\mathcal{D}(Y|X)$ depending of the values of $X$. It is common in modelling to call the function $G()$ the **signal** and the natural error distribution $\mathcal{D}(Y|X)$ the **noise**. So in order to compete the specification of any input-output   model, we need both he the signal, $G()$, an the noise $\mathcal{D}$.  Therefore a compact notation for a input output stochastic model say $\mathcal{M}$ requires, at a minimum, the specification of  the *mathematical* component, $G$ and the  *stochastic* component, $\mathcal{D}$, i.e. $\mathcal{M}(G, \mathcal{D})$.   There are three different way that an input output model can be modelled.  
+In most **data** modelling the **model** is not completely *deterministic*. $Y=G(X)$ is not sufficient to model $Y$ because there exist a **natural error** variation associated with $Y$. The reasoning behind this natural error variation come from the observation that even if we could repeat the experiment several times with identical $X$ values, the response $Y$ will be somehow slightly different. This difference in behaviour of the response constitutes the natural error associated with $Y$. In statistical terms, $Y$ has a distribution. In fact, it has a conditional distribution $\mathcal{D}(Y|X)$ depending of the values of $X$.
 
-- the **top-down** methodologies where the assumptions made  about the model applies to all individuals subjects of the  data and then we are trying to find the the model best fitted to the data according to a criterion.  Typical model in this category are the regression and machine learning models we are dealing in this  article.   
+It is common in modelling to call the function $G()$ the **signal** and the natural error distribution $\mathcal{D}(Y|X)$ the **noise**. So in order to compete the specification of any input-output model, we need to specify both the the signal, $G()$, and the noise $\mathcal{D}$. A compact notation for a input output stochastic model say $\mathcal{M}$ requires, at a minimum, the specification of the *mathematical* component of the model, $G$ and the *stochastic* component of the model, $\mathcal{D}$, i.e. $\mathcal{M}(G, \mathcal{D})$.
 
-- the **bottom-up** methodologies where we start with assumptions how individual subjects of interest are behaving and interact within a given  environment.  Data then are  **simulated**  to discover what system-level patterns could emerge. Typical models of this kink are the **agent based** models when the agent is the individual of interest.   
+There are at least three different types of an input output model:
 
-- **partitioning  data** model methodology where the data space is divided into regions, and separate model are fitted  for each region. Those models are useful when one global model cannot describe all observations well.  The simple model of this kind is the regression tree model. But regression tree model can be seeing also as  **top-down** model where the relstionships have a very simple form.   
+- using a **top-down** methodology where the assumptions made about the **model** applies to all individuals subjects of the **data**. We proceed by trying to find the the model best fitted to the data according to a criterion of **measure of goodness of fit**, MGoF. Typical models in this category are the classical regression models and also the machine learning models we are dealing in this article.
 
-In this article we will concentrate only on the  **top-down** methodology models.  In  **top-down** model  there are two ways to model the function $G()$;  using a **mathematical**, or  an **algorithmic** model.
+- using a **bottom-up** methodology where we start with assumptions how individual subjects of interest behave and interact between them within a given environment. Data then are **simulated** from the idividual behavor to discover what system-level patterns could emerge. Typical models of this kink are the *agent based models* where the *agent* is the individual of interest.
 
+- using a **partitioning data** model methodology where the data space is divided into regions, and separate model are fitted for each region. Those models are useful when one global model cannot describe all observations well. The simplest model of this kind a regression tree model. But regression tree models can be also seeing as **top-down** model where the relationships have a very simple form, piecewise constant functions of the covariates.
 
-### Mathematical model    {#sec-mathematical_model}
+In this article we will concentrate only on the **top-down** methodology models. In **top-down** model there are two ways to model the function $G()$; using a **mathematical**, or an **algorithmic** model.
 
-A **mathematical model**, assumes that the function $G(X)$ is  a mathematical  equation. For example, a linear or non-linear equation, a partial differential equation, (PDE) e.t.c., The behaviour of $G()$ is defined through its parameters. We would refer  to those parameters as the **coefficients** of the model or the $\boldsymbol{\beta}$'s. If we knew the  coefficients, $\boldsymbol{\beta}$, we would know the structure of the model. By **fitting**  or estimating a  mathematical **model**  we are trying to find which set of coefficients, say $\hat{\boldsymbol{\beta}}$, make the model closer to the **data**. How close to the **data** is determined by an objective  **measure of goodness of fit**.   Different **measure of goodness of fit**  could lead to different fitted models. So it important in any study to specify which  **measure of goodness of fit** is use to **fit** the **model**. Notice however that a **measure of goodness of fit** could have two different functionalities in data modelling. The first is to find the best fitted model while the second is to compare competitive models. The first help us for a given data to find an "good" model for the data while the second helps to  answer the  question, if models $\mathcal{M}_1$ and $\mathcal{M}_2$ are both good, according to a specify measure of goodness of fit, which one  should I use to answer the **question**?
-Note that model with similar **measure of goodness of fit** are called the literature the **Rashomon set**.  If two mathematical models  belong to the **Rashomon set**  the the principle of **parsimony** also known as **Occam’s razor** can be use to select between them. The **Occam’s razor** principle  states that among explanations that fit the evidence equally well, prefer the one that makes the fewest unnecessary assumptions. Prefer simplicity over complexity.  The simplicity/complexity  in  mathematical models, is easily defined as  the number of  coefficients used to fit  the  model. The fewer the coefficients the simpler the model is. The number of  coefficients in a mathematical models are called the **degrees of freedom** used to fit the model  and they are a natural measure of the **complexity** of the model. Note that in this case the complexity takes discrete valueswhich can not greater   the number of observations in the data. Mathematical models usually provide an easy **interpretation**  through the fitted coefficients $\hat{\boldsymbol{\beta}}$'s of the model. 
-  
+### Mathematical model {#sec-mathematical_model}
 
+A **mathematical model**, assumes that the function $G(X)$ has a known mathematical form. For example, a linear or non-linear equation, or a partial differential equation, (PDE) e.t.c., The behaviour of $G()$ is defined through its parameters. We will refer to those parameters as the **coefficients** of the model (or the $\boldsymbol{\beta}$'s). We will not use the standard notation in neural network which refer to the coefficients as **weights** because we like to keep the name for **prior weights**. Prior weights allows us to treat observations in the data differently by giving more weights to data pints we thing more important. Also we would not use the name **parameters** because we would like to keep the name for the distributional parameter in a distributional regression set up, see @sec-distributional_regression.
 
-### Algorithmic  model  {#sec-algorithmic_model}
+If we knew the coefficients, $\boldsymbol{\beta}$, we would know the structure of the model. By **fit** a **model** or equivalently estimating the coefficients of the **model**, we mean trying to find which set of coefficients, say $\hat{\boldsymbol{\beta}}$, make the model closer to the **data**. How close to the **data** is determined by an objective **measure of goodness of fit**, MGoF. Different MGoF could lead to different fitted models, so it is important in any study to careful choose the MGoF. A MGoF has two functionalities in data modelling. The first is to find the best fitted model while the second is to compare two or more competitive models. The first, finds the **model** fitting bast to the specific **data** while the second canbe use for comparing models. That is, it answer the question, if models $\mathcal{M}_1$ and $\mathcal{M}_2$ are both good, according to an objective MGoF, which one shall we use to answer the **question**?. Note that model with similar objective MGoF are called the literature the **Rashomon set** of models. If two mathematical models belong to the same **Rashomon set** then the principle of **parsimony** (also known as **Occam’s razor**) can be used to select between them. The **Occam’s razor** principle states that among explanations that fit the evidence equally well, prefer the one that makes the fewest unnecessary assumptions. That is, prefer simplicity over complexity. The simplicity/complexity in a mathematical models, is easily defined as the number of coefficients used to fit the model. The fewer the coefficients the simpler the model is. The number of coefficients in a mathematical models are called the **degrees of freedom** of the model and they are a natural measure of the **complexity** of the model. The complexity, in this case, takes discrete values can not be greater than the number of observations in the **data** $n$. The **interpretation** of a mathematical models can be achieved easily through the fitted coefficients $\hat{\boldsymbol{\beta}}$'s.
 
-The emphasis in data analysis has been move  recently on algorithmic models. Most of models used in  **machine learning** models can  be described  as  **algorithmic models**. The term *algorithmic model*, is linked to Leo Breiman, [@breiman2003statistical], although he did not used the exact phrase but instead he talked about "the algorithmic modelling culture…”.  
+### Algorithmic model {#sec-algorithmic_model}
 
-An  **algorithmic models** still defines the function $G()$ mathematically but typically the function is over-parametrized.  That is, the mathematical model has too many coefficients  $\boldsymbol{\beta}$. Too many coefficients in any model create problems during estimation  because  over-parametrized models  have multiple solutions when trying to  minimising them by any  **goodness of fit measure**. Over-parametrized models also  lead to **overfitting**. By  **overfitting** we mean a **model** close to the **data**, (i.e.  fitting well the **training** data),  but which do not generalised  well in new **test** data. Note that over-fitting ai a common problem for both mathematical and algorithmic models but manifest its sel more in the later case.  The literature  provides at least two solutions to the problem of overfitting. 
+The emphasis in more modern data analysis is on **algorithmic** models. **Deep neural networks** (neural network with many hidden layer) and random forests, part of **machine learning** methodology, are **algorithmic** models.
 
-- the first avoids  to reach the optimum (according the goodness of fit measure) solution  by stopping the algorithm  earlier. Typically this is what happend  with "gradient descend" boosting. 
+The main reason of the popularity of algorithmic models is that they deal easier, especialy with big data, with a complex *signal* $G()$ with need very little input from the practitioner. As a simple example consider *interactions* between covariates. While they have to be specified in a **mathematical** model they come out in the wash in an **algorithmic** model. The term *algorithmic model*, is linked to Leo Breiman, [@breiman2003statistical], although he did not used the exact phrase but instead he talked about "the algorithmic modelling culture…”.
 
+An **algorithmic model** still defines the function $G()$ mathematically but typically the function is over-parametrized. For example a deep neural work could have million of coefficients. An **algorithmic model** could have an abandon number of coefficients $\boldsymbol{\beta}$ in the model. Too many coefficients in any model create problems during fitting since over-parametrized models have multiple solutions when trying to minimising its objective MGoFusing any **optimizer** available. Over-parametrized models also could easily lead to **overfitting**. By **overfitting** we mean that the **model** is very close to the **data**, (i.e. fitting well the **training** set of data), but which do not generalised well in new **test** data. Note that over-fitting is a common problem for both mathematical and algorithmic models but it manifest more in the later case. The literature provides at least two solutions to the problem of **overfitting**.
 
-- the second restrict the coefficients  $\boldsymbol{\beta}$ of the over-parametrized model using a set of **hyper-parameters**, $\boldsymbol{\lambda}$. Those hyper parameters restrict the behaviour of the coefficients $\boldsymbol{\beta}$  and make  the estimation of the function  $G()$ more robust.  
+- the first solution avoids to reach the optimum solution (according the MGoF) by stopping the algorithm earlier. Typically this happens with "gradient descend" boosting.
 
+- the second solution restrict the coefficients $\boldsymbol{\beta}$ of the over-parametrized model by penalised them using a set of **hyper-parameters**, $\boldsymbol{\lambda}$. Those hyper parameters restrict the behaviour of the coefficients $\boldsymbol{\beta}$ and make the estimation of the function $G()$ easier and more robust. To avoid overfitting the evaluation of the MGoF should be done in the **test** rather than the **training** data.
 
-In both case to avoid overfitting the evaluation of the  **measure of goodness of fit**  can be done in the **test** rather than the **training** data. In summary, an algorithmic model is an over-parametrised mathematical model allowing  more complex modelling of the functions $G()$ that a mathematical model do.  However because of its over- parametrization is more difficult to define the complexity of an algorithmic model. The degrees of freedom are very difficult or impossible to define in algorithmic models   making the evaluation of the  measurement of goodness of fit on **test** data rather  desirable.  
+In summary, an algorithmic model is an over-parametrised mathematical model allowing complex modelling of the functions $G()$ nd with less intervention from the practitioner. However because of its over- parametrization nature is more difficult to the define the complexity of an algorithmic model. The degrees of freedom are very difficult or impossible to define in algorithmic models making the evaluation of the measurement of goodness of fit on **test** data rather desirable.
 
 <!-- Breiman had contracted the algorithmic models to "data models": models based on probabilistic assumptions about the data-generating mechanism (e.g., linear regression, generalized linear models). We will refer to those models as *mathematical models* since they are based on mathematical assumptions and concepts but we will ingore the idea of data generate d mechanism because we agree with Breiman that it should not be part of model building because it is and un-testable part of the analysis. (`Mikis: read the article to confirm this`) -->
 
-
 Any model independently if it mathematical or algorithmic needs assumptions to be build the subject of next section..
 
-## The assumptions {#sec-assumptions}
+### Distributional regression model {#sec-distributional_regression}
 
-How the function $G$ and the stochastic component $\mathcal{D}$ of a model $\mathcal{M}$ are defined on a specific study depends of the set of **assumptions** the researcher is prepared to make. An **assumption** is an axiomatic statement which need to be, at least approximately correct, for a model to be adequate. All models are based on assumptions but, unfortunately, not all assumptions are stated **explicitly**. Considered for example the familiar linear regression model used in statistics; $$Y =\textbf{X}\boldsymbol{\beta}+\mathcal{E}.$$ {#eq-LM} Here the generic function $G()$ is replaced by the linear equation $\textbf{X}\boldsymbol{\beta}$ (an **assumption**) while the natural error distribution $\mathcal{D}(Y|X)$ is replaces by the **error**, $\mathcal{E}$. The values in the vector $\mathcal{E}$ are assumed to be independent from each other and normally distributed with zero mean and constant variance (another **assumption**). The linear function assumption of the model and the normality assumption of the errors in @eq-LM are **explicit** assumptions. Explicit assumptions are usually stated by the modeller and they are  easily checked using **diagnostics** tools. The checking of assumptions is part of the statistical modelling process. For example the assumption of normality can be easily checked using a QQ-plot. The assumption of linearity  for a specific covariate  can be easily check by plotting the partial derivative against the covariate.   The problem is that often the model contains **implicit** assumptions  which are never checked. For example, an implicit assumptions in @eq-LM, is that the signal $\textbf{X}\boldsymbol{\beta}$ and the noise $\mathcal{E}$ are **additive**.  This assumption is rarely  checked.
-Considering now replacing the normality assumption  with the more general "distribution free" assumption that the errors are independent with constant variance.  This assumptions leads to the same estimates for the coefficients $\boldsymbol{\beta}$ as the normal distribution assumption (with constant variance).  But what usually we fail to notice is that  the "free distributions" assumption in @eq-LM it does assumes a symmetric distributions around the mean of the resposnse. This is rarely  checked and as a consequence any skew response variable will be fitted wrongly. There are two common expressions which came to our mind concerning  **implicit** assumptions, 
-
-- “There is no free lunch”
-
-- “If it seems too good to be true, it probably is.”
-
-
-
-::: callout-warning
-Be aware of implicit assumptions in any model. The word "free" do not necessarily mean free of assumptions 
-:::
-
-Another important point concerning assumptions, worth mentioned here, is that assumptions often help the **interpretation** of the model, that is, are helping to answer the **question**.
-
-
-
-## Distributional Regression {#sec-distributional_regression}
-
-If the linear function $\textbf{X}\boldsymbol{\beta}$ in @eq-LM is replaced with the generic function $G()$ we have the model: $$Y =G(\textbf{X})+\mathcal{E}.$$ {#eq-GM} which is the common form of a regression model used in *machine learning*. Remember that in machine learning the construction of $G()$ is done algorithmically i.e random forest, boosting, deep learning. In Breiman's notation @eq-LM can be written as; $$X  {\longrightarrow}  \fbox{G(X)} {\longrightarrow} \mathbb{E}[Y|X],$${#eq-GM1} where $E[Y|X]$ denote the conditional expectation (mean) of $Y$ given $X$. That is the input variable(s) $X$ affect only the mean of the response. The  model in @eq-GM (or @eq-GM1) is a more general model than the linear model of @eq-LM but still too restrictive. It deals on how the mean (or the location) parameter of the distribution of the response is behaving but say nothing for other parts of the distribution for the response. It assumes that the variance the skewness and the kurtosis of the distribution of the response are constant. To model the more general behaviour of the response variable we need a *distributional regression* model. In a distributional regression model we assume that the condition distribution of the response, $\mathcal{D}(Y|X)$ depends on a set of parameters $\boldsymbol{\theta}=(\theta_1, \theta_2, \ldots, \theta_k)$, i.e. $\mathcal{D}(Y|X, \boldsymbol{\theta})$. Those parameters correspond to properties of the distribution (i.e. mean, variance, skewness etc.) and that **all** of the parameters could be a function of the explanatory variables i.e $\boldsymbol{\theta}=G(X).$ In Breiman's notation a distributional regression can be represented as
-$$X  {\longrightarrow}  \fbox{G(X)} {\longrightarrow} \mathcal{D}(Y|\boldsymbol{\theta}=G(X)),$$ where $\mathcal{D}(Y|\boldsymbol{\theta})$ represent the natural error distribution of $Y$ given $X$ and where the $X$'s could affect all the characterisics of the distribution of the response.
+If the linear function $\textbf{X}\boldsymbol{\beta}$ in @eq-LM is replaced with the generic function $G()$ we have the model: $$Y =G(\textbf{X})+\mathcal{E}.$$ {#eq-GM} which is the common form of a regression model used in *machine learning*. Remember that in machine learning the construction of $G()$ is done algorithmically i.e random forest, boosting, deep learning. In Breiman's notation @eq-LM can be written as; $$X  {\longrightarrow}  \fbox{G(X)} {\longrightarrow} \mathbb{E}[Y|X],$$ {#eq-GM1} where $E[Y|X]$ denote the conditional expectation (mean) of $Y$ given $X$. That is the input variable(s) $X$ affect only the mean of the response. The model in @eq-GM (or @eq-GM1) is a more general model than the linear model of @eq-LM but still too restrictive. It deals on how the mean (or the location) parameter of the distribution of the response is behaving but say nothing for other parts of the distribution for the response. It assumes that the variance the skewness and the kurtosis of the distribution of the response are constant. To model the general behaviour of the response variable we need a *distributional regression* model. In a distributional regression model we assume that the condition distribution of the response, $\mathcal{D}(Y|X)$ depends on a set of parameters $\boldsymbol{\theta}=(\theta_1, \theta_2, \ldots, \theta_k)$, i.e. $\mathcal{D}(Y|X, \boldsymbol{\theta})$. Those parameters correspond to properties of the distribution (i.e. mean, variance, skewness etc.) and that **all** of the parameters could be a function of the explanatory variables i.e $\boldsymbol{\theta}=G(X).$ In Breiman's notation a distributional regression can be represented as $$X  {\longrightarrow}  \fbox{G(X)} {\longrightarrow} \mathcal{D}(Y|\boldsymbol{\theta}=G(X)),$$ where $\mathcal{D}(Y|\boldsymbol{\theta})$ represent the natural error distribution of $Y$ given $X$ and where the $X$'s could affect all the characterisics of the distribution of the response.
 
 The first serious attempt to a distributional regression was the Generalized Additive Models for Location, Scale and Shape, GAMLSS, introduced by @RigbyStasinopoulos05, where the function $G()$ was assumed to be a set of additive functions of the explanatory variables different for each parameter, for example, $$\begin{split}
 g_1(\boldsymbol{\theta}_1) &= \textbf{X}_1 \boldsymbol{\beta}_1+ s_{\theta_1,1}(\textbf{x}_{\theta_1,1})+\ldots+ s_{\theta_1, J_k} (\textbf{x}_{\theta_1,J_{\theta_1}}) \nonumber \\
@@ -296,138 +294,113 @@ g_1(\boldsymbol{\theta}_1) &= \textbf{X}_1 \boldsymbol{\beta}_1+ s_{\theta_1,1}(
 g_k(\boldsymbol{\theta}_K) &= \textbf{X}_K \boldsymbol{\beta}_K + 
 s_{\theta_K,1}(\textbf{x}_{\theta_K,1})+\ldots+ s_{\theta_K, J_K} (\textbf{x}_{\theta_K,J_{\theta_K}})
 \nonumber 
- \end{split}$$ {#eq-GAMLSS} where the response variable $y_i$ for $i=1,\ldots, n$, is assumed independently distributed having a \[conditional distribution\] $\mathcal{D}(Y|\boldsymbol{\theta}=G(X))$ with $k$ parameters and where $s_{\theta_k, j} (.)$ for $k=1,\ldots,K$ and $j=1,\ldots, J_{\theta_k}$ are smooth non-parametric function (smoothers) additive for different explanatory variables.
- Note that the  smoothers introduce an algorithmic aspect to the otherwise generalised linear model (GLM) framework.   The evaluation of each smoother depends on a corresponding smoothing  hyper-parameters $\lambda$ which determines the  complexity of  $s_{\theta_k, j}$. 
- 
- The conditional distribution $\mathcal{D}(Y|\boldsymbol{\theta}=G(X))$ could be **any** theoretical probability distribution function (p.d.f.). The set of possible distribution functions, depending on the range of values for the response variable, on whether we need   **continuous**, **discrete** or **mixed** variable distributions. Note also that the functions $g_i(\theta_i)$ for $i=1,\ldots,k$ are known monotonic link functions which also ensure  that the parameters $\theta_i$ are kept in the right range of values. Within  a GAMLSS model framework the task of the researcher becomes to find;
+ \end{split}$$ {#eq-GAMLSS} where the response variable $y_i$ for $i=1,\ldots, n$, is assumed independently distributed having a \[conditional distribution\] $\mathcal{D}(Y|\boldsymbol{\theta}=G(X))$ with $k$ parameters and where $s_{\theta_k, j} (.)$ for $k=1,\ldots,K$ and $j=1,\ldots, J_{\theta_k}$ are smooth non-parametric function (smoothers) additive for different explanatory variables. Note that the smoothers introduce an algorithmic aspect to the otherwise generalised linear model (GLM) framework. The evaluation of each smoother depends on a corresponding smoothing hyper-parameters $\lambda$ which determines the complexity of $s_{\theta_k, j}$.
 
-- **which** and **how** the $X$'s effect each of the parameters of the distribution, and
+The conditional distribution $\mathcal{D}(Y|\boldsymbol{\theta}=G(X))$ could be **any** theoretical probability distribution function (p.d.f.). The set of possible distribution functions, depending on the range of values for the response variable, for example, whether we need **continuous**, **discrete** or **mixed** variable distribution. Note also that the functions $g_i(\theta_i)$ for $i=1,\ldots,k$ are known monotonic link functions which also ensure that the parameters $\theta_i$ are kept in the right range of values. Within a GAMLSS model framework the task of the researcher becomes to find;
+
+- **which** and **how** the $X$'s effect the parameters of the distribution, and
 
 - the **appropriate** conditional distribution for the response i.e. $\mathcal{D}(Y|\boldsymbol{\theta})$.
 
-Note that the contribution of the explanatory variables to the model come through the parameters of the distribution for the response, therefore an appropriate parametrization of the distributions helps the **interpretation** of the model. Parameters should be chossen to reflect specific characteristic of the distribution like for example the location, scale, skewness and tail behaviour.
+Note that the contribution of the explanatory variables to the model come through the parameters of the distribution for the response, therefore an appropriate parametrization of the distributions helps the **interpretation** of the model. Parameters should be chosen to reflect specific characteristic of the distribution like for example the location, scale, skewness and tail behaviour.
 
-Summarising, a GAMLSS model allow all the characteristics of the distribution of the response to be modelled as functions of its parameters but but it needs several assumptions for the creation of the model. Assumptions of how the $X$ affect the parameters of he distributions and which distribution  $\mathcal{D}()$ is appropriate for the data. @chai2026neural took a more machine learning approach  and try to model a distributional regression through a deep learning algorithm without warring about assumptions.  @chai2026neural model can be presented in a input-output notation as:
-$$X, U  {\longrightarrow}  \fbox{deep learning} {\longrightarrow} D(Y|X),$$ where the input ,  contains $X$ and $U$ where  $U$ is a simple distribution e.g. the uniform (or the standardised normal) which after deep learning transformations becomes the conditional distribution of $Y$ given $X$,  $D(Y|X)$. Also the effect that $X$ has to the distributions is modelled through deep learning. There are few comments we would like about the above model related to our general discussion on statistical modelling.  The first comment is, that is true that any continuous distribution can be seen as a transformation from the uniform, so it possible that the deep learning transformation will end up with a proper distribution. `Mikis:  I am  not sure that this applies to discrete or mixed distributions`. The second has to do with the interpretation of the model. The model is a **black box**. The deep learning algorithm probably could model the relationship between $X$ and the distribution of $Y$ reasonably well. Also  interactions between the $X$'s would be  accounted for something which more difficult on  additive models.  The question is what we have learn from the model? We have not learned what is the right distribution of the response? or how the $X$ affect $Y.$ We feel a statistical modelling approach while more demanding on assumtions would have answer most of the question properly.  
-
+Summarising, a GAMLSS model allow all the characteristics of the distribution of the response to be modelled as functions of its parameters but it requires several assumptions in the creation of the model. Assumptions of how the $X$ affect the parameters of he distributions and which distribution $\mathcal{D}()$ is appropriate for the data. @chai2026neural took a more machine learning approach and try to model a distributional regression through a deep learning algorithm without warring about assumptions. @chai2026neural model can be presented in a input-output notation as: $$X, U  {\longrightarrow}  \fbox{deep learning} {\longrightarrow} D(Y|X),$$ where the input , contains $X$ and $U$ where $U$ is a simple distribution e.g. the uniform (or the standardised normal) which after deep learning transformations becomes the conditional distribution of $Y$ given $X$, $D(Y|X)$. Also the effect that $X$ has to the distributions is modelled through deep learning. There are few comments we would like about the above model related to our general discussion on statistical modelling. The first comment is, that it is true that any continuous distribution can be seen as a transformation from the uniform, so it possible that the deep learning transformation will end up with a proper distribution. `Mikis:  I am  not sure that this applies to discrete or mixed distributions`. The second has to do with the interpretation of the model. The model is clearly a **black box**. The deep learning algorithm probably could model the relationship between $X$ and the distribution of $Y$ reasonably wellby taking into the account the interactions between the $X$'s. The question is what we have learn from the model? We have not learned what is the right distribution of the response? or how the $X$ affect $Y.$ We feel a statistical modelling approach while more demanding on assumptions would have answer most of the questions properly.
 
 ::: callout-note
-Distributional regression emphasized the effect that explanatory variables have on the whole distribution of the response   
+Distributional regression emphasized the effect that explanatory variables have on the whole distribution of the response
 :::
-
-
-
 
 <!--  for **fit** any model to the data you need an objective  **measure of goodneed of fit**   -->
 
-
 <!-- Since there is no obvious distribution to maximised the authors use       -->
-
-
 
 <!-- This version of the DR model is NOT easy to interpret because it is a `black box`. -->
 
 <!-- Note that at any stage here we make the distinction about *predictive* and *data* based models. The reasons is that we feel it is not help full. A model is a model how to fit depends on the -->
 
+#### ALB model {#sec-ALB_model}
 
+The ALB data are suited to a distribution regression model in which the response variable `ALB` (a continuous positive variable) can be modelled by assuming a four parameters flexible distribution, to account for shifts in the location, the scale, the skewness and the kurtosis in the response.
 
-#### the ALB assumtpions   {#sec-ALB_model}
+All of those parameters could be modelled as a function of the `ga`. Notice that our job is simplified considerable since we have only one explanatory variable because we do no have to spent time on a selection procedure for the covariates. We still though we need to decide how to model each parameter as a function of the gestation age, `ga`. The possibilities are i) model the paramater as a constant, ii) as a linearly function of `ga` or iii) as a smooth function of `ga` (allowing non-linear relationships between `ga` and the distribution parameter).
 
-The ALB data are suited to a distribution regression model. The response variable `ALB`, a continuous positive  variable can be modelled having an assumed flexible distribution, possible with four parameters to account for shifts in the  location, the  scale, the skewness and the  kurtosis in the response.
-
-
-Since there is   only  one explanatory variable, `ga`, we would avoid having a complicate selection procedure. We only need to decide on how to model each parameter as a function of gestation age; as a constant , as a linearly or as a smooth function.  
-
-The `ALB` data are typical datra used of "reference curves" otherwise known as "centile curve estimation". For example, WHO (2006) created standard reference curves whose purpose was to identify abnormalities in children's growth.  The model used has the form; 
-$$\begin{split}
+The problem of analysing the `ALB` data is a typical statistical problem known as *reference curves* estimation (or *centile curve* estimation). In most of the reference curves estimation situations it is common to have a response against one co-covariance. As an example of reference curves estimation see WHO (2006), where standard reference curves were created for several response variables like weights, heights against age to be used as reference curves for the detection of abnormalities in children's growth. A typical model for reference curves has the following form; $$\begin{split}
 y_i     & \stackrel{\small{ind}}{\sim} \mathcal{D}(\mu_i, \sigma_i, \nu_i, \tau_i) \nonumber \\
-g_{\mu}(\boldsymbol{\mu}) &=  s_{\mu}(\texttt{ga}, \texttt{df}_{\mu})) \nonumber \\
-  g_{\sigma}(\boldsymbol{\sigma}) &=  s_{\sigma}(\texttt{ga}, \texttt{df}_{\sigma}) \nonumber \\
- g_{\nu}(\boldsymbol{\nu}) &=  s_{\nu}(\texttt{ga}, \texttt{df}_{\nu})) \nonumber \\
- g_{\tau}(\boldsymbol{\tau}) &=  s_{\tau}(\texttt{ga}, \texttt{df}_{\tau}))\nonumber \\
- \end{split}$$ {#eq-ALB}
-where a four parameter theoretical distribution,  $\mathcal{D}(\mu_i, \sigma_i, \nu_i, \tau_i)$ is assumed for the for the response, and where we assume that each of the  parameters $(\boldsymbol{\mu}, \boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau})$ are smooth functions of the explanatory variable, `ga`, gestation age. Each of the smoother depends on its **hyper-parmaters** which in this case are the degrees of freedom used for each smoother.  
+g_{\mu}(\boldsymbol{\mu}) &=  s_{\mu}(\texttt{ga}, \lambda_{\mu})) \nonumber \\
+  g_{\sigma}(\boldsymbol{\sigma}) &=  s_{\sigma}(\texttt{ga}, \lambda_{\sigma}) \nonumber \\
+ g_{\nu}(\boldsymbol{\nu}) &=  s_{\nu}(\texttt{ga}, \lambda_{\nu})) \nonumber \\
+ g_{\tau}(\boldsymbol{\tau}) &=  s_{\tau}(\texttt{ga}, \lambda_{\tau}))\nonumber \\
+ \end{split}$$ {#eq-ALB} where the response variable $y$ assumed to have a flexible possible four parameter theoretical distribution, $\mathcal{D}(\mu_i, \sigma_i, \nu_i, \tau_i)$ and where each of the parameters $(\boldsymbol{\mu}, \boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau})$ are assumed to be function of the covariable, `age`, (gestation age in our case). Notice that we use the notation $s()$ to indicate a smoother non-parametric function (often called a smoother). A smoother is an over parametrized function which is regulated by a **hyper-parameter** $\lambda$. In our case we could have up to four lambdas one for each parameters of the distribution, $\boldsymbol{\lambda}=(\lambda_{\mu}, \lambda_{\sigma}, \lambda_{\nu}, \lambda_{\tau})$. It can be shown that each lambda if is one to one functions of the degrees of freedom used to smooth each parameter i.e. $(\texttt{df}_{\mu}, \texttt{df}_{\sigma}, \texttt{df}_{\nu}, \texttt{df}_{\tau})$. Therefore searching the degrees of freedom of the smoothers is equivalent of searching for the $\boldsymbol{\lambda}$'s.
 
-According to our previous definition, the model in @eq-ALB is an **algorithmic**  model because each smooth functions in  @eq-ALB  requires a **hyper-parameters** we use an over parametrized basis and  penalised its coefficients by a  quadratic penalty  which contains **hyper-parameters**, in fact we use P-splines see @EilersMarx96 for details.  
+According to our previous definition the **model** in @eq-ALB is an **algorithmic** model because contains the regulateratory hyper-parameters which control the amount of smoothing of the functions $s()$. In out example we will use P-splines as a smoother, @EilersMarx96, @eilers2010splines. P-splines are one the smoothers available in the literature, for more allternatives see @Wood2017.
 
 <!-- This is a typical use of reference curves. For example, WHO (2006) created reference curves whose purpose was to identify abnormalities in children's growth. For our specific data set, the **question** is how to identify individuals with abnormally low `ALB` values. In other words, we are interested at the extreme left tail of the conditional distribution of `ALB` given `ga`. If we know the *population* quantile/centile values for `ALB` we could identify individuals at the extreme left tail of the distribution of `ALB` given `ga`, e.g. a value lower than the $2.5\%$ centile value of the `ALB` distribution given `ga`. Since we only have a *sample* from the *population* (our data) and in order to make *inferences* about the population, we need a **statistical model**. -->
 
-
 <!-- For our specific data set, the **question** is how to identify individuals with abnormally low `ALB` values. In other words, we are interested at the extreme left tail of the conditional distribution of `ALB` given `ga` and this is purpose of the study. If we know the *population* quantile/centile values for `ALB` we could identify individuals at the extreme left tail of the distribution of `ALB` given `ga`, e.g. a value lower than the $2.5\%$ centile value of the `ALB` distribution given `ga`. Since we only have a *sample* from the *population* (the **data**) and in order to make *inferences* about the population, (to go from the specific to the general) we need a **statistical model**. More specifically a distributional regression model, see @sec-model, could answer our **question**. -->
 
+## Assumptions {#sec-assumptions}
 
+How the function $G()$ and the stochastic component $\mathcal{D}()$ of any model $\mathcal{M}$ are defined on a specific study depends of the set of **assumptions** the researcher is prepared to make. An **assumption** is an axiomatic statement which need to be, at least approximately correct, for a **model** to be adequate to answer the **question**. All models are based on assumptions but, unfortunately, not all assumptions are stated **explicitly**. Considered, for example, the familiar linear regression model; $$Y =\textbf{X}\boldsymbol{\beta}+\mathcal{E}.$$ {#eq-LM} Here the generic function $G()$ is replaced by the linear equation $\textbf{X}\boldsymbol{\beta}$ (an **assumption**) while the natural error distribution $\mathcal{D}(Y|X)$ is replaces by the **error**, $\mathcal{E}$. The values in the vector $\mathcal{E}$ are assumed to be independent from each other and normally distributed with zero mean and constant variance (another heavy **assumption**). The linear function assumption of the model and the normality assumption of the errors in @eq-LM are **explicit** assumptions. Explicit assumptions are usually stated by the modeller and therefore are easily checked by the practitioner using **diagnostics** tools. Checking assumptions using **diagnostics** is part of the statistical modelling process. For example, the assumption of normality can be easily checked using a QQ-plot. The assumption of linearity for a specific covariate can be easily check by plotting the partial residuals against the covariate. The problem is that often the model contains **implicit** assumptions which are never checked.
 
+For example, an implicit assumptions in @eq-LM, is that the signal $\textbf{X}\boldsymbol{\beta}$ and the noise $\mathcal{E}$ are **additive**. This assumption is rarely checked. Considering now replacing the normality assumption with the more general "distribution free" assumption that the errors are independent with constant variance. This assumptions leads to the same estimates for the coefficients $\boldsymbol{\beta}$ as the normal distribution assumption (with constant variance). But what usually we fail to notice is that the "free distributions" assumption in @eq-LM does assumes a symmetric distributions around the mean of the response. This is rarely checked and as a consequence any skew response variable will be fitted wrongly. There are two common expressions which came to our mind concerning **implicit** assumptions,
 
-## The fit  {#sec-fit}
+- “There is no free lunch”
 
-Fitting a model to the data  means finding which coefficients  make the model closer to the data according to an objective  **measure of goodness of fit**. 
-A goodness-of-fit measure quantifies how well a statistical model matches the observed data. If the  goodness-of-fit measure can be written explicit then **fit** a model it means finds the coefficients which minimizing  the measure of goodness of fit.  If the  goodness-of-fit measure can not be written explicitly then the fitting could involve Monte Carlo simulations from the fitted model.  The results samples of the simulation can be used then  used to calculate fitted values and therefore to estimate of the effect the $X$'s would have on the response. In distribution regression models, not be able to write down the **measure of goodness of fit** explicitly is  because either itcontains integrals or because the pdf is not a  well defined pdf  because of  possible distribution free  assumptions.  
+- “If it seems too good to be true, it probably is.”
 
-For the simple regression models, the typical **measures of goodness of fit** are; 
-
-- **Least Squares**, $\mathrm{LS} =
-\sum_{i=1}^{n}(y_i-\hat y_i)^2.
-$ lower least squares means that the data are closet to the *training* data.  
-- Residual Mean Square Error 
-$\mathrm{RMSE}
-=
-\sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat y_i)^2}.
-$ Lower RMSE means the predictions for the response $\hat y_i)$ are closer to the observed values.
-- Mean Absolute Error  (MAE) 
-$\mathrm{MAE}
-=
-\sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat y_i)^2}.
-$ Lower MAE means the fitted values  or the predictive values for the response $\hat y_i)$ are closer to the observed values.
-- R square:
-$R^2
-=
-1-\frac{\sum_i(y_i-\hat y_i)^2}
-{\sum_i(y_i-\bar y)^2}
-$ Higher $R^2$ closer to one means the model explains more variation in $y$. 
-
-The first two  of the above measures are _relative_ measures relative to  other models fitted to the same data the third one is more an absolute.  The problem with all of those measures is that they only measures  how well the data are from their fitted mean $\hat{\mu}=\hat{y}$. There  are measure of how good the model is fitting the location of the response. Those measures are not appropriate for distributional regression models especially if the question is not related to the mean of the response because.  By assuming  a distribution  for the response we need a measure which accounts for how well the fit is for the whole distribution of the response  not just the mean.  Such a measure is  the **deviance**;
-
-- **deviance**: $\hat{D}= -2\ell$ where $\ell$ is the log-likelihood of the response $\ell=\sum_{i}^n \log {\mathcal{D}_i}$, lower deviance mean better model if the complexity of the model is the same.  
-
-The deviance is a measure based on the assumed distribution of the response. A measure based on the cumulative function of the response is the 
-
-- **continuous ranked probability score** (CRPS)
-$$\operatorname{CRPS}(F,y_{\text{obs}})
-=
-\int_{-\infty}^{\infty}
-\left[
-F(z)-\mathbf{1}\{z\ge y_{\text{obs}}\}
-\right]^2 dz.$$  where $F()$ is he cdf of the response and  $\mathbf{1}()$ it the function jumping  from 0 to 1 if the condition is meet.
-Lower CRPS is better. If the evaluation is on a single point CRPS reduces to absolute error:
-$\operatorname{CRPS} = |\hat y-y_{\text{obs}}|.$.
-
-
-A important point here is that if we portioned the data in **training** and **test**. we can evaluate the measure of goodness of fit either in the **training** data or in the **test** data. Evaluated at the 
-
-- **training data** the measure shows how  close the model is to the data 
-
-- **test data**  the measure shows how well the  model would do  in future  data  
-
-The second measure is a better for preventing  **overfitting**. Overfitting occurs if the model is very close to the training data but fails to predict well future data.  
-
-
-::: callout-important
-**Measures of goodness of fit** can be evaluated in both **training** and **test** data for difference purpose and answering the **question**. 
+::: callout-warning
+Be aware of implicit assumptions in any model. The word "free" do not necessarily mean free of assumptions
 :::
 
-For  the over-parametrised **algorithm models**, fitting the model still means finding the right **coefficients** which minimised the goodness of fit measure, but those coefficients  are controlled   by  the **hyper parameters**. So in this case it is the combination of the coefficients with the hyper-parameters which makes the model closer to the data according to a measure of goodness of fit.  The estimation of the hyper- parameters is a main problem for fitting an algorithmic model. We can not treat the hyper-parameters at some footing as we treat the coefficients. TThehyper paramatera have to estimated separatedfrom the  coefficients.  Here are some of the methods for estimating the hyper parameters in a  algorithm model setup;
+Another important point concerning assumptions, worth mentioned here, is that assumptions often help the **interpretation** of the model, that is, are helping to answer the **question**.
 
-- **$K^{th}$ cross validation**  in which the is  data are partioned into $K^{th}$ non-overlapping sections and repetitively fit the model to the $K-1$ sections while keep the $K$ section as **test** data. By the end of the $K$ iterations all observation are treated at each iteration as as "test" data. Let call of  **prediction values** can  be defined on all  data. Evaluation of the measurement of goodness of fit at the test data can be use for model selection and  **overfitting**.
+### ALB assumptions {#sec-ALB_assumptions}
 
--  Generalize Akaike information criterion (**GAIC**) can be used to estimate the **hyper -parameters** but also to compare competitive model. The GAIC's are penalised version of the deviance.
+In order to set up the distributional regression model of @eq-ALB into the GAMLSS framework we need to make two basic explicit assumptions:
 
-- under certain circumstances a Restricted Maximumim Likelihood Estimation, **REML**, can be use to find the **hyper-parameters**. This is very common with non-parametric smoothers. A smoother discover non-linear functions in the data.   
+1.  about the distribution $\mathcal{D}()$ and
 
+2.  how to model the parameters against `ga`.
 
-### The Albumin (ALB) fitting  {#sec-ALB-fitting}
+For the former we would like to use a flexible positive line distribution. We have two options either choosing a very flexible four parameter distribution where all of its parameters could be modelled as function of the covariate `ga` or go through a set of potential positive line distributions available in the `gamlss` package and select the "best" according to a particular MGoF criterion (evaluated in the training data).
 
-In order to fit the model in  @eq-ALB we only require to find an appropriate distribution for the response since the **hyper parameters** of  smoothers can be estimated automatically  by REML see @rigby2013automatic.  After going through all available distributions in the positive real line using as a measure of goodness of fit the AIC evaluated at the **training** data  we found that the `BCTo` distributions was fitting the data well. The final model had estimated hyper-parameters $\hat{df}_{\mu}=6.19$, $\hat{df}_{\sigma}=4.83$, $\hat{df}_{\nu}=4.41$  and $\hat{df}_{\tau}=4.21.$ 
-The fitted centile from the `bCTo` model are shown in @fig-a. 
+## Fit {#sec-fit}
+
+Fitting a model to the data means finding which coefficients make the model closer to the data according to an objective **measure of goodness of fit**, MGoF, see @sec-MGoF.
+
+<!-- Finding an appropriate transformations for the covariates in within the reference   -->
+
+For the over-parametrised **algorithm models**, fitting the model still means finding the right **coefficients** which minimised the goodness of fit measure, but those coefficients are controlled by the **hyper parameters**. So in this case it is the combination of the coefficients with the hyper-parameters which makes the model closer to the data according to a MGoF. The estimation of the hyper- parameters is a main problem for fitting an algorithmic model. We can not treat the hyper-parameters at some footing as we treat the coefficients. The hyper parameters have to estimated separate from the coefficients. Here are some of the methods for estimating the hyper parameters in a algorithm model setup;
+
+- $K^{th}$ cross validation in which the is data are partioned into $K^{th}$ non-overlapping sections and repetitively fit the model to the $K-1$ sections while keep the $K$ section as **test** data. By the end of the $K$ iterations all observation are treated at each iteration as as "test" data. Let call of **prediction values** can be defined on all data. Evaluation of the measurement of goodness of fit at the test data can be use for model selection and **overfitting**.
+
+- Generalize Akaike information criterion (**GAIC**) can be used to estimate the **hyper -parameters** but also to compare competitive model. The GAIC's are penalised version of the deviance.
+
+- under certain circumstances a Local Restricted Maximum Likelihood Estimation, local **REML**, can be use to find the **hyper-parameters** see @rigby2013automatic. This is very common with non-parametric smoothers. A smoother discover non-linear functions in the data.
+
+The process of fitting a distributional regression model usually involves;
+
+- finding appropriate transformations for the covariates (an **assumption**),
+- finding an appropriate distribution for the response (an **assumption**),
+- finding an appropriate **MGoF** (an **assumption**),
+- use a **optimizer** to find the **model** closer to the data (the **fit** of the model depending on a chosen **MGoF**),
+- check the model usind **diagnostics**
+
+@fig-classic show the classical process of data modelling. It involves making assumptions about the **data**, the **model**, **fit** the model and check it using **diagnostics**. If happy that the **model** is *adequate* then use it for **interpretation**. An adequate model for the data is a model which overperformed other similar model acording to the a MGoF criterion but which also have been checked on its assumtions by diagnotic tools, see @sec-diagnostics.
+
+Note that by data we mean the \*training **data and that the** MGoF **is evaluated at the** training\*\* data.
+
+![The classical data modelling process](classical_statistical_modelling.png){#fig-classic width="70%" height="350px"}
+
+### ALB fit {#sec-ALB-fit}
+
+In order to fit the model of @eq-ALB we use the function `gamlss2` of the package **gamlss2**.
+
+- to find an appropriate distribution for the response
+
+- and to find the appropriate relationship between the parameters of the distribution of the response and the covaraince `ga`.
+
+as since the **hyper parameters** of smoothers can be estimated automatically by REML see @rigby2013automatic. After going through all available distributions in the positive real line using as a measure of goodness of fit the AIC evaluated at the **training** data we found that the `BCTo` distributions was fitting the data well. The final model had estimated hyper-parameters $\hat{df}_{\mu}=6.19$, $\hat{df}_{\sigma}=4.83$, $\hat{df}_{\nu}=4.41$ and $\hat{df}_{\tau}=4.21.$ The fitted centile from the `bCTo` model are shown in @fig-a.
 
 ```{r}
 #| cache: true
@@ -440,14 +413,13 @@ m2 <- gamlss(ALB ~ pb(ga),
              tau.formula = ~ pb(ga),
              family = BCTo, data = ALB) 
 ```
- 
+
 ```{r}
 #| echo: false
 #| eval: false
 edfAll(m2)
 m2
 ```
-
 
 ```{r}
 #| label: fig-a
@@ -459,52 +431,109 @@ fitted_centiles_gap(m2, cent=c(97.5, 90, 75, 50, 25, 2.5), title="",  data=FALSE
   ggplot2::theme_bw(15)
 ```
 
+## Measure of goodness of fit (MGoF) {#sec-MGoF}
 
+Any **measure of goodness of fit**, MGoF, quantifies how well a statistical model matches the observed data. Mathematically most MGoF's are measures of distance between the **data** and the **model**. If the MGoF is evaluated at a particular data set and model often is called the **distance score**. Notice that other names in the literature for MGoF are: a) the **loss function** ii) the **objective function** iii) the **cost function** iv) the **empirical risk** e.t.c. Often specific MGoF's can be written explicit in a mathematical formula but there are occasions where this is not possible.
 
+For a distributional regression model like GAMLSS, having an assumed distribution for the response, $f(x_i|\boldsymbol{\theta}_i)$ for $i=1\ldots, n$, and when the pdf of the response can be written explicitly we often use the log-likelihood function $\ell(\boldsymbol{\theta})$ as a MGoF. The likelihood function is the probability of observing the response $y_i$ (for $i=1,2,\ldots, n$), seeing not as a function of the response but as a function of the parameters $\boldsymbol{\theta}_i$ for $i=1\ldots, n$. For independent observations the likelihood function $L()$ takes the simple form of a product of the individual probabilities; $$L(\boldsymbol{\Theta})=f(y_1|\boldsymbol{\theta}_1)f(y_2|\boldsymbol{\theta}_2)\ldots f_n(y_n |\boldsymbol{\theta}_n),$$ where $\boldsymbol{\Theta}$ is a $n \times k$ matrix of parameters each row having the $k$ distributional parameters $\boldsymbol{\theta}_i$ (for $i=1,2,\ldots, n$). The log-likelihood is the summation of the individual log-probabilities $$\ell(\boldsymbol{\Theta}) = \sum_{1}^n \log f(y_i|\boldsymbol{\theta}_i).$$ {#eq-loglikelihood}
+
+Maximising the likelihood $L(\boldsymbol{\Theta})$ is equivalent to maximise the log-likelihood, $\ell(\boldsymbol{\Theta})$ which is equivalent of minimise the **deviance**, $\mathcal{D}(\boldsymbol{\Theta})=-2 \ell(\boldsymbol{\Theta}_i)$. The **fitted deviance** is the deviance evaluated at the minimum, $\mathcal{D}(\boldsymbol{\hat{\Theta}})=-2 \ell(\boldsymbol{\hat{\Theta}})$. In order to evaluate the fitted deviance you need both the fitted distribution parameters $\boldsymbol{\hat{\Theta}}$ (which are functions of the covariates) and the response variable $\textbf{y}$. It is important to state clearly in which data set the deviance is evaluated. We call the deviance a **fitted deviance** if it evaluated at the **training** data, $\mathcal{D}_{train}(\boldsymbol{\hat{\Theta}})$, and **predictive deviance** if it is evaluated at the **test** data, $\mathcal{D}_{test}(\boldsymbol{\hat{\Theta}})$.\
+The quantity @eq-loglikelihood evaluated at **test** data often is called the **logarithmic score** or **log score**. The **average deviance** is obtained if we divide by the right number of observations. for example, the fitted average deviance is $\bar{\mathcal{D}}_{train}(\boldsymbol{\Theta})/n.$ The important point here is that partitioning the the data into **training** and **test** allow us to check both;
+
+- how close the model is to the **data** using $\mathcal{D}_{train}(\boldsymbol{\hat{\Theta}})$and\
+- how well the model would predict future **data** using $\mathcal{D}_{test}(\boldsymbol{\hat{\Theta}})$. That is, how close the model is to the population. This of course assumed the that the **test** data are representative of the population.
+
+The $\mathcal{D}_{test}(\boldsymbol{\hat{\Theta}})$ measure is better for preventing **overfitting**. The concept of **overfitting** occurs if the model is very close to the **training** data but fails to predict well future observations because it is far from the **population** of interest.
+
+::: callout-note
+We have not define the **population**, and the concepts of closeness of the **sample** to the **population**.
+:::
+
+If the MGoF can not be written explicitly then fitting the **model** often involves Monte Carlo simulations. The resulting samples of the simulation can then be used to calculate fitted values and other summaries of the fitted model. For example, what is the effect of explanatory variables on the response etc. There are two main reasons for to be able to write down the MDoF explicitly; either because integrals are involved or because a proper pdf is not properly defined, possibly, because of a distribution free assumptions of the model.
+
+The different MGoF can be classified into categories according to: i) whether they are design to improve the location characteristic of the distribution ii) whether they check the preformance of the whole distribution of the response and iii) on whether are focus on a specific **question**.
+
+#### MDoF based on location parameters
+
+The standard MGoF used in regression analysis are based on location parameters. That is, are measure of how well the middle of the distribution of the response is fitted to the data.
+
+- the **Least Squares**, $\mathrm{LS} =
+  \sum_{i=1}^{n}(y_i-\hat{\mu}_i)^2.$ Note that we did not use the usual notation $\hat{y}_i$ for the fitted $i^{th}$ observation but use instead $\hat{\mu}_i$ to emphasise that the measure penalised distances from the mean or median of the distribution. Lower least squares means that the data are closet to the location parameter. Note that least squares is used as a MGoF to fit the **training** data (equivalent to assuming a normal distribution for the response).
+
+- the **R square**, \$R\^2 = 1-\frac{\sum_i(y_i-\hat y_i)^2} {\sum\_i(y_i-\bar y)\^2}. \$ Higher $R^2$ closer to one means the model explains more variation in the response $y$. The rest of the measures are mostly are used in the **test** data as *prediction performance measures*.\
+
+- 
+
+  # the **Residual Mean Square Error**, \$\mathrm{RMSE}
+
+  \sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{\mu}_i)^2}. \$ That is, the square roor of the average least squares. Lower RMSE means the predictions for the location paramater of the response $\hat{\mu}_i$ are closer to the observed values.
+
+- the **Mean Absolute Error**, \$\mathrm{MAE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}|y_i-\hat{\mu}_i|}. \$ Lower MAE means the fitted values or the location parameters values $\hat{\mu}_i$ are closer in absolute value to the observed values.
+
+All of the above measures are *relative* measures, in the sense that they can be used to compare with other models MFoF's fitted to the same data. The $R^2$ gives the impression of an absolute measure because it has a ceiling of one on its values but this is a dilution. $R^2$ make sense to compare it with other $R^2$'s of models fitted in the same data and even this comparison is wrong if in the specific data the relationships in the model are not linear. $R^2$ and its interpretation as *percentage variance explain* is one of the statistical myths. That is, statistics thet practitioners used without a real understanding of what it means.
+
+The main problem with all the above measures is that they measures how well the data are fitted in the middle. How close are to the location parameter. Those measures are not appropriate if the **question** concerns other part of the distribution of the response, for example, the tail. For distributional regression models where we assume a distribution for the response we need a measure which accounts for how well the fit is for the whole distribution of the response not just the mean.
+
+#### MDoF based on the distribution of the response
+
+Such a measures are;
+
+- the **deviance**, $\hat{D}(\textbf{y}, \boldsymbol{\hat{\theta}})= -2 \hat{\ell}(\textbf{y}, \boldsymbol{\hat{\theta}})$ where $\hat{\ell}$ is the fitted log-likelihood of the response $\hat{\ell}(\textbf{y}, \boldsymbol{\hat{\theta}}) = \sum_{i}^n \log {\mathcal{\hat{D}}_i}(y_i, \boldsymbol{\hat{\theta}})$, lower deviance mean better model if the complexity of the model is the same.\
+  The deviance is a measure of how well average pdf of the response fits the data.
+
+- **continuous ranked probability score** (CRPS) $$\operatorname{CRPS}(F,y_{\text{obs}})
+  =
+  \int_{-\infty}^{\infty}
+  \left[
+  F(z)-\mathbf{1}\{z\ge y_{\text{obs}}\}
+  \right]^2 dz.$$ where $F()$ is he cdf of the response and $\mathbf{1}()$ it the function jumping from 0 to 1 if the condition is meet. Lower CRPS is better. If the evaluation is on a single point CRPS reduces to absolute error: $\operatorname{CRPS} = |\hat y-y_{\text{obs}}|.$.
+
+#### MDoF based on grouping
+
+.
+
+::: callout-important
+**Measures of goodness of fit** can be evaluated in both **training** and **test** data for difference purpose and answering the **question**.
+:::
 
 ::: callout-warning
-`Mikis` I stopped here  
+`Mikis` I stopped here
 :::
+
+### ALB MGoF {#sec-ALB-MGoF}
 
 To choose between different distributions (having the same range of values as the response) we have used two different **measures of fit**. The first is log-likelihood based, while the second is a focus criterion based on $\chi^2$, see later. Both criteria are **test** measures, because both are evaluated at cross validated data (using 10-fold cross-validation explained later). The first criterion, the deviance, $D(\hat{\theta})=-2\ell(\hat{\theta})$ (where $\ell()$ is the log-likelihood) is a global measure of fit is also used to **train** the model while the second is a focus measure more related to the \text{question}, of identification of individuals with low `ALB`. Both criteria selected the `BCTo` distribution. In fact, the test deviance select the `BCTo` distribution as best with `BCT` as second while the test focus criterion selected `BCT` as best with `BCTo` as second. The distributions are almost identical with `BCTo` using a log link for the parameter $\mu$ while `BCT` using an identity link.
 
+## Diagnostics {#sec-diagnostics}
 
-
-## Diagnostics  {#sec-diagnostics}
-
-
-## Model stacking  {#sec-stacking}
-
-
-## Model average  {#sec-average}
-
-
-## Model interpretation  {#sec-interpretation}
-
-The last but probably the most important part of statistical modelling is the **interpretation** of the model. Figure 1 (c) shows the z-scores (the training residuals) of the fitted DR model. Given the gestation age the z-scores can be calculated for any new value of `ALB` (even for the regions of gestational mage where we do not have any data, although this can be dangerous as it assumes that the model is still valid in these regions). The final plot Figure 1 (d) is to demonstrate the flexibility of a DR model and shows the shape of four different fitted distributions of `ALB` given four values of gestational age, one from each of the our four groups of gestational age.
-
-
-
-<!-- A statistical model combines a *mathematical* or *algorithmic* component with a *stochastic* component. The first component helps to model the *signal* in the **data**, while the stochastic component helps to model the distribution around the signal. Note that in machine learning a typical algorithmic model e.g. a random forest, uses normal distribution errors with constant variance. Here because of the nature of the `ALB` we will use a *distributional regression* model, DR, because it has more flexibility to correctly model the tails of the distribution. -->
-
-<!-- A DR is a statistical model where a distribution is **assumed** for the *response* variable given the covariates and where all the parameters of the distribution are potentially influenced by the covariates. There are two major statistical modelling parts in any DR: i) how to choose the distribution for the response, and ii) how and which of the covariates affect the distribution parameters. In most occasions we start with the first, by *assuming* a parametric distribution for the response and fitting different distributions (using a reasonable model for the parameters), to find an adequate distribution for the response. Given a selected distribution, we then try to identify how the parameters are affected and by which covariates, e.g are the effects linear, non-linear, and how the covariates interact with each other. In our case, because we have only one co-variate, gestation age, we use a smoother for `ga` for each distribution parameter. A smoother is, a non-parametric smooth function which can capture non-nonlinear relationships (but which also at the limit could identify a linear relationship). Note that in our example, the second part of the DR analysis, on how to determine the affect of covariates to the parameters is rather trivial, but more generally when we have multiple covariates often it is the most difficult part of the analysis. -->
-
-In conclusion, the main task of the current study is to find a suitable conditional distribution for `ALB`, given the gestational age, where the effect of gestational age is captured by a smoother. For example, for a four parameter distribution with parameters say, $\mu$, $\sigma$, $\nu$ and $\tau$ we use model with smooth non-parametric functions $s(ga)$ for their predictors, \$\mu: \sim s(ga) $,$\sigma: \sim  s(ga)\$, \$\nu: \sim s(ga) \$, $\tau: \sim s(ga)$, where the notation $s()$ represents a suitable smoother, for example, a P-spline (Eilers and Marx, 1996).
-
+### ALB diagnostics {#sec-ALB_diagnostics}
 
 The `BCTo` model had good test *residual* **diagnostic** plots. Figure (b) shows a *worm* plot, van Buuren and Fredriks (2001) of its training residuals. It is recommended that multiple worm plots of the residuals split into intervals by gestation age should be used but they are not not shown here because of limitation of space. The `BCTo` distribution has four parameters all defined on the range $(0, \infty)$, where $\mu$ approximates the median of the distribution, $\sigma$ approximates the coefficient of variation, and $\nu$ and $\tau$ are skewness and the kurtosis parameters, respectively.
 
+## Stacking {#sec-stacking}
 
+A model **stack** is a collection of models. A model **stack** could be a
 
+- **Rashomon** set of models, models with similar MGoF's,\
+- set of **adequate** models, model with similar MGoF and good diagnoatics
+- a **complimentary** set of models which fits different part of the **data** slightly differently.
 
+### Model average {#sec-average}
 
-We used cross-validated data and used appropriate **measures of goodness of fit** and **diagnostics** to select appropriate models and then try to **interpret** the model. Next we try formalize these concepts.
+A stack of model can be *averaged* to improve the overall performance of a *single* model. Model averaging in general improves predictions because different models are making different errors. Averaging combines their estimates, so individual mistakes partially cancel out.
 
-### The Albumin (ALB) diagnostics 
+Let $\hat y_{\mathcal{M}}$ be the fitted values of model $\mathcal{M}$. If the models are not perfectly correlated, the average prediction $y_{av}$ has lower variance $$
+\mathrm{Var}(\hat{y}_{av})=\mathrm{Var}\!\left(\frac{1}{M}\sum_{m=1}^M \hat y_{\mathcal{M}} \right)
+$$is usually smaller than the variance of any one prediction $\mathcal{M}$. This often makes the results more stable and less prone to overfitting. It helps most when the models are each reasonably accurate but complimentary. For example, trained on different training data, different covariates, different algorithms or different random seeds. *Bagging* and *random forests* explore this idea. Model averaging offers little benefit if all models make the same biased errors, it is reducing the variance much more efficiently than the bias. Notice however that averaging of models could improve modelling at the expense of **interpretation**.
 
+### ALB stacking {#sec-ALB-diagnostics}
 
+## Model interpretation {#sec-interpretation}
 
-### The Albumin (ALB) quesions
+"Stop explaining black box machine learning models for `high stakes decisions` and use `interpretable` models instead" [@rudin2019stop]
+
+### ALF interpretation {#sec-AFL-interpretation}
+
 ```{r}
 #| label: fig-c
 #| echo: false
@@ -519,138 +548,150 @@ ALBe <- data.frame(ALB, zscores=resid(m2), index=resid(m2) < qnorm(.05))
    ggplot2::theme_bw(15)
 ```
 
+The last but probably the most important part of statistical modelling is the **interpretation** of the model. Figure 1 (c) shows the z-scores (the training residuals) of the fitted DR model. Given the gestation age the z-scores can be calculated for any new value of `ALB` (even for the regions of gestational mage where we do not have any data, although this can be dangerous as it assumes that the model is still valid in these regions). The final plot Figure 1 (d) is to demonstrate the flexibility of a DR model and shows the shape of four different fitted distributions of `ALB` given four values of gestational age, one from each of the our four groups of gestational age.
+
+<!-- A statistical model combines a *mathematical* or *algorithmic* component with a *stochastic* component. The first component helps to model the *signal* in the **data**, while the stochastic component helps to model the distribution around the signal. Note that in machine learning a typical algorithmic model e.g. a random forest, uses normal distribution errors with constant variance. Here because of the nature of the `ALB` we will use a *distributional regression* model, DR, because it has more flexibility to correctly model the tails of the distribution. -->
+
+<!-- A DR is a statistical model where a distribution is **assumed** for the *response* variable given the covariates and where all the parameters of the distribution are potentially influenced by the covariates. There are two major statistical modelling parts in any DR: i) how to choose the distribution for the response, and ii) how and which of the covariates affect the distribution parameters. In most occasions we start with the first, by *assuming* a parametric distribution for the response and fitting different distributions (using a reasonable model for the parameters), to find an adequate distribution for the response. Given a selected distribution, we then try to identify how the parameters are affected and by which covariates, e.g are the effects linear, non-linear, and how the covariates interact with each other. In our case, because we have only one co-variate, gestation age, we use a smoother for `ga` for each distribution parameter. A smoother is, a non-parametric smooth function which can capture non-nonlinear relationships (but which also at the limit could identify a linear relationship). Note that in our example, the second part of the DR analysis, on how to determine the affect of covariates to the parameters is rather trivial, but more generally when we have multiple covariates often it is the most difficult part of the analysis. -->
+
+In conclusion, the main task of the current study is to find a suitable conditional distribution for `ALB`, given the gestational age, where the effect of gestational age is captured by a smoother. For example, for a four parameter distribution with parameters say, $\mu$, $\sigma$, $\nu$ and $\tau$ we use model with smooth non-parametric functions $s(ga)$ for their predictors, \$\mu: \sim s(ga) $,$\sigma: \sim  s(ga)\$, \$\nu: \sim s(ga) \$, $\tau: \sim s(ga)$, where the notation $s()$ represents a suitable smoother, for example, a P-spline (Eilers and Marx, 1996).
+
+We used cross-validated data and used appropriate **measures of goodness of fit** and **diagnostics** to select appropriate models and then try to **interpret** the model. Next we try formalize these concepts.
+
 ## The statistical modelling process {#sec-statistical_modelling}
 
 <!-- $\textbf{data} \rightarrow \textbf{model}   \rightarrow \textbf{information} ,$ -->
 
-@fig-modern in blue shows the classical statistical modelling process which is similar to the one introduced in the 70"s by Box and Jenkins  [@BoxJenkins70]. All data at this stage are  **training** data. The assumptions are repeatedly updated in order to obtain a model with an **adequate** fit. The **model** is used then for **interpretation** and answering  the **question**.  Assumptions can be _explicit_ or _implicit_. All models are built on assumptions even the so called "non-parametric" or "distribution free". Often it is easier to make explicit the _assumption_ and check it with _diagnostic_ tool than trying to check whether the implictit assumptions are are holding. The **training measure**  is the **measure of goodness of fit** evaluated at the **training** sample is usually an appropriate objective  like least squares (whem we are interested on the conditional mean), the  log-likelihood (if we are inrested in the whole distribution for the response). Note that a glossary of terms in @fig-modern is shown  in the @sec-glossary.  
+@fig-modern in blue shows the classical statistical modelling process which is similar to the one introduced in the 70"s by Box and Jenkins [@BoxJenkins70]. All data at this stage are **training** data. The assumptions are repeatedly updated in order to obtain a model with an **adequate** fit. The **model** is used then for **interpretation** and answering the **question**. Assumptions can be *explicit* or *implicit*. All models are built on assumptions even the so called "non-parametric" or "distribution free". Often it is easier to make explicit the *assumption* and check it with *diagnostic* tool than trying to check whether the implictit assumptions are are holding. The **training measure** is the **measure of goodness of fit** evaluated at the **training** sample is usually an appropriate objective like least squares (whem we are interested on the conditional mean), the log-likelihood (if we are inrested in the whole distribution for the response). Note that a glossary of terms in @fig-modern is shown in the @sec-glossary.
 
-The problems with classical data modelling are, firstly, that it aims to find an single overall adequately fitted model avoiding underfitting, but does not check for overfitting. Secondly, by looking at the overall fit, it does not necessarily focus on the **question** of the study. In the `ALB` data example  the **question** is to identify abnormally low values of `ALB` given `ga`. Hence the fit to the lower tail of the distribution of `ALB` given `ga` matters more than the overall fit.
+The problems with classical data modelling are, firstly, that it aims to find an single overall adequately fitted model avoiding underfitting, but does not check for overfitting. Secondly, by looking at the overall fit, it does not necessarily focus on the **question** of the study. In the `ALB` data example the **question** is to identify abnormally low values of `ALB` given `ga`. Hence the fit to the lower tail of the distribution of `ALB` given `ga` matters more than the overall fit.
 
-A more modern approach of data analysis is shown in @fig-modern} in blue and purple. In order to find a good model for the response variable, we require an adequate model (i.e. avoid underfitting), but also avoid overfitting. In order to find possible models that ensure both, we need to use **test measure** that is a measure of goodness of fit evaluated ate the **test** data.  For  smaller data sets we recommend a K-fold cross-validation, followed by diagnostic checking of the combined **test** residuals from all 10 folds. Finally to compare possible models, we could use focused statistical modelling (FSM), which using an appropriate **test measure**. Note that in order to evaluate any **test measure** we would need the observed response variable values at the test data.  For the `ALB` example, our proposed FSM test measure is the value of a Chi-squared test statistic, number of observations (in a 2x4 table, with rows defined by above or below the 5% centile, and columns defined by splitting the data into the 4 gestational age intervals). 
+A more modern approach of data analysis is shown in @fig-modern} in blue and purple. In order to find a good model for the response variable, we require an adequate model (i.e. avoid underfitting), but also avoid overfitting. In order to find possible models that ensure both, we need to use **test measure** that is a measure of goodness of fit evaluated ate the **test** data. For smaller data sets we recommend a K-fold cross-validation, followed by diagnostic checking of the combined **test** residuals from all 10 folds. Finally to compare possible models, we could use focused statistical modelling (FSM), which using an appropriate **test measure**. Note that in order to evaluate any **test measure** we would need the observed response variable values at the test data. For the `ALB` example, our proposed FSM test measure is the value of a Chi-squared test statistic, number of observations (in a 2x4 table, with rows defined by above or below the 5% centile, and columns defined by splitting the data into the 4 gestational age intervals).
 
 <!-- \textcolor{red}{Model Selection? Overfitting?} -->
 
-
-![The  modern data modelling process](modern_1.png){width="90%" height="600px" #fig-modern  alt="A drawing of an elephant."}
+![A drawing of an elephant.](modern_1.png){#fig-modern width="90%" height="600px"}
 
 ## Conclusions {#sec-conclusions}
-
 
 We compared the classical statistical modelling process approach of @BoxJenkins70 with a more modern approach which allows data partition, stacking of models and model avenging. In order to demonstrate the statistical modelling approach we use a simple distributional regression model example. We have tried emphasise the interconnectivity between the data, the question and the model and that they should not be seen as separate components but as a whole. Seeing like this is makes redundant the distinction between estimation and prediction models. A model is a model the purpose is changing dependiong the question we would like to answer.
 
 We recommend selecting models based on the test data, using test objective measurement of fit and test diagnostics. Note that for smaller data set we couldd use a 10-fold cross-validation. We recommend choosing models using a focused test data objective measure (is available) related to the purpose or objective of the study. For example, it is not appropriate to use an MSE criterion, which is suitable for evaluating the fit in the centre of the distribution odf the response to assess predictive performance when the interest lies in the behaviour of the tails of the distribution. We support the connection between the focused test measure and the underlying purpose or research questions of a study, se we introduce the term **focused statistical modelling** (FSM).
 
+- What statistician can learn from LM or AI?
 
+- What ML and AI can learn from statistics?
+
+- assumptions could become irrelevant over time
 
 ## Acknowledgements,
 
 if needed:
 
-## Appendix A: data modelling glossary {.appendix #sec-glossary}
+## Appendix A: data modelling glossary {#sec-glossary .appendix}
 
-- **adequate model**: a model performing well  in terms of a **training measure** but it is not checked for overfitting. 
+- **adequate model**: a model performing well in terms of a **training measure** but it is not checked for overfitting.
 
 - **assumptions**: The axiomatic statements justify the creation of a **model**. If the assumptions are not (approximately) correct the model fails to answer the **question** correctly.
 
-
-- **coefficients**: the parameters associated with a mathematical **model**.  
+- **coefficients**: the parameters associated with a mathematical or overparametrised algoritmic **model**.
 
 - **data**: the source of information and the main point of the analysis. It customary to partition the **data** into
 
-  - **training** data set(s): to **fit** the model and 
-  - **test** data set(s): to evaluate its performance and checked for **overfitting**.
+  - **training** data set(s): to **fit** the model
 
-- **diagnostics**: statistical tools helping to test the **assumptions** of the **model**
-     which could be evaluated in both **training**  and **tes** **data** sets
+  - **test** data set(s): to evaluate the performance of a **model** and checked for **overfitting**.
 
-- **interpretation** : the process of using a **fitted**  **model** to explain the **question**.
+- **diagnostics**: statistical tools helping to test the **assumptions** of the **model** which could be evaluated for different purpose in both **training** and **test** **data** sets
+
+**empirical risk**: see measure of goodness of fit (MGoF)
+
+- **interpretation** : the process of using a **fitted** **model** to explain the **question**.
 
 - **fit**: the process of estimating the parameters of the **model** from the **data** using an objective **measure of goodness of fit**.
 
-- **generative model** is a model which can reproduce data "similar" to the actual **data**.
+- **generative model** a model which can reproduce data "similar" to the actual **data**.
 
-- **measure of goodness of fit** : (or **empirical risk**) is an objective measure of how well the model is performing. Mostly is a relative measure allowing the comparison between  different models. Measures of goodness of fit can be defined on **training** or **test** data sets, see **training measure** and **test measure**, respectively.  
+- **measure of goodness of fit** : is an objective measure of how well the model performs. Mostly is a relative measure allowing the comparison between different models. Measures of goodness of fit can be defined on **training** or **test** data sets, see **training measure** and **test measure**, respectively.
 
-- **model**: A mathematical device to simplify reality and to extract information from the **data**. In a **top-down** statistical modelling we deal mainly with two type of models;
+- **model**: A mathematical structe to simplify reality and to extract information from the **data**. In a **top-down** statistical modelling we deal mainly with two type of models;
 
   - a **mathematical** model is expressed using mathematical equations containing **coefficients** to be estimated from the **data**.
 
-  - an **algorithmic** model is  based on an algorithmic procedure, which often is a over-parametrized mathematical models needed regulation using **hyper parameters**
+  - an **algorithmic** model is based on an algorithmic procedure, which often is a over-parametrized mathematical models needed regulation using **hyper parameters**
 
 - **question**: what the researcher hoping to answer from the **data** using the **model**. The **purpose** of the study.
+
+- **overfitting**
 
 - **regression model**: An *input-output*, *supervised learning*, model, $X \longrightarrow Y$ where $X$ are the explanatory variable(s} (covariate(s)) and the $Y$ the response (target).
 
 - **statistical modelling**: a way to extracting **information** from the **data** using a **statistical model**.
 
--  **statistical model** is identical to a **stochastic model**.
+- **statistical model** is identical to a **stochastic model**.
 
-- **stochastic model**  is a model containing at least two components i) a systematic component $G$ and ii) a random component  $\mathcal{D}$.  The first  describes the relationship between variables involved (mathematically or algorithmically) while the second,  describes uncertainly about the response, respectively.
+- **stochastic model** is a model containing at least two components i) a systematic component $G$ and ii) a random component $\mathcal{D}$. The first describes the relationship between variables involved (mathematically or algorithmically) while the second, describes uncertainly about the response, respectively.
 
-- **tabular data** a 2-dimensional array (data frame) where rows represent individuals and columns variables.     
- 
-- **test diagnostic** a diagnostic tool to chech **model** **assumptions**   evaluated at the **test data** set.
+- **tabular data** a 2-dimensional array (data frame) where rows represent individuals and columns variables.
 
-- **training measure** a diagnostic tool to chech **model** **assumptions**  evaluated at the **training data** set.
+- **test diagnostic** a diagnostic tool to chech **model** **assumptions** evaluated at the **test data** set.
+
+- **training measure** a diagnostic tool to chech **model** **assumptions** evaluated at the **training data** set.
 
 - **test measure** a measure of goodness of fit evaluated at the **test data** set.
 
 - **training measure** a measure of goodness of fit evaluated at the **training data** set.
 
+## Appendix B: Difference between data modelling approaches {#sec-difference .appendix}
 
-## Appendix B: Difference between  data modelling  {.appendix #sec-difference}
-
-In the table bellow 
+In the table bellow
 
 - **SM**: statistical modelling
-- **ML**: machine learning (ML) and 
-- **AI**: artificial intelligent 
+- **ML**: machine learning (ML) and
+- **AI**: artificial intelligent
 
 | Area | main goad | typical focus | Models |
-|:-------------------|:-----------------|:-----------------|:-----------------|
+|:------------------|:-----------------|:-----------------|:-----------------|
 | SM | To explain and quantify relationships in data | Inference, uncertainty, hypothesis testing, interpretable coefficients | mainly mathematical models |
 | ML | To make accurate predictions or decisions | Predictive performance and generalization to new data | mainly algorithmic models (involving hyper-parameters) |
-| AI | To build systems that perform tasks associated with human intelligence | Reasoning, perception, language, planning, learning, action | a combination of different  models|
+| AI | To build systems that perform tasks associated with human intelligence | Reasoning, perception, language, planning, learning, action | a combination of different models |
 
 : Differences between statistical modelling (SM), machine learning (ML) and artificial intelligent (AI).
 
-
-## Appendix C  {.appendix #sec-dif_models}
+## Appendix C {#sec-dif_models .appendix}
 
 ### Agent based model
 
-An agent-based model (ABM) is a algorithmic  bottom up model which tries to model the environment of study using individual _agents_, the subject of interest.  The agents   follow  specified assumed rules  in order to interact with each other and its environment. Let the  subject of the study to be  the agent, $i$. Agent $i$ lives in an neighbour $\text{n}_i$ within a global environment $\text{env}$. The agent based model specifies the state of the agent at time  $t$, i.e. $s_i(t)$ and its the updating rules. Those rules usually depend on the values of the previous state, $s_i(t-1)$,  previous  neighbour $\text{n}_i(t)$, previous environment, $\text{env}_i(t-1)$, or the previous error, $\varepsilon_i(t-1)$.  By simulating these individual agents using the updating rules over time, system-level patterns can emerge. Important part of the model is the assumptions to set the updating  rules of the agent behaviour.
+An agent-based model (ABM) is a algorithmic bottom up model which tries to model the environment of study using individual *agents*, the subject of interest. The agents follow specified assumed rules in order to interact with each other and its environment. Let the subject of the study to be the agent, $i$. Agent $i$ lives in an neighbour $\text{n}_i$ within a global environment $\text{env}$. The agent based model specifies the state of the agent at time $t$, i.e. $s_i(t)$ and its the updating rules. Those rules usually depend on the values of the previous state, $s_i(t-1)$, previous neighbour $\text{n}_i(t)$, previous environment, $\text{env}_i(t-1)$, or the previous error, $\varepsilon_i(t-1)$. By simulating these individual agents using the updating rules over time, system-level patterns can emerge. Important part of the model is the assumptions to set the updating rules of the agent behaviour.
 
+### A data partition model
 
-
-### A data partition model 
-
-A data-partition model divides the data rows into subsets and uses a separate statistical model for each subset.
-Formally, let the data domain be partitioned into $K$ non-overlapping regions:
-$$
+A data-partition model divides the data rows into subsets and uses a separate statistical model for each subset. Formally, let the data domain be partitioned into $K$ non-overlapping regions: $$
 D=D_1\cup D_2\cup\cdots\cup D_K,
 \qquad
-D_j\cap D_k= \varnothing \quad (j\ne k).$$
- Then modelling the response as
-$$Y \mid X=x \sim p_k(y\mid x; \boldsymbol{\theta}_k),
-\qquad x\in R_k.$$ 
-Each region $D_k$ has its own parameters $\boldsymbol{\theta}_k$, and possibly its own model form. A key issue is whether the partitions are known in advance (e.g., children vs adults) or estimated from the data (e.g., a decision tree).
-
+D_j\cap D_k= \varnothing \quad (j\ne k).$$ Then modelling the response as $$Y \mid X=x \sim p_k(y\mid x; \boldsymbol{\theta}_k),
+\qquad x\in R_k.$$ Each region $D_k$ has its own parameters $\boldsymbol{\theta}_k$, and possibly its own model form. A key issue is whether the partitions are known in advance (e.g., children vs adults) or estimated from the data (e.g., a decision tree).
 
 <!-- Example: -->
+
 <!-- $$ -->
+
 <!-- E(Y\mid X=x)= -->
+
 <!-- \begin{cases} -->
+
 <!-- \beta_{01}+\beta_{11}x, & x\le c,\\ -->
+
 <!-- \beta_{02}+\beta_{12}x, & x>c. -->
+
 <!-- \end{cases} -->
+
 <!-- $$ Here, $c$ partitions the data into two regions, each with a separate linear regression. -->
+
 <!-- Regression trees, segmented regression, and change-point models are all examples of data-partition models. -->
 
+## Appendix D: {#sec-questions .appendix}
 
-
-## Appendix D:   {.appendix #sec-questions}
 Question and answers from Elisit and ChatGDP
 
 #### question
@@ -675,292 +716,386 @@ The boundary is not sharp. Several reviews treat them as points on a continuum r
 
 If you want a one-line rule: use statistical modelling when you need interpretable effects and uncertainty; use machine learning when prediction accuracy and nonlinear pattern-finding matter most. That is a quick synthesis from a small set of review papers, so a more targeted follow-up could sharpen it for your specific use case.
 
-#### question 
+#### question
 
 how define a distance mathematically
 
 #### answer
 
-Mathematically, a distance is a function $d(x,y)$ that measures how far two points $x$ and $y$ are apart.
-For it to be a valid distance (a metric), it must satisfy:
+Mathematically, a distance is a function $d(x,y)$ that measures how far two points $x$ and $y$ are apart. For it to be a valid distance (a metric), it must satisfy:
 
-- $d(x,y) \ge 0$  
-- $d(x,y)=0)$ exactly when $(x=y)$  
-- $d(x,y)=d(y,x)$  
+- $d(x,y) \ge 0$\
+- $d(x,y)=0)$ exactly when $(x=y)$\
+- $d(x,y)=d(y,x)$\
 - $d(x,z) \le d(x,y)+d(y,z)$ — the triangle inequality
 
-For two points in a plane, $A=(x_1,y_1)$ and $B=(x_2,y_2)$, the usual Euclidean distance is:
-$$
+For two points in a plane, $A=(x_1,y_1)$ and $B=(x_2,y_2)$, the usual Euclidean distance is: $$
 d(A,B)=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}.
-$$ 
-For example, from $(0,0)$ to $(3,4)$:
-$$
+$$ For example, from $(0,0)$ to $(3,4)$: $$
 d=\sqrt{3^2+4^2}=5.
-$$
-#### question 
+$$ \#### question
 
-define distance in a functional space 
+define distance in a functional space
 
 #### answer
 
-In a function space, distance measures how different two functions $f$ and $g$ are.
-Common choices include:
-$$
+In a function space, distance measures how different two functions $f$ and $g$ are. Common choices include: $$
 d_\infty(f,g)=\sup_{x\in D}|f(x)-g(x)|
-$$ This is the largest vertical difference between the functions over domain $(D)$.
-$$
+$$ This is the largest vertical difference between the functions over domain $(D)$. $$
 d_1(f,g)=\int_D |f(x)-g(x)|\,dx
-$$ This measures the total absolute difference.
-$$
+$$ This measures the total absolute difference. $$
 d_2(f,g)=\left(\int_D |f(x)-g(x)|^2\,dx\right)^{1/2}
-$$ This is the usual distance in $L^2(D)$, based on the square-integrated difference.
-More generally, for $(1\le p<\infty)$,
-$$
+$$ This is the usual distance in $L^2(D)$, based on the square-integrated difference. More generally, for $(1\le p<\infty)$, $$
 d_p(f,g)=\left(\int_D |f(x)-g(x)|^p\,dx\right)^{1/p}.
 $$ In $L^p$ spaces, functions that differ only on a set of measure zero are considered the same function, so $d_p(f,g)=0$ means $f=g$ almost everywhere.
 
-#### question 
+#### question
 
-define distance for two probability density  functions 
+define distance for two probability density functions
 
-#### answer 
+#### answer
 
-For two probability density functions $p(x)$ and $q(x)$, several notions of “distance” are used.
-A common true metric is the total variation distance:
-$$
+For two probability density functions $p(x)$ and $q(x)$, several notions of “distance” are used. A common true metric is the total variation distance: $$
 d_{\mathrm{TV}}(p,q)
-\frac12\int |p(x)-q(x)|\,dx.$$
-It lies between $0$ and $1$. It is $0$ exactly when $p=q$ almost everywhere.
-Another common choice is the $L^2$ distance:
-$$
+\frac12\int |p(x)-q(x)|\,dx.$$ It lies between $0$ and $1$. It is $0$ exactly when $p=q$ almost everywhere. Another common choice is the $L^2$ distance: $$
 d_2(p,q)
 =
 \left(\int (p(x)-q(x))^2\,dx\right)^{1/2}.
-$$ For distributions on the real line, the **Wasserstein-1 distance** compares how much probability mass must move:
-$$
+$$ For distributions on the real line, the **Wasserstein-1 distance** compares how much probability mass must move: $$
 W_1(p,q)
 =
 \int_{-\infty}^{\infty}
 \left|F_p(x)-F_q(x)\right|\,dx,
-$$ where $F_p$ and $F_q$ are the cumulative distribution functions.
-You may also see the **Kullback–Leibler** divergence:
-$$
+$$ where $F_p$ and $F_q$ are the cumulative distribution functions. You may also see the **Kullback–Leibler** divergence: $$
 D_{\mathrm{KL}}(p\|q)
 =
-\int p(x)\log\frac{p(x)}{q(x)}\,dx.$$
- But KL divergence is not a mathematical distance: it is generally asymmetric and does not satisfy the triangle inequality.
+\int p(x)\log\frac{p(x)}{q(x)}\,dx.$$ But KL divergence is not a mathematical distance: it is generally asymmetric and does not satisfy the triangle inequality.
 
+#### question
 
-#### question 
-distance  to compare differennt stastical models
+distance to compare differennt stastical models
 
 #### answer
 
 To compare different statistical models, the “distance” depends on whether you compare their predicted distributions, fitted parameters, or predictive performance.
 
-For predicted probability distributions $p_\theta(y\mid x)$ and $q_\phi(y\mid x)$:
-$$
+For predicted probability distributions $p_\theta(y\mid x)$ and $q_\phi(y\mid x)$: $$
 D_{\mathrm{KL}}(p\|q)
 =
 \int p(y\mid x)\log\frac{p(y\mid x)}{q(y\mid x)}\,dy
-$$ measures information lost when using $q$ in place of $p$.
-Often average it over inputs $x$.
+$$ measures information lost when using $q$ in place of $p$. Often average it over inputs $x$.
 
-A symmetric alternative is the **Jensen–Shannon** distance:
-$$
+A symmetric alternative is the **Jensen–Shannon** distance: $$
 \operatorname{JS}(p,q)
 =
 \frac12D_{\mathrm{KL}}(p\|m)+\frac12D_{\mathrm{KL}}(q\|m),
 \quad m=\frac{p+q}{2}.
-$$
-$$d_{\mathrm{JS}}(p,q)=\sqrt{\operatorname{JS}(p,q)}
-$$ is a true metric.
-For comparing fitted parameter vectors $\hat\theta_1,\hat\theta_2$, use a parameter-space distance such as
-$$
+$$ $$d_{\mathrm{JS}}(p,q)=\sqrt{\operatorname{JS}(p,q)}
+$$ is a true metric. For comparing fitted parameter vectors $\hat\theta_1,\hat\theta_2$, use a parameter-space distance such as $$
 d(\hat\theta_1,\hat\theta_2)
 =
 \sqrt{(\hat\theta_1-\hat\theta_2)^T
 \Sigma^{-1}
 (\hat\theta_1-\hat\theta_2)},
-$$ the Mahalanobis distance, where $\Sigma$ accounts for scale and parameter correlation.
-For models assessed on observed data, it is usually more meaningful to compare predictive performance:
-$$
+$$ the Mahalanobis distance, where $\Sigma$ accounts for scale and parameter correlation. For models assessed on observed data, it is usually more meaningful to compare predictive performance: $$
 \text{average log loss}
 =
 -\frac{1}{n}\sum_{i=1}^{n}\log p_{\theta}(y_i\mid x_i).
 $$ Use held-out data or cross-validation. Lower log loss means the model assigns higher probability to what actually occurs.
 
+#### question
 
-#### question 
-
-measure of goodness of fit in statsitical modelling 
+measure of goodness of fit in statistical modelling
 
 #### answers
 
 Common measures of goodness of fit assess how well a statistical model matches the observed data.
 
-- $R^2$ — for regression:
-$$
-R^2 = 1-\frac{\sum_i (y_i-\hat y_i)^2}{\sum_i(y_i-\bar y)^2}.
-$$It is the proportion of outcome variation explained by the model. Higher is better.
+- $R^2$ — for regression: $$
+  R^2 = 1-\frac{\sum_i (y_i-\hat y_i)^2}{\sum_i(y_i-\bar y)^2}.
+  $$It is the proportion of outcome variation explained by the model. Higher is better.
 
 - Adjusted $R^2$ — adjusts $R^2$ for the number of predictors, helping discourage needless complexity.
 
-- Residual sum of squares (**RSS**) / RMSE:
-$$
-\mathrm{RMSE}=\sqrt{\frac{1}{n}\sum_i(y_i-\hat y_i)^2}.
-$$Lower values mean predictions are closer to observations.
+- Residual sum of squares (**RSS**) / RMSE: $$
+  \mathrm{RMSE}=\sqrt{\frac{1}{n}\sum_i(y_i-\hat y_i)^2}.
+  $$Lower values mean predictions are closer to observations.
 
 - **Log-likelihood** — how probable the data are under the fitted model. Higher is better.
 
-- **AIC** and **BIC** — compare models while penalizing complexity:
-$$
-\mathrm{AIC}=-2\log L+2k,
-\qquad
-\mathrm{BIC}=-2\log L+k\log n.
-$$Lower is better; use them to compare models fit to the same data.
+- **AIC** and **BIC** — compare models while penalizing complexity: $$
+  \mathrm{AIC}=-2\log L+2k,
+  \qquad
+  \mathrm{BIC}=-2\log L+k\log n.
+  $$Lower is better; use them to compare models fit to the same data.
 
 - **Deviance** — commonly used in generalized linear models. Lower residual deviance generally indicates better fit.
 
-- *Pearson chi-square** test — often used for contingency tables or binned count data:
-$$
-\chi^2=\sum_i\frac{(O_i-E_i)^2}{E_i}.
-$$
+- \*Pearson chi-square\*\* test — often used for contingency tables or binned count data: $$
+  \chi^2=\sum_i\frac{(O_i-E_i)^2}{E_i}.
+  $$
 
 Out-of-sample performance — usually the most useful check. Use cross-validation or a test set: RMSE/MAE for continuous outcomes; log loss, Brier score, accuracy, or AUC for classification. A model can fit the training data very well yet generalize poorly, so goodness of fit should be paired with residual diagnostics and held-out predictive evaluation.
 
-#### question 
+#### question
 
-how the question we asked from the data changes  the model?
+how the question we asked from the data changes the model?
 
 #### answer
 
-The question determines what the model must represent, predict, or estimate. The same dataset can need very different models depending on the question.
-For example, with patient data:
+The question determines what the model must represent, predict, or estimate. The same dataset can need very different models depending on the question. For example, with patient data:
 
-|Question	|Suitable model|
-|---------|------------|
-|“What is the average effect of treatment?”	| Causal model, such as regression with confounder adjustment|
-|“Who is likely to become ill?”|	Predictive classification model|
-|“How many cases will occur next month?”	| Time-series forecasting model |
-|“Are there hidden patient subgroups?”	| Clustering or mixture model|
-|“How is the data generated?”	|Generative probabilistic model|
+| Question | Suitable model |
+|-------------------------------|-----------------------------------------|
+| “What is the average effect of treatment?” | Causal model, such as regression with confounder adjustment |
+| “Who is likely to become ill?” | Predictive classification model |
+| “How many cases will occur next month?” | Time-series forecasting model |
+| “Are there hidden patient subgroups?” | Clustering or mixture model |
+| “How is the data generated?” | Generative probabilistic model |
 
-
-The question changes:
-- the outcome $Y$ to model;
-- the relevant predictors $X$;
-- whether causality, prediction, description, or decision-making is the goal;
-- the loss function or evaluation measure;
-- the assumptions that matter.
-For instance, predicting disease risk may use
-$$
+The question changes: - the outcome $Y$ to model; - the relevant predictors $X$; - whether causality, prediction, description, or decision-making is the goal; - the loss function or evaluation measure; - the assumptions that matter. For instance, predicting disease risk may use $$
 P(Y=1\mid X),
-$$ while estimating a treatment effect needs a causal quantity such as
-$$
+$$ while estimating a treatment effect needs a causal quantity such as $$
 E\!\left[Y(1)-Y(0)\right].
-$$
-Both may use similar variables, but they answer different questions and require different designs, assumptions, and validation.
+$$ Both may use similar variables, but they answer different questions and require different designs, assumptions, and validation.
 
-## miscellaneous {.appendix #sec-miscellaneous}
+#### question
 
-![Box and Jengins modelling process](BoXJenkins_SM.png)
-The expression is usually “There is no free lunch” (or “No free lunch”).
-It means that every benefit has a cost or trade-off somewhere.
-In statistical modelling and machine learning, the No Free Lunch theorem means there is no single algorithm that is best for every possible data-generating problem. If a method performs very well for some types of data, it must perform less well for others.
-So choosing a model requires assumptions about the data: linearity, smoothness, sparsity, groups, time dependence, and so on.
+what is the difference between big data and small data?
 
+#### answer
 
-## A summary of important points {.appendix #sec-summary}
+Small data is limited, structured information that a person or a standard database/spreadsheet can easily handle—e.g., a customer list with a few thousand records. Big data is data so large, fast-changing, or varied that it needs specialized storage and processing tools—e.g., billions of social-media events, sensor readings, or transaction logs. The usual comparison is the “3 Vs”:
 
+- Volume: big data has far more records.
 
-### general 
-  
-- data analysis as a **process**,  understanding the process helps us to find its pitfalls;
+- Velocity: it may arrive continuously and rapidly.
 
-### components 
+- Variety: it can include text, images, video, logs, and other formats.
+
+Small data is usually analyzed with Excel, SQL, or ordinary applications. Big data often uses distributed systems such as Spark, Hadoop, cloud data warehouses, or streaming platforms.
+
+#### question
+
+Reproducibility in science
+
+#### 
+
+Reproducibility in science is the ability of other researchers to obtain consistent results when they repeat a study using the same methods, data, and analysis.
+
+It relies on clear protocols, transparent reporting, available data and code where possible, preregistration, and independent replication. Reproducibility helps detect errors, reduces bias, and builds confidence that findings are reliable rather than due to chance.
+
+#### question
+
+Reproducibility in data modelling
+
+#### answer
+
+Reproducibility in data modelling means that the same data, code, settings, and computational environment produce the same model results. It requires documenting and controlling:
+
+- Data source, version, cleaning, and feature engineering
+- Model type, hyperparameters, random seeds, and train/test splits
+- Software packages, versions, and hardware/environment
+- Evaluation metrics and the exact validation procedure
+- Code, model artifacts, and experiment records
+
+For example, if another analyst reruns a model-training pipeline with the recorded dataset version and seed, they should obtain the same predictions and performance metrics.
+
+#### question
+
+data modelling pipeline
+
+#### answer
+
+A data modelling pipeline is a repeatable sequence of steps that turns raw data into evaluated model outputs:
+
+1.  Define the question and target outcome.
+2.  Collect and version the data.
+3.  Clean, validate, and transform it.
+4.  Create/select features.
+5.  Split data into training, validation, and test sets.
+6.  Train and tune candidate models.
+7.  Evaluate performance and check bias, robustness, and interpretability.
+8.  Deploy or report the selected model.
+9.  Monitor performance and retrain when data or conditions change.
+
+A well-designed pipeline automates these steps, records data/code versions and settings, and makes results reproducible.
+
+#### question
+
+robustify a statistical model
+
+#### answer
+
+To robustify a statistical model means making its conclusions less sensitive to outliers, assumption violations, missing data, or small changes in the dataset. Common approaches:
+
+- Check and treat outliers appropriately; use robust regression or robust loss functions.
+
+- Use transformations or flexible models when linearity or normality assumptions fail.
+
+- Use bootstrap confidence intervals or robust (sandwich) standard errors.
+
+- Handle missing values with multiple imputation rather than simply dropping observations.
+
+- Validate with cross-validation, external validation, and sensitivity analyses.
+
+- Check influential observations and multicollinearity.
+
+- Use regularization (e.g., ridge or lasso) to reduce overfitting.
+
+- Report uncertainty, diagnostics, and alternative-model results.
+
+The goal is not necessarily a more complex model—it is a model whose main findings remain credible under reasonable alternative assumptions and data perturbations.
+
+#### question
+
+the minimax theorem?
+
+#### answer
+
+The minimax theorem says that, under suitable conditions, $$
+\min_x \max_y f(x,y)
+=
+\max_y \min_x f(x,y).
+$$In words: choosing your best strategy against the opponent’s worst response is equivalent to the opponent choosing their best strategy against yours.
+
+For a finite zero-sum game, it guarantees a game value and optimal mixed strategies for both players. For example, if you choose $x$ and an adversary chooses $y$, with your payoff $f(x,y)$, neither player can improve their guaranteed outcome by changing strategy once both play optimally.
+
+The classic result is von Neumann’s minimax theorem. More general versions, such as Sion’s minimax theorem, require properties like convex strategy sets and convexity/concavity of $f$.
+
+#### question
+
+LLM how they operate?
+
+#### answer
+
+An LLM (large language model) works by repeatedly predicting the next small piece of text—called a token—from the text so far.
+
+During training, it reads huge amounts of text and adjusts billions of numerical parameters so it gets better at predicting missing or next tokens.
+
+It does not store a rulebook of facts in the usual sense; patterns in language, concepts, and reasoning are encoded across those parameters. When you ask a question:
+
+- 
+
+  1.  Your text is split into tokens.
+
+- 
+
+  2.  The model uses an architecture called a transformer to consider the relevant relationships among those tokens.
+
+- 
+
+  3.  It assigns probabilities to possible next tokens.
+
+- 
+
+  4.  A token is selected, added to the context, and the process repeats until it produces an answer.
+
+For example, after “The capital of France is”, it gives high probability to “Paris”.
+
+It can sound like it understands because predicting language well requires learning many patterns about the world. But it can still make mistakes or invent plausible details, so important claims should be checked.
+
+## The old flow diagram {#sec-miscellaneous .appendix}
+
+The flow diagram presented in the classical 1970 time series book by Box and Jenkins in page 18 of @BoxJenkins70.
+
+![Box and Jengins modelling process](BoXJenkins_SM.png) The expression is usually “There is no free lunch” (or “No free lunch”). It means that every benefit has a cost or trade-off somewhere. In statistical modelling and machine learning, the No Free Lunch theorem means there is no single algorithm that is best for every possible data-generating problem. If a method performs very well for some types of data, it must perform less well for others. So choosing a model requires assumptions about the data: linearity, smoothness, sparsity, groups, time dependence, and so on.
+
+## A summary of important points {#sec-summary .appendix}
+
+### general
+
+- data analysis as a **process**, a **pipeline** understanding the process helps us to find its pitfalls;
+
+### components
 
 - the main three components of the process are:
 
-   i)  the **question**,
-  ii)  the **data** and 
-  iii) the **model**;  
-  
-- the three main components  are interrelated. The **model** filter out the important information from the **data** to answer the **question**.
+  i)  the **question**,
+  ii) the **data** and
+  iii) the **model**;
+
+- the three main components are interrelated. The **model** filter out the important information from the **data** to answer the **question**.
 
 ### the data
 
-- assumptions  about the data (**data generating mechanism**) are difficulut to test 
+- assumptions about the data (**data generating mechanism**) are difficulut to test
 
 - data **partition** into **training** ans **test** helps to identify **overfitting**;
 
-### question 
+### question
 
-- there are no **predictive** models, the **question** determines whether the emphasis of the model should be in prediction; 
+- there are no **predictive** models, the **question** determines whether the emphasis of the model should be in prediction; It also determine what type model to use for answering the question.
 
+The questuion determine the target outcome.
 
+### model
 
-### model 
+- there are **top-down**, **bottom-up** and **data partition** models.
 
-- there are **top-down**, **bottom-up** and **data partioning** models.
+- a top-down **mathematical** model uses mathematical equation to describe relationships and are easier to interpret though their estimated **coefficients**.
 
-- top-down **mathematical** model use mathematical equation to describe relationships and are easier to interpret though their estimated **coefficients**.  
+- a top-down **algorithmic** models uses over parametrized mathematical models which are regulated by **hyper-parameters**.
 
-- top-down  **algorithmic** models use over parametrized mathematical models which are regulated by  **hyper-parameters**. 
+- the **algorithmic** models are better of modelling more complex relationships including **interactions** between the explanatory variables but difficult to interpret (**black box**);
 
-- **algorithmic** models are better of modelling more complex relationships including  **interactions** between the explanatory variables but difficult to interpret (**black box**);  
+**mathematical** models are associated with small data sets and simpler questions
 
+**algorithmic** models are associated with big data sets and more complect questions
 
-#### assumptions 
+**machine learning**, uses **algorithmic** models to estimate the function $G()$
 
-- **assumptions** about the **model** (and possible about the **data**) are necessary for  building  a suitable **model**;  
+**AI** perform functions that individual usually performed. That could involve;
 
-- The **assumptions** should be at least approximately correct for the **model** to **fit** adequate the data; 
+- language communication (using LLM)
+- visual functionality (pattern regonition)
+- machine learning (esimating the unkown function $G()$)
+- decisions under uncertainty (automation, what is the next movement)
 
-- **assumptions** can ne **explicit** or **implicit**; 
+#### assumptions
 
-#### fit 
+- **assumptions** about the **model** (and possible about the **data**) are necessary for building a suitable **model**;
 
-- finding  the best  **fit**, is finding  the model in the class of the assumed models which is closer to the data according to a **measure of goodness of fit**.  
+- The **assumptions** should be at least approximately correct for the **model** to **fit** adequate the data;
 
-- an **adequate**  model fits well the **data**  according to a **measure of goodness of fit**  and has good **diagnostics** on the **training** data.
+- **assumptions** can ne **explicit** or **implicit**;
 
+#### fit
 
-- an **adequate** model is  not **under-fitting** the data but it could be  **over-fitting**.
- 
-####  measure of goodness of fit
+- finding the best **fit**, is finding the model in the class of the assumed models which is closer to the data according to a **measure of goodness of fit**.
 
-- models too fat from the data according to a  **measure of goodness of fit** are **under-fitting** the data;  
+- an **adequate** model fits well the **data** according to a **measure of goodness of fit** and has good **diagnostics** on the **training** data.
 
-- models too close to the data according to a  **measure of goodness of fit** could **over-fitting** the data if their prediction are bad; 
+- an **adequate** model is not **under-fitting** the data but it could be **over-fitting**.
 
-- models  with similar **measure of goodness of fit** are called the **Rashomon set**. 
+#### measure of goodness of fit
 
-- different **measure of goodness of fit** can be used to fit the model and to compare between models.  The evaluation of the first is done on the **training** data while for comparison could be done on the **test** data.  
+- models too fat from the data according to a **measure of goodness of fit** are **under-fitting** the data;
+
+- models too close to the data according to a **measure of goodness of fit** could **over-fitting** the data if their prediction are bad;
+
+- models with similar **measure of goodness of fit** are called the **Rashomon set**.
+
+- different **measure of goodness of fit** can be used to fit the model and to compare between models. The evaluation of the first is done on the **training** data while for comparison could be done on the **test** data.
 
 #### diagnostics
 
-- **diagnostics** are used to check **model** **assumptions** 
+- **diagnostics** are used to check **model** **assumptions**
 
-- **diagnostics** tools to check the assumptions and performance  of a **model** should  be used in both  **training** and **test** data sets. 
-  
+- **diagnostics** tools to check the assumptions and performance of a **model** should be used in both **training** and **test** data sets.
 
-### model stack 
+### model stack
 
-- a model **stack** is a collection of models.  
+- a model **stack** is a collection of models.
 
-- a model  **stack** could be a **Rashomon set** of models,  a set of **adequate** models or a set of **complimentary**  of models
+- a model **stack** could be a **Rashomon set** of models, a set of **adequate** models or a set of **complimentary** of models
 
-- a  **complimentary**  set of models   which fit different part of the **data** differently, That is, each models fits different feature of the data. This is a similar idea to boos
+- a **complimentary** set of models which fit different part of the **data** differently, That is, each models fits different feature of the data. This is a similar idea to boos
 
-- averaging a stack of model could improve prediction but at the expense of **interpretation**. 
+- averaging a stack of model could improve prediction but at the expense of **interpretation**.
 
+### interpretation
 
-### interpretation 
-
-- **interpretation** answering the **question** favours the choice of a  **single** final model rather that a **stack** of  models.  On the other hand complementary models stack could reveal different features in the data. 
-
-
-
+- **interpretation** answering the **question** favours the choice of a **single** final model rather that a **stack** of models. On the other hand complementary models stack could reveal different features in the data.
 
 ## references
